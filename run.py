@@ -152,7 +152,9 @@ def run_codex(spec, workdir):
     env = {**os.environ, "CODEX_HOME": str(CODEX_HOME)}
     cmd = ["codex", "exec", "--json", "--skip-git-repo-check", "--ignore-rules",
            "-m", spec["model"], "-c", f'model_reasoning_effort="{EFFORT}"',
-           "-s", "workspace-write", PROMPT]
+           # The bwrap sandbox can't start on the devbox. Like the Claude run, it works in a
+           # throwaway temp repo instead.
+           "--dangerously-bypass-approvals-and-sandbox", PROMPT]
     marker = time.time()
     started = time.monotonic()
     try:

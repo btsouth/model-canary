@@ -29,6 +29,7 @@ MODELS = {
     "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Max"},
     "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT"},
     "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT"},
+    "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go"},
 }
 
 PROMPT = (
@@ -42,6 +43,12 @@ PROMPT = (
 # home that shares only the login.
 CODEX_HOME = Path.home() / ".codex-canary"
 CODEX_AUTH = Path.home() / ".codex" / "auth.json"
+
+# OpenCode 2 runs from its own home too, so it sees none of my config or instructions. Its
+# only setting points the Go provider at a key file.
+OPENCODE = Path.home() / ".local" / "opt" / "opencode2" / "bin" / "opencode"
+OPENCODE_HOME = Path.home() / ".opencode-canary"
+GO_KEY = Path.home() / ".config" / "model-canary" / "opencode-go.key"
 
 CLAUDE_FLAGS = [
     "--setting-sources", "project", "--strict-mcp-config", "--disable-slash-commands",
@@ -57,6 +64,10 @@ def sh(*cmd, cwd=None, env=None, timeout=None):
 def secrets():
     """Token values that must never reach a committed file."""
     found = set()
+    try:
+        found.add(GO_KEY.read_text().strip())
+    except OSError:
+        pass
     for path in (Path.home() / ".claude" / ".credentials.json", CODEX_AUTH):
         try:
             data = json.loads(path.read_text())
@@ -204,6 +215,65 @@ def run_codex(spec, workdir):
                     "limits": limits, "harness_version": version}
 
 
+def go_limits():
+    """Read the OpenCode Go plan's 5-hour and weekly usage from its usage API."""
+    import urllib.request
+    try:
+        request = urllib.request.Request("https://opencode.ai/zen/go/v1/usage", headers={
+            "Authorization": "Bearer " + GO_KEY.read_text().strip(), "User-Agent": "model-canary/1"})
+        with urllib.request.urlopen(request, timeout=15) as response:
+            usage = json.load(response)["usage"]
+        pct = lambda name: usage[name]["percent"] / 100 if isinstance(usage.get(name), dict) else None
+        return {"five_hour": pct("rolling"), "seven_day": pct("weekly"), "monthly": pct("monthly")}
+    except Exception:
+        return None
+
+
+def run_opencode(spec, workdir):
+    import sqlite3
+    env = {**os.environ, "HOME": str(OPENCODE_HOME), "OPENCODE_DISABLE_CLAUDE_CODE": "1"}
+    cmd = [str(OPENCODE), "run", "--standalone", "--format", "json", "--auto", "-m", spec["model"], PROMPT]
+    before = go_limits()
+    started = time.monotonic()
+    try:
+        proc = subprocess.run(cmd, cwd=workdir, env=env, capture_output=True, text=True,
+                              timeout=TIMEOUT, stdin=subprocess.DEVNULL)
+        stdout, code, timed_out = proc.stdout, proc.returncode, False
+    except subprocess.TimeoutExpired as err:
+        stdout, code, timed_out = (err.stdout or b"").decode() if isinstance(err.stdout, bytes) else (err.stdout or ""), None, True
+    wall = time.monotonic() - started
+    after = go_limits()
+    sessions = set()
+    for line in stdout.splitlines():
+        try:
+            sessions.add(json.loads(line)["sessionID"])
+        except (ValueError, KeyError, TypeError):
+            pass
+    # OpenCode's JSON output has no token counts; they live in its database.
+    usage = {"input": 0, "cache_read": 0, "cache_write": 0, "output": 0, "reasoning": 0}
+    cost, turns = 0.0, 0
+    db = OPENCODE_HOME / ".local" / "share" / "opencode" / "opencode.db"
+    if sessions and db.exists():
+        conn = sqlite3.connect(db.as_uri() + "?mode=ro", uri=True, timeout=5)
+        marks = ",".join("?" * len(sessions))
+        for (data,) in conn.execute(f"SELECT data FROM session_message WHERE type='assistant' AND session_id IN ({marks})",
+                                    tuple(sessions)):
+            msg = json.loads(data)
+            t = msg.get("tokens") or {}
+            usage["input"] += t.get("input", 0)
+            usage["output"] += t.get("output", 0)
+            usage["reasoning"] += t.get("reasoning", 0)
+            usage["cache_read"] += (t.get("cache") or {}).get("read", 0)
+            usage["cache_write"] += (t.get("cache") or {}).get("write", 0)
+            cost += msg.get("cost") or 0
+            turns += 1
+        conn.close()
+    version = sh(str(OPENCODE), "--version").stdout.strip()
+    return stdout, {"exit_code": code, "timed_out": timed_out, "wall_seconds": round(wall, 1),
+                    "tokens": usage, "api_cost_usd": round(cost, 6), "turns": turns,
+                    "limits": {"before": before, "after": after}, "harness_version": version}
+
+
 def grade(workdir, hidden):
     tampered = bool(sh("git", "status", "--porcelain", "--", "tests", cwd=workdir).stdout.strip())
     sh("git", "checkout", "--", "tests", cwd=workdir)
@@ -231,7 +301,7 @@ def run(key, seed):
     for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
                 ["git", "-c", "user.name=canary", "-c", "user.email=canary@localhost", "commit", "-qm", "task"]):
         sh(*cmd, cwd=workdir)
-    runner = run_claude if spec["harness"] == "claude" else run_codex
+    runner = {"claude": run_claude, "codex": run_codex, "opencode": run_opencode}[spec["harness"]]
     transcript, outcome = runner(spec, workdir)
     diff, grades = grade(workdir, hidden)
     limits = outcome["limits"]

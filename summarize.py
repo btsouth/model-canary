@@ -27,10 +27,16 @@ def main():
             "latest": {k: mine[-1].get(k) for k in (
                 "date", "seed", "passed", "score", "hidden_passed", "hidden_total", "wall_seconds",
                 "tokens", "api_cost_usd", "limits", "harness_version")},
-            "history": [{k: r.get(k) for k in ("date", "passed", "score", "wall_seconds", "over_limit", "limits")}
+            "history": [{**{k: r.get(k) for k in ("date", "passed", "score", "wall_seconds", "over_limit",
+                                                  "limits", "api_cost_usd", "turns")},
+                         "tokens": sum((r.get("tokens") or {}).values()) - (r.get("tokens") or {}).get("reasoning", 0),
+                         "output": (r.get("tokens") or {}).get("output", 0)}
                         for r in mine],
         }
-    (RESULTS / "summary.json").write_text(json.dumps({"updated": runs[-1]["started_at"], "models": models}, indent=2) + "\n")
+    latest = runs[-1]
+    (RESULTS / "summary.json").write_text(json.dumps({
+        "updated": latest["started_at"], "date": latest["date"], "variant": latest.get("variant"),
+        "hidden_total": latest.get("hidden_total"), "models": models}, indent=2) + "\n")
 
 
 if __name__ == "__main__":

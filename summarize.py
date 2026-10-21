@@ -9,7 +9,7 @@ RESULTS = Path(__file__).resolve().parent / "results"
 
 def main():
     runs = [json.loads(l) for l in (RESULTS / "runs.jsonl").read_text().splitlines() if l.strip()]
-    runs = [r for r in runs if r.get("task_version") == 2]
+    runs = [r for r in runs if r.get("task_version") == 3]
     models = {}
     for key in dict.fromkeys(r["model_key"] for r in runs):
         mine = [r for r in runs if r["model_key"] == key]

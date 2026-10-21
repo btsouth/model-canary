@@ -11,16 +11,20 @@ fixed reference copy of the same seed.
 """
 import importlib
 import random
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
+import datetime
 from fractions import Fraction
 from pathlib import Path
 
-VERSION = 2
+import schedule_task
+
+VERSION = 3
 PKG = "tally"
-MODULES = ("allocate", "intervals", "duration", "fields", "ledger")
+MODULES = ("allocate", "intervals", "duration", "fields", "ledger", "schedule")
 
 UNIT_SETS = [
     [("d", 86400), ("h", 3600), ("m", 60), ("s", 1)],
@@ -40,6 +44,7 @@ def params(seed):
         "rounding": rng.choice(["half_up", "half_even"]),
         "who": rng.choice(["person", "member", "client", "account"]),
         "symbol": rng.choice(["$", "€", "£"]),
+        "schedule": schedule_task.params(rng),
     }
 
 
@@ -365,6 +370,7 @@ def sources(p, fixed):
             text = text.replace(f"@{marker}@\n", "") if not code else text.replace(f"@{marker}@", code)
         out[name] = fill(text, **common)
     out["__init__"] = '"""Small helpers for billing time."""\n'
+    out["schedule"], _ = schedule_task.files(p["schedule"], fixed)
     return out
 
 
@@ -464,13 +470,17 @@ def cases(p, seed):
         ("bill_random_a", "eq", f"ledger.bill({[(rng.choice(['Ann', 'ann', 'Bo', 'BO ', 'Cy']), f'{r(0, 3)}h {r(0, 59)}m {r(0, 59)}s') for _ in range(6)]}, {r(100, 20000)})"),
         ("bill_random_b", "eq", f"ledger.bill({[(rng.choice(['Dee', 'Eli', 'dee', 'Fay']), f'{r(1, 50)}m {r(0, 59)}s') for _ in range(7)]}, {r(100, 20000)})"),
     ]
-    return visible, hidden
+    sched_visible, sched_hidden = schedule_task.cases(rng)
+    return visible + sched_visible, hidden + sched_hidden
 
 
-TEST_HEADER = '''import unittest
+TEST_HEADER = '''import datetime
+import datetime as dt
+import time
+import unittest
 from fractions import Fraction
 
-from tally import allocate, duration, fields, intervals, ledger
+from tally import allocate, duration, fields, intervals, ledger, schedule
 
 
 def _raises(fn, *args):
@@ -481,15 +491,26 @@ def _raises(fn, *args):
     return False
 
 
+def _fast(fn, seconds):
+    start = time.perf_counter()
+    fn()
+    return time.perf_counter() - start < seconds
+
+
 class @CLASS@(unittest.TestCase):
 '''
+
+
+RAISES = object()
 
 
 def render_tests(case_list, answers, cls):
     lines = [fill(TEST_HEADER, CLASS=cls)]
     for name, kind, code in case_list:
         lines.append(f"    def test_{name}(self):")
-        if kind == "eq":
+        if kind == "auto" and answers[name] is RAISES:
+            kind = "raises"
+        if kind in ("eq", "auto"):
             lines.append(f"        self.assertEqual({code}, {answers[name]!r})")
         elif kind == "raises":
             lines.append(f"        with self.assertRaises(ValueError):\n            {code}")
@@ -507,7 +528,29 @@ def write_package(root, p, fixed):
         (pkg / f"{name}.py").write_text(text)
 
 
-def reference_answers(p, case_lists):
+def brute_check(schedule, rng):
+    """Compare next_run with a minute-by-minute search over the next three days."""
+    for _ in range(40):
+        expr = schedule_task.random_expr(rng)
+        after = eval(schedule_task.random_time(rng), {"dt": datetime})
+        try:
+            got = schedule.next_run(expr, after)
+        except ValueError:
+            continue
+        t = after.replace(second=0, microsecond=0)
+        want = None
+        for _ in range(3 * 1440):
+            t += datetime.timedelta(minutes=1)
+            if schedule.matches(expr, t):
+                want = t
+                break
+        if want is not None and got != want:
+            raise AssertionError(f"next_run({expr!r}, {after}) = {got}, brute force says {want}")
+        if want is None and got is not None and got <= after + datetime.timedelta(days=3):
+            raise AssertionError(f"next_run({expr!r}, {after}) = {got}, brute force found nothing")
+
+
+def reference_answers(p, case_lists, brute=False, seed_rng=None):
     """Evaluate every "eq" case against the fixed code for this seed."""
     with tempfile.TemporaryDirectory() as tmp:
         write_package(Path(tmp), p, fixed=True)
@@ -516,10 +559,30 @@ def reference_answers(p, case_lists):
             del sys.modules[mod]
         try:
             ns = {m: importlib.import_module(f"{PKG}.{m}") for m in MODULES}
-            ns["Fraction"] = Fraction
+            ns.update(Fraction=Fraction, dt=datetime, datetime=datetime)
             answers = []
             for case_list in case_lists:
-                answers.append({name: eval(code, ns) for name, kind, code in case_list if kind == "eq"})
+                for i, (name, kind, code) in enumerate(case_list):
+                    hit = re.search(r"@HIT:(.*)\|(.*)@", code)
+                    if hit:
+                        try:
+                            when = eval(f"schedule.next_run({hit[1]}, {hit[2]})", ns)
+                        except ValueError:
+                            when = None
+                        when = (when or eval(hit[2], ns)).replace(second=45)
+                        case_list[i] = (name, kind, code[:hit.start()] + repr(when) + code[hit.end():])
+                found = {}
+                for name, kind, code in case_list:
+                    if kind == "eq":
+                        found[name] = eval(code, ns)
+                    elif kind == "auto":
+                        try:
+                            found[name] = eval(code, ns)
+                        except ValueError:
+                            found[name] = RAISES
+                answers.append(found)
+            if brute:
+                brute_check(ns["schedule"], seed_rng)
             return answers
         finally:
             sys.path.remove(tmp)
@@ -527,19 +590,36 @@ def reference_answers(p, case_lists):
                 del sys.modules[mod]
 
 
-def generate(seed, out, fixed=False):
+def generate(seed, out, fixed=False, check_brute=False):
     """Write OUT/task (the repo the model gets) and OUT/hidden.py. Returns the params."""
     p = params(seed)
     visible, hidden = cases(p, seed)
-    vis_answers, hid_answers = reference_answers(p, [visible, hidden])
+    vis_answers, hid_answers = reference_answers(p, [visible, hidden], brute=check_brute,
+                                                 seed_rng=random.Random(f"brute-{seed}"))
     task = Path(out) / "task"
     write_package(task, p, fixed)
     (task / "tests").mkdir(exist_ok=True)
     (task / "tests" / "__init__.py").write_text("")
     (task / "tests" / "test_tally.py").write_text(render_tests(visible, vis_answers, "TallyTest"))
     (task / ".gitignore").write_text("__pycache__/\n")
+    (task / "SCHEDULE.md").write_text(schedule_task.files(p["schedule"], fixed)[1])
     (Path(out) / "hidden.py").write_text(render_tests(hidden, hid_answers, "HiddenTest"))
     return {k: v for k, v in p.items() if k != "units"} | {"units": "".join(u for u, _ in p["units"])}
+
+
+HAND_CHECKS = [
+    # (expression, after, expected) worked out by hand from a calendar.
+    ("0 0 29 2 *", datetime.datetime(2025, 3, 1), datetime.datetime(2028, 2, 29)),
+    ("0 9 * * 1#3", datetime.datetime(2026, 7, 1), datetime.datetime(2026, 7, 20, 9)),
+    ("0 9 * * 5L", datetime.datetime(2026, 7, 1), datetime.datetime(2026, 7, 31, 9)),
+    ("0 9 * * 1#5", datetime.datetime(2026, 7, 1), datetime.datetime(2026, 8, 31, 9)),
+    ("0 8 * * 7", datetime.datetime(2026, 7, 1), datetime.datetime(2026, 7, 5, 8)),
+    ("0 18 L 2 *", datetime.datetime(2028, 1, 31), datetime.datetime(2028, 2, 29, 18)),
+    ("*/15 * * * *", datetime.datetime(2026, 5, 4, 10, 7), datetime.datetime(2026, 5, 4, 10, 15)),
+    ("* * * * *", datetime.datetime(2026, 5, 4, 10, 0, 30), datetime.datetime(2026, 5, 4, 10, 1)),
+    ("30 9 * * *", datetime.datetime(2026, 5, 4, 9, 30), datetime.datetime(2026, 5, 5, 9, 30)),
+    ("10/20 * * * *", datetime.datetime(2026, 1, 2, 3, 51), datetime.datetime(2026, 1, 2, 4, 10)),
+]
 
 
 GRADER = r"""
@@ -566,12 +646,36 @@ def grade_dir(task, hidden):
     return visible.returncode == 0, res["total"], res["failed"]
 
 
+def hand_check():
+    """Check the reference scheduler against answers worked out by hand, for every rule."""
+    problems = 0
+    for rule in ("or", "and"):
+        for wrap in (True, False):
+            ns = {}
+            exec(schedule_task.files({"rule": rule, "wrap": wrap, "years": 50}, True)[0], ns)
+            checks = list(HAND_CHECKS) + [
+                ("0 12 1 * MON", datetime.datetime(2026, 6, 2),
+                 datetime.datetime(2026, 6, 8, 12) if rule == "or" else datetime.datetime(2027, 2, 1, 12)),
+                ("0 22-2/2 * * *", datetime.datetime(2026, 6, 2, 3),
+                 datetime.datetime(2026, 6, 2, 22) if wrap else ValueError),
+            ]
+            for expr, after, want in checks:
+                try:
+                    got = ns["next_run"](expr, after)
+                except ValueError:
+                    got = ValueError
+                if got != want:
+                    problems += 1
+                    print(f"rule={rule} wrap={wrap}: next_run({expr!r}, {after}) = {got}, expected {want}")
+    return problems
+
+
 def check(n):
-    buggy_scores, problems = [], 0
+    buggy_scores, problems = [], hand_check()
     for seed in range(n):
         for fixed in (True, False):
             with tempfile.TemporaryDirectory() as tmp:
-                generate(seed, tmp, fixed)
+                p = generate(seed, tmp, fixed, check_brute=fixed)
                 ok, total, failed = grade_dir(Path(tmp) / "task", Path(tmp) / "hidden.py")
                 if fixed and (not ok or failed):
                     problems += 1

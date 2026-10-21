@@ -34,9 +34,11 @@ MODELS = {
 
 PROMPT = (
     "This repository has bugs and its tests in tests/ fail. Fix the code in tally/ so that "
-    "every function behaves exactly as its docstring describes. The tests only cover part of "
-    "that behaviour, so read the docstrings carefully. Do not change the tests or the "
-    "docstrings. Run the tests with `python3 -m unittest`. Stop when you are done."
+    "every function behaves exactly as its docstring describes. tally/schedule.py is not "
+    "written yet: implement it exactly as SCHEDULE.md describes. The tests only cover part of "
+    "the required behaviour, so read the docstrings and SCHEDULE.md carefully. Do not change "
+    "the tests, the docstrings or SCHEDULE.md. Run the tests with `python3 -m unittest`. "
+    "Stop when you are done."
 )
 
 # Codex reads ~/.codex/AGENTS.md even with --ignore-user-config, so it runs from its own

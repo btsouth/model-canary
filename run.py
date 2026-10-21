@@ -123,7 +123,8 @@ def run_claude(spec, workdir):
     before = claude_limits(workdir)
     started = time.monotonic()
     try:
-        proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, timeout=TIMEOUT)
+        proc = subprocess.run(cmd, cwd=workdir, env={**os.environ, "PWD": str(workdir)},
+                              capture_output=True, text=True, timeout=TIMEOUT)
         stdout, code, timed_out = proc.stdout, proc.returncode, False
     except subprocess.TimeoutExpired as err:
         stdout, code, timed_out = (err.stdout or b"").decode() if isinstance(err.stdout, bytes) else (err.stdout or ""), None, True
@@ -165,7 +166,7 @@ def codex_home():
 
 def run_codex(spec, workdir):
     codex_home()
-    env = {**os.environ, "CODEX_HOME": str(CODEX_HOME)}
+    env = {**os.environ, "CODEX_HOME": str(CODEX_HOME), "PWD": str(workdir)}
     cmd = ["codex", "exec", "--json", "--skip-git-repo-check", "--ignore-rules",
            "-m", spec["model"], "-c", f'model_reasoning_effort="{EFFORT}"',
            # The bwrap sandbox can't start on the devbox. Like the Claude run, it works in a
@@ -233,7 +234,8 @@ def go_limits():
 
 def run_opencode(spec, workdir):
     import sqlite3
-    env = {**os.environ, "HOME": str(OPENCODE_HOME), "OPENCODE_DISABLE_CLAUDE_CODE": "1"}
+    # OpenCode takes its project folder from $PWD, not the real working directory.
+    env = {**os.environ, "HOME": str(OPENCODE_HOME), "OPENCODE_DISABLE_CLAUDE_CODE": "1", "PWD": str(workdir)}
     cmd = [str(OPENCODE), "run", "--standalone", "--format", "json", "--auto", "-m", spec["model"], PROMPT]
     before = go_limits()
     started = time.monotonic()
@@ -297,15 +299,23 @@ def grade(workdir, hidden):
 def run(key, seed):
     spec = MODELS[key]
     stamp = dt.datetime.now(dt.timezone.utc)
-    scratch = Path(tempfile.mkdtemp(prefix=f"canary-{key}-"))
+    # /tmp keeps the task away from this repo, and the hidden tests stay in memory until the
+    # model is done, so there is nothing to find.
+    scratch = Path(tempfile.mkdtemp(prefix=f"canary-{key}-", dir="/tmp"))
     variant = gen.generate(seed, scratch)
     workdir, hidden = scratch / "task", scratch / "hidden.py"
+    hidden_text = hidden.read_text()
+    hidden.unlink()
     for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
                 ["git", "-c", "user.name=canary", "-c", "user.email=canary@localhost", "commit", "-qm", "task"]):
         sh(*cmd, cwd=workdir)
     runner = {"claude": run_claude, "codex": run_codex, "opencode": run_opencode}[spec["harness"]]
     transcript, outcome = runner(spec, workdir)
+    hidden.write_text(hidden_text)
     diff, grades = grade(workdir, hidden)
+    # Any sign the model looked at the harness, the reference code or the hidden tests.
+    leaks = sorted({m for m in (str(ROOT), "model-canary", "schedule_task", "gen.py", "hidden.py", "test_hidden")
+                    if m in transcript})
     limits = outcome["limits"]
     # Past 100% the run is paid from credits, so its limit readings say nothing about the plan.
     over = any((reading or {}).get(w) is not None and reading[w] >= 1
@@ -315,6 +325,7 @@ def run(key, seed):
               "variant": variant, **outcome, "over_limit": over, **grades}
     # The CLI itself failed (a limit, an outage, a login problem): not the model's score.
     record["infra_error"] = outcome["exit_code"] not in (0, None) and not grades["diff_lines"]
+    record["harness_seen"] = leaks
     values = secrets()
     out_dir = RESULTS / "runs" / record["date"] / key
     out_dir.mkdir(parents=True, exist_ok=True)

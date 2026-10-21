@@ -12,7 +12,7 @@ def main():
     runs = [r for r in runs if r.get("task_version") == 3]
     models = {}
     for key in dict.fromkeys(r["model_key"] for r in runs):
-        mine = [r for r in runs if r["model_key"] == key and not r.get("infra_error")]
+        mine = [r for r in runs if r["model_key"] == key and not r.get("infra_error") and not r.get("harness_seen")]
         if not mine:
             continue
         recent = mine[-30:]

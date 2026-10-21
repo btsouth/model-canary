@@ -52,7 +52,10 @@ my personal instructions, plugins or MCP servers. It records:
 Both providers report usage in whole percents, and other work on the same account moves the
 same numbers, so a single run's limit cost is rough. The trend over many runs is the useful
 part. A run where the CLI itself failed (a limit, an outage) is marked `infra_error` and left
-out of the summary. Runs that start or end past 100% of a limit are paid from credits and marked
+out of the summary. The task runs in `/tmp`, and the hidden tests are written only after the
+model finishes. A run whose transcript shows the model reading this repo, the reference code
+or the hidden tests is marked `harness_seen` and left out too. Runs that start or end past
+100% of a limit are paid from credits and marked
 `over_limit`, so they are left out of limit trends.
 
 Each run writes `results/runs/<date>/<model>/` (result, redacted transcript and diff) and

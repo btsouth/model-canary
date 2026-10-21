@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily model canary run
+
+[Service]
+Type=oneshot
+WorkingDirectory=/workspace/repos/model-canary
+ExecStart=/workspace/repos/model-canary/deploy/daily.sh
+TimeoutStartSec=3h

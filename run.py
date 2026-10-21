@@ -320,7 +320,8 @@ def run(key, seed):
     # Past 100% the run is paid from credits, so its limit readings say nothing about the plan.
     over = any((reading or {}).get(w) is not None and reading[w] >= 1
                for reading in limits.values() for w in ("five_hour", "seven_day"))
-    record = {"date": stamp.date().isoformat(), "started_at": stamp.isoformat(timespec="seconds"),
+    record = {"date": seed if re.fullmatch(r"\d{4}-\d\d-\d\d", seed) else dt.date.today().isoformat(),
+              "started_at": stamp.isoformat(timespec="seconds"),
               "model_key": key, **spec, "effort": EFFORT, "task_version": gen.VERSION, "seed": seed,
               "variant": variant, **outcome, "over_limit": over, **grades}
     # The CLI itself failed (a limit, an outage, a login problem): not the model's score.

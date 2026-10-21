@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Run the canary task once for one model and append the result to results/runs.jsonl.
 
-Usage: run.py MODEL [MODEL ...]   (keys from MODELS below, or "all")
+Usage: run.py [--seed SEED] MODEL [MODEL ...]   (keys from MODELS below, or "all")
+
+The seed picks the day's task variant (see gen.py) and defaults to today's date, so every
+model gets the same variant on the same day.
 """
 import datetime as dt
 import json
@@ -14,9 +17,9 @@ import tempfile
 import time
 from pathlib import Path
 
+import gen
+
 ROOT = Path(__file__).resolve().parent
-TASK = ROOT / "task"
-HIDDEN = ROOT / "hidden" / "test_hidden.py"
 RESULTS = ROOT / "results"
 TIMEOUT = 20 * 60
 EFFORT = "medium"
@@ -201,52 +204,43 @@ def run_codex(spec, workdir):
                     "limits": limits, "harness_version": version}
 
 
-GRADER = r"""
-import json, sys, unittest
-suite = unittest.defaultTestLoader.loadTestsFromName(sys.argv[1])
-result = unittest.TestResult()
-suite.run(result)
-failed = sorted({t.id().split('.')[-1] for t, _ in result.failures + result.errors})
-print(json.dumps({"total": result.testsRun, "failed": failed}))
-"""
-
-
-def grade(workdir):
+def grade(workdir, hidden):
     tampered = bool(sh("git", "status", "--porcelain", "--", "tests", cwd=workdir).stdout.strip())
     sh("git", "checkout", "--", "tests", cwd=workdir)
-    visible = sh(sys.executable, "-m", "unittest", "-q", cwd=workdir, timeout=120)
-    shutil.copy(HIDDEN, workdir / "tests" / "test_hidden.py")
-    out = sh(sys.executable, "-c", GRADER, "tests.test_hidden", cwd=workdir, timeout=120)
-    try:
-        hidden = json.loads(out.stdout.strip().splitlines()[-1])
-    except (ValueError, IndexError):
-        hidden = {"total": 0, "failed": ["grader-crashed"]}
-    diff = sh("git", "diff", "--", "tally", cwd=workdir).stdout
-    passed = hidden["total"] - len(hidden["failed"])
+    sh("git", "clean", "-fdq", "--", "tests", cwd=workdir)
+    visible_ok, total, failed = gen.grade_dir(workdir, hidden)
+    diff = sh("git", "diff", "--", gen.PKG, cwd=workdir).stdout
     return diff, {
-        "visible_tests_pass": visible.returncode == 0,
-        "hidden_passed": passed,
-        "hidden_total": hidden["total"],
-        "hidden_failed": hidden["failed"],
-        "passed": visible.returncode == 0 and not hidden["failed"] and not tampered,
+        "visible_tests_pass": visible_ok,
+        "hidden_passed": total - len(failed),
+        "hidden_total": total,
+        "hidden_failed": failed,
+        "score": round((total - len(failed)) / total, 3) if total else 0,
+        "passed": visible_ok and not failed and not tampered,
         "tests_tampered": tampered,
         "diff_lines": sum(1 for l in diff.splitlines() if l[:1] in "+-" and l[:3] not in ("+++", "---")),
     }
 
 
-def run(key):
+def run(key, seed):
     spec = MODELS[key]
     stamp = dt.datetime.now(dt.timezone.utc)
-    workdir = Path(tempfile.mkdtemp(prefix=f"canary-{key}-"))
-    shutil.copytree(TASK, workdir, dirs_exist_ok=True)
+    scratch = Path(tempfile.mkdtemp(prefix=f"canary-{key}-"))
+    variant = gen.generate(seed, scratch)
+    workdir, hidden = scratch / "task", scratch / "hidden.py"
     for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
                 ["git", "-c", "user.name=canary", "-c", "user.email=canary@localhost", "commit", "-qm", "task"]):
         sh(*cmd, cwd=workdir)
     runner = run_claude if spec["harness"] == "claude" else run_codex
     transcript, outcome = runner(spec, workdir)
-    diff, grades = grade(workdir)
+    diff, grades = grade(workdir, hidden)
+    limits = outcome["limits"]
+    # Past 100% the run is paid from credits, so its limit readings say nothing about the plan.
+    over = any((reading or {}).get(w) is not None and reading[w] >= 1
+               for reading in limits.values() for w in ("five_hour", "seven_day"))
     record = {"date": stamp.date().isoformat(), "started_at": stamp.isoformat(timespec="seconds"),
-              "model_key": key, **spec, "effort": EFFORT, "task_version": 1, **outcome, **grades}
+              "model_key": key, **spec, "effort": EFFORT, "task_version": gen.VERSION, "seed": seed,
+              "variant": variant, **outcome, "over_limit": over, **grades}
     values = secrets()
     out_dir = RESULTS / "runs" / record["date"] / key
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -255,15 +249,21 @@ def run(key):
     (out_dir / "result.json").write_text(redact(json.dumps(record, indent=2), values) + "\n")
     with open(RESULTS / "runs.jsonl", "a") as f:
         f.write(redact(json.dumps(record), values) + "\n")
-    shutil.rmtree(workdir, ignore_errors=True)
+    shutil.rmtree(scratch, ignore_errors=True)
     print(f"{key}: passed={record['passed']} hidden={record['hidden_passed']}/{record['hidden_total']} "
           f"time={record['wall_seconds']}s limits={record['limits']}")
     return record
 
 
 if __name__ == "__main__":
-    keys = sys.argv[1:] or ["all"]
+    args = sys.argv[1:]
+    seed = dt.date.today().isoformat()
+    if "--seed" in args:
+        i = args.index("--seed")
+        seed = args[i + 1]
+        del args[i:i + 2]
+    keys = args or ["all"]
     if keys == ["all"]:
         keys = list(MODELS)
     for k in keys:
-        run(k)
+        run(k, seed)

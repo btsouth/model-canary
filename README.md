@@ -12,24 +12,31 @@ Results are published on [btso.dev](https://btso.dev).
 
 ## The task
 
-The model gets a small Python package, `tally`, with five modules (splitting money, merging
-time intervals, parsing durations, parsing `key=value` lines and billing time) and nine bugs.
-It is told to make every function match its docstring. The visible tests cover only part of
-that, so fixing just what the tests show isn't enough. One bug only shows up when two modules
-work together.
+The model gets a small Python package, `tally`, and two jobs:
 
-`gen.py` writes a new variant every day from the date. The bugs and difficulty stay the same,
-but names, rules and numbers change: which share gets a tied leftover cent, how halves round,
-the field separator and quote character, the duration units, the currency and so on. A model
-can't pass by remembering an earlier day, even though this repo is public.
+1. **Fix nine bugs.** Five modules (splitting money, merging time intervals, parsing
+   durations, parsing `key=value` lines and billing time) must match their docstrings. The
+   visible tests cover only part of that, and one bug only shows up when two modules work
+   together.
+2. **Build a scheduler from a spec.** `SCHEDULE.md` describes cron-style expressions: lists,
+   ranges, steps, names, last-day and nth-weekday rules, shortcuts, how the day-of-month and
+   day-of-week fields combine, a search horizon and a speed requirement. `schedule.py` starts
+   as a stub.
 
-After the run, 56 hidden tests the model never sees grade the fix. Their answers come from a
-reference fix of the same variant. The score is the share of hidden tests passed. A run
-passes when the visible tests pass, every hidden test passes and the tests were left alone.
-The unfixed code scores about 28 of 56.
+`gen.py` writes a new variant every day from the date. The work stays the same size, but
+names, rules and numbers change: which share gets a tied leftover cent, how halves round, the
+separator and quote character, the duration units, whether day fields combine with OR or AND,
+whether backwards ranges wrap, how far ahead to search and so on. A model can't pass by
+remembering an earlier day, even though this repo is public.
 
-`python3 gen.py check 50` checks 50 variants: the reference fix must pass everything and the
-unfixed code must fail the visible tests.
+After the run, 157 hidden tests the model never sees grade the work. Their answers come from
+a reference implementation of the same variant, which `gen.py check` tests against answers
+worked out by hand and against a brute-force search. The score is the share of hidden tests
+passed. A run passes when the visible tests pass, every hidden test passes and the tests were
+left alone. The unfixed code scores about 28 of 157.
+
+Current models pass this almost every time. That's fine: a failure is the signal, and time,
+tokens and cost on an identical piece of work are the trends to watch.
 
 ## How a run works
 
@@ -44,7 +51,8 @@ my personal instructions, plugins or MCP servers. It records:
 
 Both providers report usage in whole percents, and other work on the same account moves the
 same numbers, so a single run's limit cost is rough. The trend over many runs is the useful
-part. Runs that start or end past 100% of a limit are paid from credits and marked
+part. A run where the CLI itself failed (a limit, an outage) is marked `infra_error` and left
+out of the summary. Runs that start or end past 100% of a limit are paid from credits and marked
 `over_limit`, so they are left out of limit trends.
 
 Each run writes `results/runs/<date>/<model>/` (result, redacted transcript and diff) and

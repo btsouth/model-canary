@@ -12,7 +12,9 @@ def main():
     runs = [r for r in runs if r.get("task_version") == 3]
     models = {}
     for key in dict.fromkeys(r["model_key"] for r in runs):
-        mine = [r for r in runs if r["model_key"] == key]
+        mine = [r for r in runs if r["model_key"] == key and not r.get("infra_error")]
+        if not mine:
+            continue
         recent = mine[-30:]
         times = [r["wall_seconds"] for r in recent if not r["timed_out"]]
         models[key] = {

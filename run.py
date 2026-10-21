@@ -313,6 +313,8 @@ def run(key, seed):
     record = {"date": stamp.date().isoformat(), "started_at": stamp.isoformat(timespec="seconds"),
               "model_key": key, **spec, "effort": EFFORT, "task_version": gen.VERSION, "seed": seed,
               "variant": variant, **outcome, "over_limit": over, **grades}
+    # The CLI itself failed (a limit, an outage, a login problem): not the model's score.
+    record["infra_error"] = outcome["exit_code"] not in (0, None) and not grades["diff_lines"]
     values = secrets()
     out_dir = RESULTS / "runs" / record["date"] / key
     out_dir.mkdir(parents=True, exist_ok=True)

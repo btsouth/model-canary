@@ -8,3 +8,5 @@ python3 summarize.py
 git add results
 git commit -qm "Canary results $(date +%F)" || exit 0
 git push -q origin main
+# Ask btso.dev to pull the new results now instead of at its next scheduled refresh.
+gh api -X POST repos/btsouth/btso.dev/dispatches -f event_type=refresh >/dev/null || true

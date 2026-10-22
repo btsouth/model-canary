@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-22",
+  "started_at": "2026-10-22T10:05:21+00:00",
+  "model_key": "sol",
+  "harness": "codex",
+  "model": "gpt-6.1-sol",
+  "plan": "ChatGPT",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-10-22",
+  "variant": {
+    "split": "allocate_units",
+    "tie": "later",
+    "sep": "|",
+    "quote": "'",
+    "rounding": "half_even",
+    "who": "client",
+    "symbol": "\u20ac",
+    "schedule": {
+      "rule": "and",
+      "wrap": false,
+      "years": 10
+    },
+    "units": "hms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 141.6,
+  "tokens": {
+    "input": 12840,
+    "cache_read": 118400,
+    "cache_write": 0,
+    "output": 5439,
+    "reasoning": 698
+  },
+  "api_cost_usd": null,
+  "turns": null,
+  "limits": {
+    "before": {
+      "five_hour": 0.0,
+      "seven_day": 0.27
+    },
+    "after": {
+      "five_hour": 0.01,
+      "seven_day": 0.27
+    }
+  },
+  "harness_version": "codex-cli 0.163.0",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 237,
+  "infra_error": false,
+  "harness_seen": []
+}

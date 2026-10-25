@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-25",
+  "started_at": "2026-10-25T10:10:41+00:00",
+  "model_key": "deepseek",
+  "harness": "opencode",
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "plan": "OpenCode Go",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-10-25",
+  "variant": {
+    "split": "split",
+    "tie": "earlier",
+    "sep": "|",
+    "quote": "\"",
+    "rounding": "half_up",
+    "who": "account",
+    "symbol": "\u20ac",
+    "schedule": {
+      "rule": "and",
+      "wrap": true,
+      "years": 20
+    },
+    "units": "wdhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 618.4,
+  "tokens": {
+    "input": 109493,
+    "cache_read": 1902976,
+    "cache_write": 0,
+    "output": 15039,
+    "reasoning": 74269
+  },
+  "api_cost_usd": 0.075718,
+  "turns": 31,
+  "limits": {
+    "before": {
+      "five_hour": 0.0,
+      "seven_day": 0.02,
+      "monthly": 0.73
+    },
+    "after": {
+      "five_hour": 0.0,
+      "seven_day": 0.02,
+      "monthly": 0.73
+    }
+  },
+  "harness_version": "opencode v2.1.1",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 466,
+  "infra_error": false,
+  "harness_seen": []
+}

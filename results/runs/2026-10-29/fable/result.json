@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-29",
+  "started_at": "2026-10-29T10:02:16+00:00",
+  "model_key": "fable",
+  "harness": "claude",
+  "model": "claude-fable-5-1",
+  "plan": "Claude Max",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-10-29",
+  "variant": {
+    "split": "split",
+    "tie": "earlier",
+    "sep": ";",
+    "quote": "\"",
+    "rounding": "half_even",
+    "who": "member",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "and",
+      "wrap": false,
+      "years": 10
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 257.3,
+  "tokens": {
+    "input": 322,
+    "cache_read": 242909,
+    "cache_write": 32686,
+    "output": 16060,
+    "reasoning": 3826
+  },
+  "api_cost_usd": 1.52066725,
+  "turns": 11,
+  "limits": {
+    "before": {
+      "five_hour": 0.01,
+      "seven_day": 0.28
+    },
+    "after": {
+      "five_hour": 0.04,
+      "seven_day": 0.28
+    }
+  },
+  "harness_version": "2.1.303 (Claude Code)",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 334,
+  "infra_error": false,
+  "harness_seen": []
+}

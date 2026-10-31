@@ -65,7 +65,7 @@ or the hidden tests is marked `harness_seen` and left out too. Runs that start o
 Every failed run gets checked by hand. `python3 regrade.py DATE MODEL` rebuilds that day's task,
 applies the run's saved diff and grades it again, so it shows whether the recorded result holds
 up, plus the call and error behind each failed hidden test. I read those against the spec and
-record what went wrong in `results/reviews.json`, and the site shows that note next to the miss.
+record what went wrong in `results/reviews.json` (code in backticks), and the site shows that note next to the miss.
 A failure that was the harness's fault (a wrong answer in the reference, a spec that says two
 things) is marked `"cause": "harness"` there and left out of the summary.
 

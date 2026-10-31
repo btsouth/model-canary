@@ -3,31 +3,31 @@
     "sol": {
       "cause": "model",
       "checked": "2026-10-31",
-      "note": "Read 1/3 in the day-of-week field as Monday and Thursday. The spec says N/S runs up to the field's maximum, and day of week goes up to 7, so Sunday counts too."
+      "note": "Read `1/3` in the day-of-week field as Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so Sunday counts too."
     }
   },
   "2026-10-30": {
     "fable": {
       "cause": "model",
       "checked": "2026-10-31",
-      "note": "Turned 7 into 0 before expanding ranges, so 0-7/2 meant only Sunday instead of Sunday, Tuesday, Thursday and Saturday. That day's spec treats 7 as 0 only in a range that wraps, and 0-7 doesn't."
+      "note": "Turned 7 into 0 before expanding ranges, so `0-7/2` meant only Sunday instead of Sunday, Tuesday, Thursday and Saturday. That day's spec treats 7 as 0 only in a range that wraps, and `0-7` doesn't."
     },
     "luna": {
       "cause": "model",
       "checked": "2026-10-31",
-      "note": "The same 0-7/2 mistake as Fable, 1/3 stopping at Saturday like Sol on Oct 27, and it rejected \"  @hourly \" even though the spec says leading and trailing whitespace is ignored."
+      "note": "The same `0-7/2` mistake as Fable, `1/3` stopping at Saturday like Sol on Oct 27, and it rejected `\"  @hourly \"` even though the spec says leading and trailing whitespace is ignored."
     }
   },
   "2026-10-31": {
     "sonnet": {
       "cause": "model",
       "checked": "2026-10-31",
-      "note": "Never added the duplicate key check that the parse_fields docstring asks for, and accepted L/2 in the day-of-month field, where the spec allows L only on its own."
+      "note": "Never added the duplicate key check that the `parse_fields` docstring asks for, and accepted `L/2` in the day-of-month field, where the spec allows `L` only on its own."
     },
     "luna": {
       "cause": "model",
       "checked": "2026-10-31",
-      "note": "Rejected every stepped range such as 11-22/5 as \"names are not allowed with steps\", which caused 23 of its 25 misses. Its day names were also off by one, so MON meant Sunday."
+      "note": "Rejected every stepped range such as `11-22/5` as \"names are not allowed with steps\", which caused 23 of its 25 misses. Its day names were also off by one, so `MON` meant Sunday."
     }
   }
 }

@@ -47,7 +47,8 @@ my personal instructions, plugins or MCP servers. It records:
 
 - score, pass or fail, which hidden tests failed, and the diff
 - wall-clock time
-- tokens, and the API-price cost where the CLI reports it
+- tokens, and what they would cost at API list prices. Claude Code and OpenCode report that
+  cost themselves. Codex reports only tokens, so `run.py` prices them at OpenAI's standard rates.
 - the plan's 5-hour and weekly usage before and after the run
 
 Both providers report usage in whole percents, and other work on the same account moves the
@@ -58,6 +59,15 @@ model finishes. A run whose transcript shows the model reading this repo, the re
 or the hidden tests is marked `harness_seen` and left out too. Runs that start or end past
 100% of a limit are paid from credits and marked
 `over_limit`, so they are left out of limit trends.
+
+## Checking failures
+
+Every failed run gets checked by hand. `python3 regrade.py DATE MODEL` rebuilds that day's task,
+applies the run's saved diff and grades it again, so it shows whether the recorded result holds
+up, plus the call and error behind each failed hidden test. I read those against the spec and
+record what went wrong in `results/reviews.json`, and the site shows that note next to the miss.
+A failure that was the harness's fault (a wrong answer in the reference, a spec that says two
+things) is marked `"cause": "harness"` there and left out of the summary.
 
 Each run writes `results/runs/<date>/<model>/` (result, redacted transcript and diff) and
 appends a line to `results/runs.jsonl`. `summarize.py` builds `results/summary.json`.

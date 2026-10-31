@@ -41,6 +41,26 @@ MODELS = {
     "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go"},
 }
 
+# Codex reports tokens but no price, so its runs are priced here: OpenAI's standard API list
+# price per 1M tokens (input, cached input, output) for prompts up to 272K tokens, from
+# https://developers.openai.com/api/docs/pricing on 2026-10-31. Codex's output count already
+# includes reasoning tokens.
+OPENAI_PRICES = {
+    "gpt-6-astra": (10.00, 1.00, 50.00),
+    "gpt-6.1-sol": (2.00, 0.10, 10.00),
+    "gpt-6.1-terra": (1.00, 0.05, 5.00),
+    "gpt-6-luna": (0.10, 0.01, 0.50),
+}
+
+
+def openai_cost(model, tokens):
+    if model not in OPENAI_PRICES:
+        return None
+    price_in, price_cached, price_out = OPENAI_PRICES[model]
+    return round((tokens["input"] * price_in + tokens["cache_read"] * price_cached
+                  + tokens["output"] * price_out) / 1e6, 6)
+
+
 PROMPT = (
     "This repository has bugs and its tests in tests/ fail. Fix the code in tally/ so that "
     "every function behaves exactly as its docstring describes. tally/schedule.py is not "
@@ -223,7 +243,7 @@ def run_codex(spec, workdir):
         limits = {"before": to_frac(readings[0]), "after": to_frac(readings[-1])}
     version = sh("codex", "--version").stdout.strip()
     return stdout, {"exit_code": code, "timed_out": timed_out, "wall_seconds": round(wall, 1),
-                    "tokens": usage, "api_cost_usd": None, "turns": None,
+                    "tokens": usage, "api_cost_usd": openai_cost(spec["model"], usage), "turns": None,
                     "limits": limits, "harness_version": version}
 
 

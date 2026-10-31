@@ -33,7 +33,7 @@
     "output": 5642,
     "reasoning": 723
   },
-  "api_cost_usd": null,
+  "api_cost_usd": 0.110437,
   "turns": null,
   "limits": {
     "before": {

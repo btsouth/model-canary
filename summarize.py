@@ -10,9 +10,14 @@ RESULTS = Path(__file__).resolve().parent / "results"
 def main():
     runs = [json.loads(l) for l in (RESULTS / "runs.jsonl").read_text().splitlines() if l.strip()]
     runs = [r for r in runs if r.get("task_version") == 3]
+    # Failed runs I've checked by hand (see README). A run whose failure was the harness's
+    # fault, not the model's, is left out like an infra error.
+    reviews = json.loads((RESULTS / "reviews.json").read_text())
+    review = lambda r: reviews.get(r["date"], {}).get(r["model_key"]) if not r["passed"] else None
     models = {}
     for key in dict.fromkeys(r["model_key"] for r in runs):
-        mine = [r for r in runs if r["model_key"] == key and not r.get("infra_error") and not r.get("harness_seen")]
+        mine = [r for r in runs if r["model_key"] == key and not r.get("infra_error") and not r.get("harness_seen")
+                and (review(r) or {}).get("cause") != "harness"]
         if not mine:
             continue
         recent = mine[-30:]
@@ -32,7 +37,8 @@ def main():
             "history": [{**{k: r.get(k) for k in ("date", "passed", "score", "wall_seconds", "over_limit",
                                                   "limits", "api_cost_usd", "turns")},
                          "tokens": sum((r.get("tokens") or {}).values()) - (r.get("tokens") or {}).get("reasoning", 0),
-                         "output": (r.get("tokens") or {}).get("output", 0)}
+                         "output": (r.get("tokens") or {}).get("output", 0),
+                         **({"review": review(r)} if review(r) else {})}
                         for r in mine],
         }
     latest = runs[-1]

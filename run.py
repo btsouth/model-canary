@@ -28,7 +28,9 @@ MODELS = {
     "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Max"},
     "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Max"},
     "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Max"},
+    "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Max"},
     "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT"},
+    "terra": {"harness": "codex", "model": "gpt-6.1-terra", "plan": "ChatGPT"},
     "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT"},
     "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go"},
 }

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-31T02:43:48+00:00",
+  "updated": "2026-10-31T02:53:21+00:00",
   "date": "2026-10-30",
   "variant": {
     "split": "share_out",
@@ -1336,6 +1336,124 @@
           "turns": 4,
           "tokens": 71030,
           "output": 10382
+        }
+      ]
+    },
+    "haiku": {
+      "model": "claude-haiku-5-5",
+      "plan": "Claude Max",
+      "runs": 1,
+      "pass_rate_30": 1.0,
+      "mean_score_30": 1.0,
+      "median_seconds_30": 176.0,
+      "latest": {
+        "date": "2026-10-30",
+        "seed": "2026-10-30",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
+        "hidden_total": 157,
+        "wall_seconds": 176.0,
+        "tokens": {
+          "input": 18,
+          "cache_read": 341269,
+          "cache_write": 54279,
+          "output": 40596,
+          "reasoning": 29700
+        },
+        "api_cost_usd": 0.034568289999999995,
+        "limits": {
+          "before": {
+            "five_hour": 0.03,
+            "seven_day": 0.73
+          },
+          "after": {
+            "five_hour": 0.03,
+            "seven_day": 0.73
+          }
+        },
+        "harness_version": "2.1.303 (Claude Code)"
+      },
+      "history": [
+        {
+          "date": "2026-10-30",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 176.0,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.03,
+              "seven_day": 0.73
+            },
+            "after": {
+              "five_hour": 0.03,
+              "seven_day": 0.73
+            }
+          },
+          "api_cost_usd": 0.034568289999999995,
+          "turns": 18,
+          "tokens": 436162,
+          "output": 40596
+        }
+      ]
+    },
+    "terra": {
+      "model": "gpt-6.1-terra",
+      "plan": "ChatGPT",
+      "runs": 1,
+      "pass_rate_30": 1.0,
+      "mean_score_30": 1.0,
+      "median_seconds_30": 29.5,
+      "latest": {
+        "date": "2026-10-30",
+        "seed": "2026-10-30",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
+        "hidden_total": 157,
+        "wall_seconds": 29.5,
+        "tokens": {
+          "input": 7770,
+          "cache_read": 130048,
+          "cache_write": 0,
+          "output": 3961,
+          "reasoning": 210
+        },
+        "api_cost_usd": null,
+        "limits": {
+          "before": {
+            "five_hour": 0.0,
+            "seven_day": 1.0
+          },
+          "after": {
+            "five_hour": 0.0,
+            "seven_day": 1.0
+          }
+        },
+        "harness_version": "codex-cli 0.163.0"
+      },
+      "history": [
+        {
+          "date": "2026-10-30",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 29.5,
+          "over_limit": true,
+          "limits": {
+            "before": {
+              "five_hour": 0.0,
+              "seven_day": 1.0
+            },
+            "after": {
+              "five_hour": 0.0,
+              "seven_day": 1.0
+            }
+          },
+          "api_cost_usd": null,
+          "turns": null,
+          "tokens": 141779,
+          "output": 3961
         }
       ]
     }

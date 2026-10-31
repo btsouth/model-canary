@@ -32,6 +32,7 @@ MODELS = {
     "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT"},
     "terra": {"harness": "codex", "model": "gpt-6.1-terra", "plan": "ChatGPT"},
     "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT"},
+    "luna": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT"},
     "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go"},
 }
 

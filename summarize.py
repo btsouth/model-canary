@@ -20,6 +20,8 @@ def main():
         models[key] = {
             "model": mine[-1]["model"],
             "plan": mine[-1]["plan"],
+            # OpenCode never took an effort setting, though early runs logged one.
+            "effort": "default" if mine[-1].get("harness") == "opencode" else mine[-1].get("effort"),
             "runs": len(mine),
             "pass_rate_30": round(sum(r["passed"] for r in recent) / len(recent), 3),
             "mean_score_30": round(sum(r.get("score", 0) for r in recent) / len(recent), 3),

@@ -24,6 +24,11 @@ RESULTS = ROOT / "results"
 TIMEOUT = 20 * 60
 EFFORT = "medium"
 
+
+def effort_of(spec):
+    """Claude Code and Codex take EFFORT; OpenCode runs at the model's own default."""
+    return "default" if spec["harness"] == "opencode" else EFFORT
+
 MODELS = {
     "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Max"},
     "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Max"},
@@ -326,7 +331,7 @@ def run(key, seed):
                for reading in limits.values() for w in ("five_hour", "seven_day"))
     record = {"date": seed if re.fullmatch(r"\d{4}-\d\d-\d\d", seed) else dt.date.today().isoformat(),
               "started_at": stamp.isoformat(timespec="seconds"),
-              "model_key": key, **spec, "effort": EFFORT, "task_version": gen.VERSION, "seed": seed,
+              "model_key": key, **spec, "effort": effort_of(spec), "task_version": gen.VERSION, "seed": seed,
               "variant": variant, **outcome, "over_limit": over, **grades}
     # The CLI itself failed (a limit, an outage, a login problem): not the model's score.
     record["infra_error"] = outcome["exit_code"] not in (0, None) and not grades["diff_lines"]

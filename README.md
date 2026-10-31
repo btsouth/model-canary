@@ -41,7 +41,8 @@ tokens and cost on an identical piece of work are the trends to watch.
 ## How a run works
 
 `run.py` generates the day's variant into a temporary git repo and runs the model through its
-own CLI (Claude Code or Codex) with fixed settings: medium effort, no web access, and none of
+own CLI (Claude Code, Codex or OpenCode) with fixed settings: medium effort (OpenCode runs at
+the model's default, since it has no effort setting), no web access, and none of
 my personal instructions, plugins or MCP servers. It records:
 
 - score, pass or fail, which hidden tests failed, and the diff

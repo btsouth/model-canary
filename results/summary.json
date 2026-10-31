@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T10:11:11+00:00",
+  "updated": "2026-10-31T02:43:48+00:00",
   "date": "2026-10-30",
   "variant": {
     "split": "share_out",
@@ -1277,6 +1277,65 @@
           "turns": 33,
           "tokens": 1692433,
           "output": 11481
+        }
+      ]
+    },
+    "sonnet": {
+      "model": "claude-sonnet-5-5",
+      "plan": "Claude Max",
+      "runs": 1,
+      "pass_rate_30": 1.0,
+      "mean_score_30": 1.0,
+      "median_seconds_30": 78.0,
+      "latest": {
+        "date": "2026-10-30",
+        "seed": "2026-10-30",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
+        "hidden_total": 157,
+        "wall_seconds": 78.0,
+        "tokens": {
+          "input": 8,
+          "cache_read": 36081,
+          "cache_write": 24559,
+          "output": 10382,
+          "reasoning": 4921
+        },
+        "api_cost_usd": 0.2056801,
+        "limits": {
+          "before": {
+            "five_hour": 0.02,
+            "seven_day": 0.73
+          },
+          "after": {
+            "five_hour": 0.03,
+            "seven_day": 0.73
+          }
+        },
+        "harness_version": "2.1.303 (Claude Code)"
+      },
+      "history": [
+        {
+          "date": "2026-10-30",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 78.0,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.02,
+              "seven_day": 0.73
+            },
+            "after": {
+              "five_hour": 0.03,
+              "seven_day": 0.73
+            }
+          },
+          "api_cost_usd": 0.2056801,
+          "turns": 4,
+          "tokens": 71030,
+          "output": 10382
         }
       ]
     }

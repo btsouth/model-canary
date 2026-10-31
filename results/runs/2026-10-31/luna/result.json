@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-31",
+  "started_at": "2026-10-31T10:14:43+00:00",
+  "model_key": "luna",
+  "harness": "codex",
+  "model": "gpt-6-luna",
+  "plan": "ChatGPT",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-10-31",
+  "variant": {
+    "split": "apportion",
+    "tie": "later",
+    "sep": "|",
+    "quote": "'",
+    "rounding": "half_up",
+    "who": "account",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "or",
+      "wrap": false,
+      "years": 20
+    },
+    "units": "wdhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 39.7,
+  "tokens": {
+    "input": 22474,
+    "cache_read": 152448,
+    "cache_write": 0,
+    "output": 4501,
+    "reasoning": 409
+  },
+  "api_cost_usd": null,
+  "turns": null,
+  "limits": {
+    "before": {
+      "five_hour": 0.0,
+      "seven_day": 1.0
+    },
+    "after": {
+      "five_hour": 0.0,
+      "seven_day": 1.0
+    }
+  },
+  "harness_version": "codex-cli 0.163.0",
+  "over_limit": true,
+  "visible_tests_pass": true,
+  "hidden_passed": 132,
+  "hidden_total": 157,
+  "hidden_failed": [
+    "matches_random_01",
+    "matches_run_time_00",
+    "matches_run_time_01",
+    "matches_run_time_02",
+    "matches_run_time_03",
+    "matches_run_time_04",
+    "matches_run_time_05",
+    "matches_run_time_06",
+    "next_both_day_fields",
+    "next_both_day_fields_step",
+    "next_names_any_case",
+    "next_random_01",
+    "next_random_03",
+    "next_random_07",
+    "next_random_13",
+    "next_random_14",
+    "next_random_15",
+    "next_random_18",
+    "next_random_20",
+    "next_random_21",
+    "next_random_22",
+    "next_random_25",
+    "next_random_26",
+    "next_random_27",
+    "next_random_28"
+  ],
+  "score": 0.841,
+  "passed": false,
+  "tests_tampered": false,
+  "diff_lines": 206,
+  "infra_error": false,
+  "harness_seen": []
+}

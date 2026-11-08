@@ -30,10 +30,10 @@ def effort_of(spec):
     return "default" if spec["harness"] == "opencode" else EFFORT
 
 MODELS = {
-    "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Max"},
-    "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Max"},
-    "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Max"},
-    "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Max"},
+    "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Ultra"},
+    "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Ultra"},
+    "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Ultra"},
+    "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra"},
     "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT"},
     "terra": {"harness": "codex", "model": "gpt-6.1-terra", "plan": "ChatGPT"},
     "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT"},

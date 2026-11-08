@@ -99,6 +99,8 @@ def secrets():
         found.add(GO_KEY.read_text().strip())
     except OSError:
         pass
+    if os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
+        found.add(os.environ["CLAUDE_CODE_OAUTH_TOKEN"])
     for path in (Path.home() / ".claude" / ".credentials.json", CODEX_AUTH):
         try:
             data = json.loads(path.read_text())

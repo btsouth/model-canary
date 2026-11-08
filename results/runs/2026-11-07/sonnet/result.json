@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-07",
+  "started_at": "2026-11-08T01:55:42+00:00",
+  "model_key": "sonnet",
+  "harness": "claude",
+  "model": "claude-sonnet-5-5",
+  "plan": "Claude Ultra",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-07",
+  "variant": {
+    "split": "split",
+    "tie": "earlier",
+    "sep": "|",
+    "quote": "\"",
+    "rounding": "half_up",
+    "who": "member",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "and",
+      "wrap": true,
+      "years": 20
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 79.9,
+  "tokens": {
+    "input": 8,
+    "cache_read": 44037,
+    "cache_write": 18875,
+    "output": 11105,
+    "reasoning": 5514
+  },
+  "api_cost_usd": 0.19096969999999996,
+  "turns": 4,
+  "limits": {
+    "before": {
+      "five_hour": null,
+      "seven_day": 0.25
+    },
+    "after": {
+      "five_hour": null,
+      "seven_day": 0.25
+    }
+  },
+  "harness_version": "2.1.319 (Claude Code)",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 251,
+  "infra_error": false,
+  "harness_seen": []
+}

@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-10",
+  "started_at": "2026-11-10T11:08:12+00:00",
+  "model_key": "haiku",
+  "harness": "claude",
+  "model": "claude-haiku-5-5",
+  "plan": "Claude Ultra",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-10",
+  "variant": {
+    "split": "split",
+    "tie": "later",
+    "sep": "|",
+    "quote": "\"",
+    "rounding": "half_even",
+    "who": "person",
+    "symbol": "\u20ac",
+    "schedule": {
+      "rule": "and",
+      "wrap": true,
+      "years": 50
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 160.2,
+  "tokens": {
+    "input": 14,
+    "cache_read": 211759,
+    "cache_write": 46155,
+    "output": 36113,
+    "reasoning": 27196
+  },
+  "api_cost_usd": 0.02940649,
+  "turns": 14,
+  "limits": {
+    "before": {
+      "five_hour": null,
+      "seven_day": 0.94
+    },
+    "after": {
+      "five_hour": null,
+      "seven_day": 0.94
+    }
+  },
+  "harness_version": "2.1.319 (Claude Code)",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 317,
+  "infra_error": false,
+  "harness_seen": []
+}

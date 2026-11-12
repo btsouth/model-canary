@@ -1,18 +1,18 @@
 {
-  "updated": "2026-11-11T11:18:51+00:00",
-  "date": "2026-11-11",
+  "updated": "2026-11-12T11:14:31+00:00",
+  "date": "2026-11-12",
   "variant": {
-    "split": "allocate_units",
-    "tie": "later",
-    "sep": "|",
-    "quote": "'",
-    "rounding": "half_even",
-    "who": "member",
+    "split": "split",
+    "tie": "earlier",
+    "sep": ",",
+    "quote": "\"",
+    "rounding": "half_up",
+    "who": "account",
     "symbol": "\u00a3",
     "schedule": {
-      "rule": "or",
-      "wrap": true,
-      "years": 20
+      "rule": "and",
+      "wrap": false,
+      "years": 10
     },
     "units": "dhms"
   },
@@ -22,34 +22,34 @@
       "model": "claude-opus-5-5",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 15,
+      "runs": 16,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
       "median_seconds_30": 124.6,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 128.6,
+        "wall_seconds": 103.3,
         "tokens": {
-          "input": 18,
-          "cache_read": 181667,
-          "cache_write": 23050,
-          "output": 14374,
-          "reasoning": 6005
+          "input": 14,
+          "cache_read": 114554,
+          "cache_write": 19278,
+          "output": 11291,
+          "reasoning": 4351
         },
-        "api_cost_usd": 0.5082854,
+        "api_cost_usd": 0.4030108,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -369,6 +369,27 @@
           "turns": 9,
           "tokens": 219109,
           "output": 14374
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 103.3,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.5
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.5
+            }
+          },
+          "api_cost_usd": 0.4030108,
+          "turns": 7,
+          "tokens": 145137,
+          "output": 11291
         }
       ]
     },
@@ -376,34 +397,34 @@
       "model": "claude-fable-5-1",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 15,
-      "pass_rate_30": 0.933,
+      "runs": 16,
+      "pass_rate_30": 0.938,
       "mean_score_30": 1.0,
-      "median_seconds_30": 165.5,
+      "median_seconds_30": 164.6,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 145.8,
+        "wall_seconds": 120.0,
         "tokens": {
-          "input": 194,
-          "cache_read": 127877,
-          "cache_write": 29653,
-          "output": 12857,
-          "reasoning": 3872
+          "input": 130,
+          "cache_read": 72932,
+          "cache_write": 28117,
+          "output": 10651,
+          "reasoning": 2915
         },
-        "api_cost_usd": 1.2698192499999998,
+        "api_cost_usd": 1.1144230000000002,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -728,6 +749,27 @@
           "turns": 7,
           "tokens": 170581,
           "output": 12857
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 120.0,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.5
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.5
+            }
+          },
+          "api_cost_usd": 1.1144230000000002,
+          "turns": 5,
+          "tokens": 111830,
+          "output": 10651
         }
       ]
     },
@@ -735,34 +777,34 @@
       "model": "gpt-6.1-sol",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 15,
-      "pass_rate_30": 0.933,
+      "runs": 16,
+      "pass_rate_30": 0.938,
       "mean_score_30": 1.0,
-      "median_seconds_30": 141.6,
+      "median_seconds_30": 136.1,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 238.7,
+        "wall_seconds": 130.5,
         "tokens": {
-          "input": 26365,
-          "cache_read": 226304,
+          "input": 12196,
+          "cache_read": 129408,
           "cache_write": 0,
-          "output": 9384,
-          "reasoning": 2204
+          "output": 5419,
+          "reasoning": 813
         },
-        "api_cost_usd": 0.1692,
+        "api_cost_usd": 0.091523,
         "limits": {
           "before": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           },
           "after": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           }
         },
         "harness_version": "codex-cli 0.167.0"
@@ -1087,6 +1129,27 @@
           "turns": null,
           "tokens": 262053,
           "output": 9384
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 130.5,
+          "over_limit": true,
+          "limits": {
+            "before": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            },
+            "after": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            }
+          },
+          "api_cost_usd": 0.091523,
+          "turns": null,
+          "tokens": 147023,
+          "output": 5419
         }
       ]
     },
@@ -1094,34 +1157,34 @@
       "model": "gpt-6-astra",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 15,
-      "pass_rate_30": 0.867,
+      "runs": 16,
+      "pass_rate_30": 0.875,
       "mean_score_30": 0.999,
-      "median_seconds_30": 130.3,
+      "median_seconds_30": 132.2,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 142.9,
+        "wall_seconds": 134.1,
         "tokens": {
-          "input": 11161,
-          "cache_read": 162560,
+          "input": 16489,
+          "cache_read": 160896,
           "cache_write": 0,
-          "output": 5473,
-          "reasoning": 560
+          "output": 5204,
+          "reasoning": 291
         },
-        "api_cost_usd": 0.54782,
+        "api_cost_usd": 0.585986,
         "limits": {
           "before": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           },
           "after": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           }
         },
         "harness_version": "codex-cli 0.167.0"
@@ -1441,6 +1504,27 @@
           "turns": null,
           "tokens": 179194,
           "output": 5473
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 134.1,
+          "over_limit": true,
+          "limits": {
+            "before": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            },
+            "after": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            }
+          },
+          "api_cost_usd": 0.585986,
+          "turns": null,
+          "tokens": 182589,
+          "output": 5204
         }
       ]
     },
@@ -1448,26 +1532,26 @@
       "model": "opencode-go/deepseek-v4.1-flash",
       "plan": "OpenCode Go",
       "effort": "default",
-      "runs": 15,
+      "runs": 16,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 624.7,
+      "median_seconds_30": 621.5,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 944.1,
+        "wall_seconds": 409.1,
         "tokens": {
-          "input": 86689,
-          "cache_read": 2179712,
+          "input": 74721,
+          "cache_read": 824064,
           "cache_write": 0,
-          "output": 14276,
-          "reasoning": 60992
+          "output": 11337,
+          "reasoning": 37949
         },
-        "api_cost_usd": 0.064703,
+        "api_cost_usd": 0.043252,
         "limits": {
           "before": {
             "five_hour": 0.0,
@@ -1827,6 +1911,29 @@
           "turns": 40,
           "tokens": 2280677,
           "output": 14276
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 409.1,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.0,
+              "seven_day": 0.0,
+              "monthly": 0.0
+            },
+            "after": {
+              "five_hour": 0.0,
+              "seven_day": 0.0,
+              "monthly": 0.0
+            }
+          },
+          "api_cost_usd": 0.043252,
+          "turns": 20,
+          "tokens": 910122,
+          "output": 11337
         }
       ]
     },
@@ -1834,34 +1941,34 @@
       "model": "claude-sonnet-5-5",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 6,
-      "pass_rate_30": 0.5,
+      "runs": 7,
+      "pass_rate_30": 0.571,
       "mean_score_30": 0.996,
-      "median_seconds_30": 78.2,
+      "median_seconds_30": 78.0,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
-        "passed": false,
-        "score": 0.994,
-        "hidden_passed": 156,
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 79.2,
+        "wall_seconds": 58.1,
         "tokens": {
           "input": 8,
-          "cache_read": 44970,
-          "cache_write": 18960,
-          "output": 10774,
-          "reasoning": 5331
+          "cache_read": 44339,
+          "cache_write": 15964,
+          "output": 8346,
+          "reasoning": 2843
         },
-        "api_cost_usd": 0.188093,
+        "api_cost_usd": 0.1517659,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -1997,6 +2104,27 @@
           "turns": 4,
           "tokens": 74712,
           "output": 10774
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 58.1,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.5
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.5
+            }
+          },
+          "api_cost_usd": 0.1517659,
+          "turns": 4,
+          "tokens": 68657,
+          "output": 8346
         }
       ]
     },
@@ -2004,34 +2132,34 @@
       "model": "claude-haiku-5-5",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 6,
-      "pass_rate_30": 1.0,
-      "mean_score_30": 1.0,
-      "median_seconds_30": 158.3,
+      "runs": 7,
+      "pass_rate_30": 0.857,
+      "mean_score_30": 0.998,
+      "median_seconds_30": 156.5,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
-        "passed": true,
-        "score": 1.0,
-        "hidden_passed": 157,
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
+        "passed": false,
+        "score": 0.987,
+        "hidden_passed": 155,
         "hidden_total": 157,
-        "wall_seconds": 161.0,
+        "wall_seconds": 105.8,
         "tokens": {
-          "input": 14,
-          "cache_read": 221954,
-          "cache_write": 49900,
-          "output": 39087,
-          "reasoning": 28903
+          "input": 20,
+          "cache_read": 276631,
+          "cache_write": 33181,
+          "output": 24168,
+          "reasoning": 12664
         },
-        "api_cost_usd": 0.03174444,
+        "api_cost_usd": 0.021488510000000002,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0
+            "seven_day": 0.5
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -2162,6 +2290,27 @@
           "turns": 11,
           "tokens": 310955,
           "output": 39087
+        },
+        {
+          "date": "2026-11-12",
+          "passed": false,
+          "score": 0.987,
+          "wall_seconds": 105.8,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.5
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.5
+            }
+          },
+          "api_cost_usd": 0.021488510000000002,
+          "turns": 17,
+          "tokens": 334000,
+          "output": 24168
         }
       ]
     },
@@ -2169,34 +2318,34 @@
       "model": "gpt-6.1-terra",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 6,
+      "runs": 7,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 75.3,
+      "median_seconds_30": 76.9,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 77.3,
+        "wall_seconds": 79.1,
         "tokens": {
-          "input": 8067,
-          "cache_read": 109184,
+          "input": 8360,
+          "cache_read": 128128,
           "cache_write": 0,
-          "output": 3762,
-          "reasoning": 242
+          "output": 3666,
+          "reasoning": 131
         },
-        "api_cost_usd": 0.032336,
+        "api_cost_usd": 0.033096,
         "limits": {
           "before": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           },
           "after": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           }
         },
         "harness_version": "codex-cli 0.167.0"
@@ -2327,6 +2476,27 @@
           "turns": null,
           "tokens": 121013,
           "output": 3762
+        },
+        {
+          "date": "2026-11-12",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 79.1,
+          "over_limit": true,
+          "limits": {
+            "before": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            },
+            "after": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            }
+          },
+          "api_cost_usd": 0.033096,
+          "turns": null,
+          "tokens": 140154,
+          "output": 3666
         }
       ]
     },
@@ -2334,34 +2504,34 @@
       "model": "gpt-6-luna",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 6,
-      "pass_rate_30": 0.167,
-      "mean_score_30": 0.963,
-      "median_seconds_30": 102.6,
+      "runs": 7,
+      "pass_rate_30": 0.143,
+      "mean_score_30": 0.965,
+      "median_seconds_30": 93.8,
       "latest": {
-        "date": "2026-11-11",
-        "seed": "2026-11-11",
+        "date": "2026-11-12",
+        "seed": "2026-11-12",
         "passed": false,
-        "score": 0.968,
-        "hidden_passed": 152,
+        "score": 0.975,
+        "hidden_passed": 153,
         "hidden_total": 157,
-        "wall_seconds": 93.8,
+        "wall_seconds": 78.4,
         "tokens": {
-          "input": 28412,
-          "cache_read": 236416,
+          "input": 22579,
+          "cache_read": 131584,
           "cache_write": 0,
-          "output": 4120,
-          "reasoning": 235
+          "output": 3842,
+          "reasoning": 381
         },
-        "api_cost_usd": 0.007265,
+        "api_cost_usd": 0.005495,
         "limits": {
           "before": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           },
           "after": {
-            "five_hour": 0.0,
-            "seven_day": 1.0
+            "five_hour": 1.0,
+            "seven_day": 0.58
           }
         },
         "harness_version": "codex-cli 0.167.0"
@@ -2502,6 +2672,27 @@
           "turns": null,
           "tokens": 268948,
           "output": 4120
+        },
+        {
+          "date": "2026-11-12",
+          "passed": false,
+          "score": 0.975,
+          "wall_seconds": 78.4,
+          "over_limit": true,
+          "limits": {
+            "before": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            },
+            "after": {
+              "five_hour": 1.0,
+              "seven_day": 0.58
+            }
+          },
+          "api_cost_usd": 0.005495,
+          "turns": null,
+          "tokens": 158005,
+          "output": 3842
         }
       ]
     }

@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-12",
+  "started_at": "2026-11-12T11:09:39+00:00",
+  "model_key": "terra",
+  "harness": "codex",
+  "model": "gpt-6.1-terra",
+  "plan": "ChatGPT",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-12",
+  "variant": {
+    "split": "split",
+    "tie": "earlier",
+    "sep": ",",
+    "quote": "\"",
+    "rounding": "half_up",
+    "who": "account",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "and",
+      "wrap": false,
+      "years": 10
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 79.1,
+  "tokens": {
+    "input": 8360,
+    "cache_read": 128128,
+    "cache_write": 0,
+    "output": 3666,
+    "reasoning": 131
+  },
+  "api_cost_usd": 0.033096,
+  "turns": null,
+  "limits": {
+    "before": {
+      "five_hour": 1.0,
+      "seven_day": 0.58
+    },
+    "after": {
+      "five_hour": 1.0,
+      "seven_day": 0.58
+    }
+  },
+  "harness_version": "codex-cli 0.167.0",
+  "over_limit": true,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 243,
+  "infra_error": false,
+  "harness_seen": []
+}

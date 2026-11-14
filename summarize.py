@@ -4,6 +4,8 @@ import json
 import statistics
 from pathlib import Path
 
+from run import MODELS
+
 RESULTS = Path(__file__).resolve().parent / "results"
 
 
@@ -15,7 +17,9 @@ def main():
     reviews = json.loads((RESULTS / "reviews.json").read_text())
     review = lambda r: reviews.get(r["date"], {}).get(r["model_key"]) if not r["passed"] else None
     models = {}
-    for key in dict.fromkeys(r["model_key"] for r in runs):
+    # Models in run.py's order, so a new version sits next to the one before it.
+    seen = dict.fromkeys(r["model_key"] for r in runs)
+    for key in [k for k in MODELS if k in seen] + [k for k in seen if k not in MODELS]:
         mine = [r for r in runs if r["model_key"] == key and not r.get("infra_error") and not r.get("harness_seen")
                 and (review(r) or {}).get("cause") != "harness"]
         if not mine:

@@ -10,6 +10,8 @@ if [ -r "$TOKEN_FILE" ]; then
 fi
 git pull -q --ff-only origin main || true
 python3 run.py all
+# Explain every miss that has no note yet. A failure here must not hold back the results.
+python3 review.py || true
 python3 summarize.py
 git add results
 git commit -qm "Canary results $(date +%F)" || exit 0

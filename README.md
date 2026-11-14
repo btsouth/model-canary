@@ -62,12 +62,18 @@ or the hidden tests is marked `harness_seen` and left out too. Runs that start o
 
 ## Checking failures
 
-Every failed run gets checked by hand. `python3 regrade.py DATE MODEL` rebuilds that day's task,
-applies the run's saved diff and grades it again, so it shows whether the recorded result holds
-up, plus the call and error behind each failed hidden test. I read those against the spec and
-record what went wrong in `results/reviews.json` (code in backticks), and the site shows that note next to the miss.
-A failure that was the harness's fault (a wrong answer in the reference, a spec that says two
-things) is marked `"cause": "harness"` there and left out of the summary.
+Every failed run gets checked the same morning, with no step left to me. `review.py` runs after
+the day's runs: for each miss it calls `regrade.py`, which rebuilds that day's task, applies the
+run's saved diff and grades it again, so it shows whether the recorded result holds up, plus the
+call and error behind each failed hidden test. A reviewer model (Opus 5.5) then reads those
+against the spec and the model's code and writes a short note in `results/reviews.json` (code in
+backticks), which the site shows next to the miss.
+
+The reviewer can't take a run out of the results. If it thinks the task was at fault (a wrong
+answer in the reference, a spec that says two things), or the regrade doesn't match the recorded
+result, the note says so, the entry is marked `"cause": "unclear"` and the miss still counts.
+Only an entry I mark `"cause": "harness"` myself, after fixing the task, is left out of the
+summary. `python3 regrade.py DATE MODEL` checks a single run by hand.
 
 Each run writes `results/runs/<date>/<model>/` (result, redacted transcript and diff) and
 appends a line to `results/runs.jsonl`. `summarize.py` builds `results/summary.json`.

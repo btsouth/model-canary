@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Check a saved run's grade by grading its saved diff again from scratch.
 
-Usage: regrade.py DATE MODEL
+Usage: regrade.py DATE MODEL [DIR]
 
 Rebuilds the day's task from the run's seed, applies the run's fix.diff, runs the visible and
 hidden tests and compares the result with the recorded one. For each hidden test that fails it
-prints the test and its error, which is where an entry in results/reviews.json starts.
+prints the test and its error, which is what review.py reads to explain the miss. With DIR,
+the rebuilt task (fix applied, hidden tests in tests/test_hidden.py) is left there.
 """
 import json
 import sys
@@ -17,12 +18,13 @@ import gen
 from run import RESULTS, grade, sh
 
 
-def main(date, key):
+def main(date, key, keep=None):
     folder = RESULTS / "runs" / date / key
     record = json.loads((folder / "result.json").read_text())
     if record.get("task_version") != gen.VERSION:
         sys.exit(f"Run used task version {record.get('task_version')}, gen.py is version {gen.VERSION}.")
     with tempfile.TemporaryDirectory(prefix="canary-regrade-") as tmp:
+        tmp = keep or tmp
         gen.generate(record["seed"], tmp)
         task, hidden = Path(tmp) / "task", Path(tmp) / "hidden.py"
         for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
@@ -56,6 +58,6 @@ def main(date, key):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         sys.exit(__doc__)
     sys.exit(main(*sys.argv[1:]))

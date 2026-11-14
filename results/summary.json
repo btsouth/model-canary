@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13T11:16:48+00:00",
+  "updated": "2026-11-14T00:54:55+00:00",
   "date": "2026-11-13",
   "variant": {
     "split": "share_out",
@@ -2939,6 +2939,66 @@
             "checked": "2026-11-13",
             "note": "Day names were off by one for the third day running, so `MON` meant Sunday. All three misses use a day name."
           }
+        }
+      ]
+    },
+    "fable52": {
+      "model": "claude-fable-5-2",
+      "plan": "Claude Ultra",
+      "effort": "medium",
+      "runs": 1,
+      "pass_rate_30": 1.0,
+      "mean_score_30": 1.0,
+      "median_seconds_30": 120.5,
+      "latest": {
+        "date": "2026-11-13",
+        "seed": "2026-11-13",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
+        "hidden_total": 157,
+        "wall_seconds": 120.5,
+        "tokens": {
+          "input": 6,
+          "cache_read": 32982,
+          "cache_write": 19317,
+          "output": 11271,
+          "reasoning": 4905
+        },
+        "api_cost_usd": 0.38657640000000004,
+        "limits": {
+          "before": {
+            "five_hour": null,
+            "seven_day": 0.84
+          },
+          "after": {
+            "five_hour": null,
+            "seven_day": 0.84
+          }
+        },
+        "harness_version": "2.1.319 (Claude Code)"
+      },
+      "history": [
+        {
+          "date": "2026-11-13",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 120.5,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.84
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.84
+            }
+          },
+          "api_cost_usd": 0.38657640000000004,
+          "turns": 4,
+          "tokens": 63576,
+          "output": 11271
         }
       ]
     }

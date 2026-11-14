@@ -811,7 +811,12 @@
           "api_cost_usd": 1.6722620000000001,
           "turns": 8,
           "tokens": 217225,
-          "output": 18525
+          "output": 18525,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Rejected any item with an `L` in it outside the day fields, to catch a misplaced `L` or `5L`. That also threw out the month name `JUL`, so `1,JUL` raised `ValueError`."
+          }
         }
       ]
     },
@@ -1503,7 +1508,12 @@
           "api_cost_usd": 0.485198,
           "turns": null,
           "tokens": 151991,
-          "output": 4833
+          "output": 4833,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Read `1/3` in the day-of-week field as Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so Sunday counts too. The same mistake Sol made on Oct 27."
+          }
         },
         {
           "date": "2026-11-09",
@@ -1545,7 +1555,12 @@
           "api_cost_usd": 0.53715,
           "turns": null,
           "tokens": 160047,
-          "output": 5097
+          "output": 5097,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Read `1/3` in the day-of-week field as Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so Sunday counts too."
+          }
         },
         {
           "date": "2026-11-11",
@@ -2189,7 +2204,12 @@
           "api_cost_usd": 0.18784720000000002,
           "turns": 4,
           "tokens": 73433,
-          "output": 10937
+          "output": 10937,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Accepted `L/2` in the day-of-month field. The spec allows a step only on `*`, a number or a range, so `L` has to stand on its own."
+          }
         },
         {
           "date": "2026-11-11",
@@ -2210,7 +2230,12 @@
           "api_cost_usd": 0.188093,
           "turns": 4,
           "tokens": 74712,
-          "output": 10774
+          "output": 10774,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Accepted `L/2` in the day-of-month field. The spec allows a step only on `*`, a number or a range, so `L` has to stand on its own. The same miss as the day before."
+          }
         },
         {
           "date": "2026-11-12",
@@ -2438,7 +2463,12 @@
           "api_cost_usd": 0.021488510000000002,
           "turns": 17,
           "tokens": 334000,
-          "output": 24168
+          "output": 24168,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Two separate mistakes: it accepted `L/2` in the day-of-month field, where `L` has to stand on its own, and it read `1/3` in the day-of-week field as Monday and Thursday, leaving out Sunday (7)."
+          }
         },
         {
           "date": "2026-11-13",
@@ -2799,7 +2829,12 @@
           "api_cost_usd": 0.008232,
           "turns": null,
           "tokens": 233081,
-          "output": 5482
+          "output": 5482,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Took `L` only when it was the whole day-of-month field, so `5-19,L` raised `ValueError`. The spec lists `L` as an item, which can sit in a comma-separated list like any other."
+          }
         },
         {
           "date": "2026-11-10",
@@ -2820,7 +2855,12 @@
           "api_cost_usd": 0.007201,
           "turns": null,
           "tokens": 196207,
-          "output": 5211
+          "output": 5211,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Rejected `?` in the day-of-week field, so `0 7 ? * ?` raised `ValueError`. The spec allows `?` as a whole day-of-month or day-of-week field."
+          }
         },
         {
           "date": "2026-11-11",
@@ -2841,7 +2881,12 @@
           "api_cost_usd": 0.007265,
           "turns": null,
           "tokens": 268948,
-          "output": 4120
+          "output": 4120,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Day names were off by one, so `MON` meant Sunday and `FRI-MON` started on Thursday. A day-of-week field of `?` also matched no day at all, when it should mean the same as `*`."
+          }
         },
         {
           "date": "2026-11-12",
@@ -2862,7 +2907,12 @@
           "api_cost_usd": 0.005495,
           "turns": null,
           "tokens": 158005,
-          "output": 3842
+          "output": 3842,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Day names were off by one again, so `MON` meant Sunday and `Tue` meant Monday. All four misses use a day name; the same schedules written with numbers work."
+          }
         },
         {
           "date": "2026-11-13",
@@ -2883,7 +2933,12 @@
           "api_cost_usd": 0.005465,
           "turns": null,
           "tokens": 181928,
-          "output": 4382
+          "output": 4382,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-13",
+            "note": "Day names were off by one for the third day running, so `MON` meant Sunday. All three misses use a day name."
+          }
         }
       ]
     }

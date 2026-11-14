@@ -29,5 +29,72 @@
       "checked": "2026-10-31",
       "note": "Rejected every stepped range such as `11-22/5` as \"names are not allowed with steps\", which caused 23 of its 25 misses. Its day names were also off by one, so `MON` meant Sunday."
     }
+  },
+  "2026-11-07": {
+    "astra": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Read `1/3` in the day-of-week field as Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so Sunday counts too. The same mistake Sol made on Oct 27."
+    }
+  },
+  "2026-11-09": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Took `L` only when it was the whole day-of-month field, so `5-19,L` raised `ValueError`. The spec lists `L` as an item, which can sit in a comma-separated list like any other."
+    }
+  },
+  "2026-11-10": {
+    "sonnet": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Accepted `L/2` in the day-of-month field. The spec allows a step only on `*`, a number or a range, so `L` has to stand on its own."
+    },
+    "astra": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Read `1/3` in the day-of-week field as Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so Sunday counts too."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Rejected `?` in the day-of-week field, so `0 7 ? * ?` raised `ValueError`. The spec allows `?` as a whole day-of-month or day-of-week field."
+    }
+  },
+  "2026-11-11": {
+    "sonnet": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Accepted `L/2` in the day-of-month field. The spec allows a step only on `*`, a number or a range, so `L` has to stand on its own. The same miss as the day before."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Day names were off by one, so `MON` meant Sunday and `FRI-MON` started on Thursday. A day-of-week field of `?` also matched no day at all, when it should mean the same as `*`."
+    }
+  },
+  "2026-11-12": {
+    "haiku": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Two separate mistakes: it accepted `L/2` in the day-of-month field, where `L` has to stand on its own, and it read `1/3` in the day-of-week field as Monday and Thursday, leaving out Sunday (7)."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Day names were off by one again, so `MON` meant Sunday and `Tue` meant Monday. All four misses use a day name; the same schedules written with numbers work."
+    }
+  },
+  "2026-11-13": {
+    "fable": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Rejected any item with an `L` in it outside the day fields, to catch a misplaced `L` or `5L`. That also threw out the month name `JUL`, so `1,JUL` raised `ValueError`."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-13",
+      "note": "Day names were off by one for the third day running, so `MON` meant Sunday. All three misses use a day name."
+    }
   }
 }

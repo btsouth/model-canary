@@ -31,6 +31,7 @@ def effort_of(spec):
 
 MODELS = {
     "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Ultra"},
+    "fable52": {"harness": "claude", "model": "claude-fable-5-2", "plan": "Claude Ultra"},
     "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Ultra"},
     "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Ultra"},
     "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra"},

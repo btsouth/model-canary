@@ -96,5 +96,25 @@
       "checked": "2026-11-13",
       "note": "Day names were off by one for the third day running, so `MON` meant Sunday. All three misses use a day name."
     }
+  },
+  "2026-11-15": {
+    "sonnet": {
+      "cause": "model",
+      "checked": "2026-11-15",
+      "by": "claude-opus-5-5",
+      "note": "The parser removed the `/S` step before checking the base, and then accepted `L` and dropped the step, so `L/2` acted like `L`. The spec allows `/S` only after `*`, `N` or `A-B`, the items listed above it, and says anything else raises `ValueError`."
+    },
+    "sol": {
+      "cause": "model",
+      "checked": "2026-11-15",
+      "by": "claude-opus-5-5",
+      "note": "The code turned 7 into 0 and capped day of week at 6 before building ranges and steps, so `0-7` meant only Sunday and `1/3` meant only Monday and Thursday. The spec gives day of week a maximum of 7, says `N/S` runs up to that maximum, and applies the 7 as 0 rule only to wrapping ranges, so `0-7` is every day and `1/3` includes Sunday."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-15",
+      "by": "claude-opus-5-5",
+      "note": "Built day names from `calendar.day_abbr`, which starts on Monday, so `MON` meant Sunday and `FRI-MON` started on Thursday. It also reduced both ends of a day-of-week range mod 7 before expanding it, so `0-7` became Sunday only. The spec numbers days with 0 as Sunday and says the range 0 to 7 covers every day."
+    }
   }
 }

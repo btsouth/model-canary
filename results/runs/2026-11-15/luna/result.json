@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-15",
+  "started_at": "2026-11-15T15:19:28+00:00",
+  "model_key": "luna",
+  "harness": "codex",
+  "model": "gpt-6-luna",
+  "plan": "ChatGPT",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-15",
+  "variant": {
+    "split": "split",
+    "tie": "later",
+    "sep": "|",
+    "quote": "'",
+    "rounding": "half_up",
+    "who": "account",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "or",
+      "wrap": true,
+      "years": 10
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 130.4,
+  "tokens": {
+    "input": 25619,
+    "cache_read": 220288,
+    "cache_write": 0,
+    "output": 6399,
+    "reasoning": 452
+  },
+  "api_cost_usd": 0.007964,
+  "turns": null,
+  "limits": {
+    "before": {
+      "five_hour": 1.0,
+      "seven_day": 0.47
+    },
+    "after": {
+      "five_hour": 1.0,
+      "seven_day": 0.47
+    }
+  },
+  "harness_version": "codex-cli 0.167.0",
+  "over_limit": true,
+  "visible_tests_pass": true,
+  "hidden_passed": 149,
+  "hidden_total": 157,
+  "hidden_failed": [
+    "bad_expr_25",
+    "matches_run_time_06",
+    "matches_run_time_07",
+    "next_both_day_fields",
+    "next_names_any_case",
+    "next_random_18",
+    "next_random_27",
+    "next_wrapping_days"
+  ],
+  "score": 0.949,
+  "passed": false,
+  "tests_tampered": false,
+  "diff_lines": 228,
+  "infra_error": false,
+  "harness_seen": []
+}

@@ -26,8 +26,9 @@ EFFORT = "medium"
 
 
 def effort_of(spec):
-    """Claude Code and Codex take EFFORT; OpenCode runs at the model's own default."""
-    return "default" if spec["harness"] == "opencode" else EFFORT
+    """Claude Code and Codex run at EFFORT unless the model's entry names another. OpenCode
+    runs at the model's own default: DeepSeek has low, high and max, but no medium."""
+    return "default" if spec["harness"] == "opencode" else spec.get("effort", EFFORT)
 
 MODELS = {
     "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Ultra"},
@@ -35,10 +36,12 @@ MODELS = {
     "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Ultra"},
     "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Ultra"},
     "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra"},
+    "haiku-high": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra", "effort": "high"},
     "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT"},
     "terra": {"harness": "codex", "model": "gpt-6.1-terra", "plan": "ChatGPT"},
     "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT"},
     "luna": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT"},
+    "luna-high": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT", "effort": "high"},
     "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go"},
 }
 
@@ -150,7 +153,7 @@ def claude_limits(cwd):
 
 
 def run_claude(spec, workdir):
-    cmd = ["claude", "-p", PROMPT, "--model", spec["model"], "--effort", EFFORT,
+    cmd = ["claude", "-p", PROMPT, "--model", spec["model"], "--effort", effort_of(spec),
            "--output-format", "stream-json", "--verbose", *CLAUDE_FLAGS]
     before = claude_limits(workdir)
     started = time.monotonic()
@@ -200,7 +203,7 @@ def run_codex(spec, workdir):
     codex_home()
     env = {**os.environ, "CODEX_HOME": str(CODEX_HOME), "PWD": str(workdir)}
     cmd = ["codex", "exec", "--json", "--skip-git-repo-check", "--ignore-rules",
-           "-m", spec["model"], "-c", f'model_reasoning_effort="{EFFORT}"',
+           "-m", spec["model"], "-c", f'model_reasoning_effort="{effort_of(spec)}"',
            # The bwrap sandbox can't start on the devbox. Like the Claude run, it works in a
            # throwaway temp repo instead.
            "--dangerously-bypass-approvals-and-sandbox", PROMPT]

@@ -41,9 +41,10 @@ tokens and cost on an identical piece of work are the trends to watch.
 ## How a run works
 
 `run.py` generates the day's variant into a temporary git repo and runs the model through its
-own CLI (Claude Code, Codex or OpenCode) with fixed settings: medium effort (OpenCode runs at
-the model's default, since it has no effort setting), no web access, and none of
-my personal instructions, plugins or MCP servers. It records:
+own CLI (Claude Code, Codex or OpenCode) with fixed settings: medium effort, no web access,
+and none of my personal instructions, plugins or MCP servers. Three entries differ on effort:
+Haiku 5.5 and Luna 6 also run a second time at high, as their own entries, and DeepSeek runs
+at its default because OpenCode offers it low, high and max but no medium. It records:
 
 - score, pass or fail, which hidden tests failed, and the diff
 - wall-clock time

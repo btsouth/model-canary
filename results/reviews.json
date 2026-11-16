@@ -116,5 +116,13 @@
       "by": "claude-opus-5-5",
       "note": "Built day names from `calendar.day_abbr`, which starts on Monday, so `MON` meant Sunday and `FRI-MON` started on Thursday. It also reduced both ends of a day-of-week range mod 7 before expanding it, so `0-7` became Sunday only. The spec numbers days with 0 as Sunday and says the range 0 to 7 covers every day."
     }
+  },
+  "2026-11-16": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-16",
+      "by": "claude-opus-5-5",
+      "note": "Built the day name table from `calendar.day_abbr`, so `SUN` was 6 and `MON` was 0, which put every name one day early. The spec numbers Sunday as 0. It also treated `L` as matching every day of the month, rejected `L` inside a list like `17,23,L`, and rejected `?` in the day-of-week field, all of which the spec allows."
+    }
   }
 }

@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-16",
+  "started_at": "2026-11-16T11:00:47+00:00",
+  "model_key": "opus",
+  "harness": "claude",
+  "model": "claude-opus-5-5",
+  "plan": "Claude Ultra",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-16",
+  "variant": {
+    "split": "share_out",
+    "tie": "later",
+    "sep": ";",
+    "quote": "'",
+    "rounding": "half_up",
+    "who": "account",
+    "symbol": "\u20ac",
+    "schedule": {
+      "rule": "or",
+      "wrap": false,
+      "years": 10
+    },
+    "units": "wdhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 104.5,
+  "tokens": {
+    "input": 16,
+    "cache_read": 140497,
+    "cache_write": 19793,
+    "output": 11671,
+    "reasoning": 3816
+  },
+  "api_cost_usd": 0.4199274,
+  "turns": 8,
+  "limits": {
+    "before": {
+      "five_hour": null,
+      "seven_day": 0.75
+    },
+    "after": {
+      "five_hour": null,
+      "seven_day": 0.75
+    }
+  },
+  "harness_version": "2.1.319 (Claude Code)",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 318,
+  "infra_error": false,
+  "harness_seen": []
+}

@@ -1,0 +1,66 @@
+name: Freshness
+
+# The daily run happens on a home server, so nothing on it can report that it didn't run.
+# This checks the published results from outside every morning after the run: an issue
+# labelled canary-down opens (or gets a comment) when no run landed today or an active model
+# has no result for the day, and closes once a run is complete again.
+on:
+  schedule:
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: freshness
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check today's results
+        id: check
+        run: |
+          python3 - <<'PY' > problems.txt
+          import datetime as dt, json, zoneinfo
+          from run import MODELS, active
+          today = dt.datetime.now(zoneinfo.ZoneInfo("America/New_York")).date().isoformat()
+          summary = json.load(open("results/summary.json"))
+          if summary["date"] != today:
+              print(f"- No results for {today}. The last run that landed was {summary['date']}.")
+          else:
+              for key in MODELS:
+                  if not active(key, today):
+                      continue
+                  m = summary["models"].get(key)
+                  if not m or m["last"] != today:
+                      last = m["last"] if m else "never"
+                      print(f"- `{key}` has no result for {today} (last: {last}). See `results/runs/{today}/{key}/`.")
+          PY
+          cat problems.txt
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh label create canary-down -R "$REPO" --color d73a4a --description "The daily run is missing a day or a model" 2>/dev/null || true
+          open=$(gh issue list -R "$REPO" --label canary-down --state open --json number --jq '.[0].number // empty')
+          day=$(TZ=America/New_York date +%F)
+          if [ -s problems.txt ]; then
+            body=$(printf 'Freshness check for %s:\n\n%s\n\nOn devbox: `journalctl --user -u model-canary.service -n 80`.' "$day" "$(cat problems.txt)")
+            if [ -n "$open" ]; then
+              gh issue comment "$open" -R "$REPO" --body "$body"
+            else
+              gh issue create -R "$REPO" --label canary-down --title "Daily run incomplete on $day" --body "$body"
+            fi
+            exit 1
+          elif [ -n "$open" ]; then
+            gh issue close "$open" -R "$REPO" --comment "Every active model ran on $day."
+          fi

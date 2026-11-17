@@ -1,4 +1,6 @@
 {
+  "schema": 2,
+  "task_version": 3,
   "updated": "2026-11-17T11:26:52+00:00",
   "date": "2026-11-17",
   "variant": {
@@ -17,9 +19,38 @@
     "units": "hms"
   },
   "hidden_total": 157,
+  "events": [
+    {
+      "date": "2026-11-07",
+      "vendor": "Anthropic",
+      "kind": "harness",
+      "text": "Claude Code 2.1.319"
+    },
+    {
+      "date": "2026-11-07",
+      "vendor": "Anthropic",
+      "kind": "plan",
+      "text": "Plan: Claude Ultra"
+    },
+    {
+      "date": "2026-11-07",
+      "vendor": "OpenAI",
+      "kind": "harness",
+      "text": "Codex 0.167.0"
+    }
+  ],
   "models": {
     "opus": {
       "model": "claude-opus-5-5",
+      "label": "Opus 5.5",
+      "vendor": "Anthropic",
+      "family": "opus",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-10-21",
+      "last": "2026-11-17",
       "plan": "Claude Ultra",
       "effort": "medium",
       "runs": 21,
@@ -73,6 +104,8 @@
           },
           "api_cost_usd": 0.40130239999999995,
           "turns": 7,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 143417,
           "output": 11202
         },
@@ -94,6 +127,8 @@
           },
           "api_cost_usd": 0.40306939999999997,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 165633,
           "output": 11252
         },
@@ -115,6 +150,8 @@
           },
           "api_cost_usd": 0.44389520000000005,
           "turns": 9,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 197620,
           "output": 12303
         },
@@ -136,6 +173,8 @@
           },
           "api_cost_usd": 0.4696626,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 168248,
           "output": 11565
         },
@@ -157,6 +196,8 @@
           },
           "api_cost_usd": 0.47106259999999994,
           "turns": 7,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 147608,
           "output": 11882
         },
@@ -178,6 +219,8 @@
           },
           "api_cost_usd": 0.49473559999999994,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 188007,
           "output": 14018
         },
@@ -199,6 +242,8 @@
           },
           "api_cost_usd": 0.5049738,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 181334,
           "output": 12645
         },
@@ -220,6 +265,8 @@
           },
           "api_cost_usd": 0.5595918000000001,
           "turns": 11,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 252785,
           "output": 14200
         },
@@ -241,6 +288,8 @@
           },
           "api_cost_usd": 0.47265360000000006,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 181211,
           "output": 13257
         },
@@ -262,6 +311,8 @@
           },
           "api_cost_usd": 0.5414578,
           "turns": 9,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 202130,
           "output": 13990
         },
@@ -283,6 +334,8 @@
           },
           "api_cost_usd": 0.5407826,
           "turns": 10,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 229640,
           "output": 13472
         },
@@ -304,6 +357,8 @@
           },
           "api_cost_usd": 0.46155199999999996,
           "turns": 9,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 204349,
           "output": 12918
         },
@@ -325,6 +380,8 @@
           },
           "api_cost_usd": 0.44144059999999996,
           "turns": 9,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 197707,
           "output": 12149
         },
@@ -346,6 +403,8 @@
           },
           "api_cost_usd": 0.5406788,
           "turns": 10,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 247211,
           "output": 15452
         },
@@ -367,6 +426,8 @@
           },
           "api_cost_usd": 0.5082854,
           "turns": 9,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 219109,
           "output": 14374
         },
@@ -388,6 +449,8 @@
           },
           "api_cost_usd": 0.4030108,
           "turns": 7,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 145137,
           "output": 11291
         },
@@ -409,6 +472,8 @@
           },
           "api_cost_usd": 0.43069899999999994,
           "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 175690,
           "output": 12016
         },
@@ -430,6 +495,8 @@
           },
           "api_cost_usd": 0.4440618,
           "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 177152,
           "output": 12502
         },
@@ -451,6 +518,8 @@
           },
           "api_cost_usd": 0.44281079999999995,
           "turns": 7,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 154159,
           "output": 12571
         },
@@ -472,6 +541,8 @@
           },
           "api_cost_usd": 0.4199274,
           "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 171977,
           "output": 11671
         },
@@ -493,6 +564,8 @@
           },
           "api_cost_usd": 0.42781579999999997,
           "turns": 9,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 195997,
           "output": 11631
         }
@@ -500,6 +573,15 @@
     },
     "fable52": {
       "model": "claude-fable-5-2",
+      "label": "Fable 5.2",
+      "vendor": "Anthropic",
+      "family": "fable",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-11-13",
+      "last": "2026-11-17",
       "plan": "Claude Ultra",
       "effort": "medium",
       "runs": 5,
@@ -553,6 +635,8 @@
           },
           "api_cost_usd": 0.38657640000000004,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 63576,
           "output": 11271
         },
@@ -574,6 +658,8 @@
           },
           "api_cost_usd": 0.4163296,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 61796,
           "output": 10365
         },
@@ -595,6 +681,8 @@
           },
           "api_cost_usd": 0.417846,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 76396,
           "output": 10341
         },
@@ -616,6 +704,8 @@
           },
           "api_cost_usd": 0.34660440000000003,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 60810,
           "output": 9784
         },
@@ -637,6 +727,8 @@
           },
           "api_cost_usd": 0.3497304,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 60762,
           "output": 10018
         }
@@ -644,6 +736,15 @@
     },
     "fable": {
       "model": "claude-fable-5-1",
+      "label": "Fable 5.1",
+      "vendor": "Anthropic",
+      "family": "fable",
+      "base": null,
+      "successor": "fable52",
+      "retired": null,
+      "until": "2026-11-26",
+      "first": "2026-10-21",
+      "last": "2026-11-17",
       "plan": "Claude Ultra",
       "effort": "medium",
       "runs": 21,
@@ -697,6 +798,8 @@
           },
           "api_cost_usd": 1.2033277500000001,
           "turns": 6,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 146510,
           "output": 13691
         },
@@ -718,6 +821,8 @@
           },
           "api_cost_usd": 1.1105117500000001,
           "turns": 6,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 139425,
           "output": 12645
         },
@@ -739,6 +844,8 @@
           },
           "api_cost_usd": 1.2320119999999999,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 190602,
           "output": 12224
         },
@@ -760,6 +867,8 @@
           },
           "api_cost_usd": 1.8327229999999997,
           "turns": 12,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 358565,
           "output": 20042
         },
@@ -781,6 +890,8 @@
           },
           "api_cost_usd": 1.44102875,
           "turns": 9,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 228331,
           "output": 15081
         },
@@ -802,6 +913,8 @@
           },
           "api_cost_usd": 1.317803,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 193426,
           "output": 13388
         },
@@ -823,6 +936,8 @@
           },
           "api_cost_usd": 1.2359434999999999,
           "turns": 7,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 163959,
           "output": 12388
         },
@@ -844,6 +959,8 @@
           },
           "api_cost_usd": 1.72828875,
           "turns": 8,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 215928,
           "output": 19379
         },
@@ -865,6 +982,8 @@
           },
           "api_cost_usd": 1.52066725,
           "turns": 11,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 291977,
           "output": 16060
         },
@@ -886,6 +1005,8 @@
           },
           "api_cost_usd": 1.2296307499999999,
           "turns": 6,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 140333,
           "output": 12400,
           "review": {
@@ -912,6 +1033,8 @@
           },
           "api_cost_usd": 1.29721625,
           "turns": 7,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 165921,
           "output": 13314
         },
@@ -933,6 +1056,8 @@
           },
           "api_cost_usd": 1.10190575,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 105954,
           "output": 10814
         },
@@ -954,6 +1079,8 @@
           },
           "api_cost_usd": 1.44042775,
           "turns": 9,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 246660,
           "output": 14373
         },
@@ -975,6 +1102,8 @@
           },
           "api_cost_usd": 1.5093127499999996,
           "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 212036,
           "output": 15870
         },
@@ -996,6 +1125,8 @@
           },
           "api_cost_usd": 1.2698192499999998,
           "turns": 7,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 170581,
           "output": 12857
         },
@@ -1017,6 +1148,8 @@
           },
           "api_cost_usd": 1.1144230000000002,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 111830,
           "output": 10651
         },
@@ -1038,6 +1171,8 @@
           },
           "api_cost_usd": 1.6722620000000001,
           "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 217225,
           "output": 18525,
           "review": {
@@ -1064,6 +1199,8 @@
           },
           "api_cost_usd": 1.4237555000000002,
           "turns": 9,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 235982,
           "output": 14768
         },
@@ -1085,6 +1222,8 @@
           },
           "api_cost_usd": 1.526441,
           "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 205577,
           "output": 16371
         },
@@ -1106,6 +1245,8 @@
           },
           "api_cost_usd": 1.2195692500000002,
           "turns": 6,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 140265,
           "output": 12264
         },
@@ -1127,6 +1268,8 @@
           },
           "api_cost_usd": 1.75931725,
           "turns": 10,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 288934,
           "output": 19318
         }
@@ -1134,6 +1277,15 @@
     },
     "sonnet": {
       "model": "claude-sonnet-5-5",
+      "label": "Sonnet 5.5",
+      "vendor": "Anthropic",
+      "family": "sonnet",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-10-30",
+      "last": "2026-11-17",
       "plan": "Claude Ultra",
       "effort": "medium",
       "runs": 12,
@@ -1187,6 +1339,8 @@
           },
           "api_cost_usd": 0.2056801,
           "turns": 4,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 71030,
           "output": 10382
         },
@@ -1208,6 +1362,8 @@
           },
           "api_cost_usd": 0.1875305,
           "turns": 5,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 90826,
           "output": 8866,
           "review": {
@@ -1234,6 +1390,8 @@
           },
           "api_cost_usd": 0.19096969999999996,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 74025,
           "output": 11105
         },
@@ -1255,6 +1413,8 @@
           },
           "api_cost_usd": 0.16419530000000002,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 93784,
           "output": 9042
         },
@@ -1276,6 +1436,8 @@
           },
           "api_cost_usd": 0.18784720000000002,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 73433,
           "output": 10937,
           "review": {
@@ -1302,6 +1464,8 @@
           },
           "api_cost_usd": 0.188093,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 74712,
           "output": 10774,
           "review": {
@@ -1328,6 +1492,8 @@
           },
           "api_cost_usd": 0.1517659,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 68657,
           "output": 8346
         },
@@ -1349,6 +1515,8 @@
           },
           "api_cost_usd": 0.1512144,
           "turns": 4,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 68941,
           "output": 8172
         },
@@ -1370,6 +1538,8 @@
           },
           "api_cost_usd": 0.1921614,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 99227,
           "output": 11011
         },
@@ -1391,6 +1561,8 @@
           },
           "api_cost_usd": 0.18635210000000002,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 98515,
           "output": 10561,
           "review": {
@@ -1418,6 +1590,8 @@
           },
           "api_cost_usd": 0.2094446,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 95680,
           "output": 10323
         },
@@ -1439,6 +1613,8 @@
           },
           "api_cost_usd": 0.1633749,
           "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 91823,
           "output": 9118
         }
@@ -1446,6 +1622,15 @@
     },
     "haiku": {
       "model": "claude-haiku-5-5",
+      "label": "Haiku 5.5",
+      "vendor": "Anthropic",
+      "family": "haiku",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-10-30",
+      "last": "2026-11-17",
       "plan": "Claude Ultra",
       "effort": "medium",
       "runs": 12,
@@ -1499,6 +1684,8 @@
           },
           "api_cost_usd": 0.034568289999999995,
           "turns": 18,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 436162,
           "output": 40596
         },
@@ -1520,6 +1707,8 @@
           },
           "api_cost_usd": 0.02899126,
           "turns": 14,
+          "harness_version": "2.1.303 (Claude Code)",
+          "plan": "Claude Max",
           "tokens": 290486,
           "output": 35520
         },
@@ -1541,6 +1730,8 @@
           },
           "api_cost_usd": 0.027884040000000002,
           "turns": 11,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 186709,
           "output": 35417
         },
@@ -1562,6 +1753,8 @@
           },
           "api_cost_usd": 0.03058885,
           "turns": 19,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 558432,
           "output": 33211
         },
@@ -1583,6 +1776,8 @@
           },
           "api_cost_usd": 0.02940649,
           "turns": 14,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 294041,
           "output": 36113
         },
@@ -1604,6 +1799,8 @@
           },
           "api_cost_usd": 0.03174444,
           "turns": 11,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 310955,
           "output": 39087
         },
@@ -1625,6 +1822,8 @@
           },
           "api_cost_usd": 0.021488510000000002,
           "turns": 17,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 334000,
           "output": 24168,
           "review": {
@@ -1651,6 +1850,8 @@
           },
           "api_cost_usd": 0.02762366,
           "turns": 12,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 327965,
           "output": 32842
         },
@@ -1672,6 +1873,8 @@
           },
           "api_cost_usd": 0.032672280000000005,
           "turns": 20,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 370896,
           "output": 38753
         },
@@ -1693,6 +1896,8 @@
           },
           "api_cost_usd": 0.03201849,
           "turns": 13,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 410434,
           "output": 37798
         },
@@ -1714,6 +1919,8 @@
           },
           "api_cost_usd": 0.02578764,
           "turns": 11,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 269870,
           "output": 30908
         },
@@ -1735,6 +1942,8 @@
           },
           "api_cost_usd": 0.024819050000000002,
           "turns": 11,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 217768,
           "output": 30361
         }
@@ -1742,6 +1951,15 @@
     },
     "haiku-high": {
       "model": "claude-haiku-5-5",
+      "label": "Haiku 5.5",
+      "vendor": "Anthropic",
+      "family": "haiku",
+      "base": "haiku",
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-11-15",
+      "last": "2026-11-17",
       "plan": "Claude Ultra",
       "effort": "high",
       "runs": 3,
@@ -1795,6 +2013,8 @@
           },
           "api_cost_usd": 0.047147940000000006,
           "turns": 18,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 666079,
           "output": 56485
         },
@@ -1816,6 +2036,8 @@
           },
           "api_cost_usd": 0.04953916000000002,
           "turns": 19,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 952974,
           "output": 55673
         },
@@ -1837,6 +2059,8 @@
           },
           "api_cost_usd": 0.05639263,
           "turns": 22,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
           "tokens": 1010042,
           "output": 65279
         }
@@ -1844,6 +2068,15 @@
     },
     "sol": {
       "model": "gpt-6.1-sol",
+      "label": "Sol 6.1",
+      "vendor": "OpenAI",
+      "family": "sol",
+      "base": null,
+      "successor": "sol62",
+      "retired": null,
+      "until": "2026-11-30",
+      "first": "2026-10-21",
+      "last": "2026-11-17",
       "plan": "ChatGPT",
       "effort": "medium",
       "runs": 21,
@@ -1897,6 +2130,8 @@
           },
           "api_cost_usd": 0.139401,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 204270,
           "output": 7732
         },
@@ -1918,6 +2153,8 @@
           },
           "api_cost_usd": 0.09191,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 136679,
           "output": 5439
         },
@@ -1939,6 +2176,8 @@
           },
           "api_cost_usd": 0.108358,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 176120,
           "output": 5630
         },
@@ -1960,6 +2199,8 @@
           },
           "api_cost_usd": 0.085152,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 143363,
           "output": 5416
         },
@@ -1981,6 +2222,8 @@
           },
           "api_cost_usd": 0.11779,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 152970,
           "output": 5422
         },
@@ -2002,6 +2245,8 @@
           },
           "api_cost_usd": 0.09208,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 170943,
           "output": 5923
         },
@@ -2023,6 +2268,8 @@
           },
           "api_cost_usd": 0.110437,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 168964,
           "output": 5642,
           "review": {
@@ -2049,6 +2296,8 @@
           },
           "api_cost_usd": 0.123439,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 162058,
           "output": 5741
         },
@@ -2070,6 +2319,8 @@
           },
           "api_cost_usd": 0.074122,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 140753,
           "output": 4477
         },
@@ -2091,6 +2342,8 @@
           },
           "api_cost_usd": 0.119212,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 195006,
           "output": 5822
         },
@@ -2112,6 +2365,8 @@
           },
           "api_cost_usd": 0.10858,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 198345,
           "output": 7215
         },
@@ -2133,6 +2388,8 @@
           },
           "api_cost_usd": 0.110438,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 146890,
           "output": 4959
         },
@@ -2154,6 +2411,8 @@
           },
           "api_cost_usd": 0.087793,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 173262,
           "output": 5385
         },
@@ -2175,6 +2434,8 @@
           },
           "api_cost_usd": 0.09761,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 175726,
           "output": 5601
         },
@@ -2196,6 +2457,8 @@
           },
           "api_cost_usd": 0.1692,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 262053,
           "output": 9384
         },
@@ -2217,6 +2480,8 @@
           },
           "api_cost_usd": 0.091523,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 147023,
           "output": 5419
         },
@@ -2238,6 +2503,8 @@
           },
           "api_cost_usd": 0.11894,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 241394,
           "output": 6047
         },
@@ -2259,6 +2526,8 @@
           },
           "api_cost_usd": 0.097296,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 176491,
           "output": 5948
         },
@@ -2280,6 +2549,8 @@
           },
           "api_cost_usd": 0.096172,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 173882,
           "output": 5487,
           "review": {
@@ -2307,6 +2578,8 @@
           },
           "api_cost_usd": 0.143135,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 252529,
           "output": 8750
         },
@@ -2328,6 +2601,8 @@
           },
           "api_cost_usd": 0.102695,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 125694,
           "output": 5095
         }
@@ -2335,6 +2610,15 @@
     },
     "terra": {
       "model": "gpt-6.1-terra",
+      "label": "Terra 6.1",
+      "vendor": "OpenAI",
+      "family": "terra",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-10-30",
+      "last": "2026-11-17",
       "plan": "ChatGPT",
       "effort": "medium",
       "runs": 12,
@@ -2388,6 +2672,8 @@
           },
           "api_cost_usd": 0.034077,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 141779,
           "output": 3961
         },
@@ -2409,6 +2695,8 @@
           },
           "api_cost_usd": 0.034931,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 152410,
           "output": 4131
         },
@@ -2430,6 +2718,8 @@
           },
           "api_cost_usd": 0.030756,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 115344,
           "output": 3781
         },
@@ -2451,6 +2741,8 @@
           },
           "api_cost_usd": 0.035435,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 142033,
           "output": 4085
         },
@@ -2472,6 +2764,8 @@
           },
           "api_cost_usd": 0.031154,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 121431,
           "output": 3514
         },
@@ -2493,6 +2787,8 @@
           },
           "api_cost_usd": 0.032336,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 121013,
           "output": 3762
         },
@@ -2514,6 +2810,8 @@
           },
           "api_cost_usd": 0.033096,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 140154,
           "output": 3666
         },
@@ -2535,6 +2833,8 @@
           },
           "api_cost_usd": 0.031275,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 120023,
           "output": 3501
         },
@@ -2556,6 +2856,8 @@
           },
           "api_cost_usd": 0.042052,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 123677,
           "output": 3701
         },
@@ -2577,6 +2879,8 @@
           },
           "api_cost_usd": 0.030305,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 115526,
           "output": 3562
         },
@@ -2598,6 +2902,8 @@
           },
           "api_cost_usd": 0.031849,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 134224,
           "output": 3651
         },
@@ -2619,6 +2925,8 @@
           },
           "api_cost_usd": 0.033111,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 121671,
           "output": 4004
         }
@@ -2626,6 +2934,15 @@
     },
     "astra": {
       "model": "gpt-6-astra",
+      "label": "Astra 6",
+      "vendor": "OpenAI",
+      "family": "astra",
+      "base": null,
+      "successor": "astra62",
+      "retired": null,
+      "until": "2026-11-30",
+      "first": "2026-10-21",
+      "last": "2026-11-17",
       "plan": "ChatGPT",
       "effort": "medium",
       "runs": 21,
@@ -2679,6 +2996,8 @@
           },
           "api_cost_usd": 0.50874,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 141030,
           "output": 4965
         },
@@ -2700,6 +3019,8 @@
           },
           "api_cost_usd": 0.425154,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 114637,
           "output": 4232
         },
@@ -2721,6 +3042,8 @@
           },
           "api_cost_usd": 0.794476,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 175806,
           "output": 4624
         },
@@ -2742,6 +3065,8 @@
           },
           "api_cost_usd": 0.3733,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 114190,
           "output": 3969
         },
@@ -2763,6 +3088,8 @@
           },
           "api_cost_usd": 0.655022,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 175355,
           "output": 5340
         },
@@ -2784,6 +3111,8 @@
           },
           "api_cost_usd": 0.469626,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 146345,
           "output": 5020
         },
@@ -2805,6 +3134,8 @@
           },
           "api_cost_usd": 0.468724,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 116046,
           "output": 4681
         },
@@ -2826,6 +3157,8 @@
           },
           "api_cost_usd": 0.444884,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 138394,
           "output": 4546
         },
@@ -2847,6 +3180,8 @@
           },
           "api_cost_usd": 0.476622,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 114743,
           "output": 4369
         },
@@ -2868,6 +3203,8 @@
           },
           "api_cost_usd": 0.569672,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 186396,
           "output": 6350
         },
@@ -2889,6 +3226,8 @@
           },
           "api_cost_usd": 0.48906,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 115894,
           "output": 4565
         },
@@ -2910,6 +3249,8 @@
           },
           "api_cost_usd": 0.485198,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 151991,
           "output": 4833,
           "review": {
@@ -2936,6 +3277,8 @@
           },
           "api_cost_usd": 0.444046,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 149875,
           "output": 4074
         },
@@ -2957,6 +3300,8 @@
           },
           "api_cost_usd": 0.53715,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 160047,
           "output": 5097,
           "review": {
@@ -2983,6 +3328,8 @@
           },
           "api_cost_usd": 0.54782,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 179194,
           "output": 5473
         },
@@ -3004,6 +3351,8 @@
           },
           "api_cost_usd": 0.585986,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 182589,
           "output": 5204
         },
@@ -3025,6 +3374,8 @@
           },
           "api_cost_usd": 0.560042,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 125297,
           "output": 4968
         },
@@ -3046,6 +3397,8 @@
           },
           "api_cost_usd": 0.508568,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 154584,
           "output": 5201
         },
@@ -3067,6 +3420,8 @@
           },
           "api_cost_usd": 0.482482,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 146557,
           "output": 5058
         },
@@ -3088,6 +3443,8 @@
           },
           "api_cost_usd": 0.48689,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 169609,
           "output": 4618
         },
@@ -3109,6 +3466,8 @@
           },
           "api_cost_usd": 0.429838,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 117755,
           "output": 4520
         }
@@ -3116,6 +3475,15 @@
     },
     "luna": {
       "model": "gpt-6-luna",
+      "label": "Luna 6",
+      "vendor": "OpenAI",
+      "family": "luna",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-10-30",
+      "last": "2026-11-17",
       "plan": "ChatGPT",
       "effort": "medium",
       "runs": 12,
@@ -3169,6 +3537,8 @@
           },
           "api_cost_usd": 0.006249,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 259623,
           "output": 4946,
           "review": {
@@ -3195,6 +3565,8 @@
           },
           "api_cost_usd": 0.006022,
           "turns": null,
+          "harness_version": "codex-cli 0.163.0",
+          "plan": "ChatGPT",
           "tokens": 179423,
           "output": 4501,
           "review": {
@@ -3221,6 +3593,8 @@
           },
           "api_cost_usd": 0.006516,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 196369,
           "output": 5618
         },
@@ -3242,6 +3616,8 @@
           },
           "api_cost_usd": 0.008232,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 233081,
           "output": 5482,
           "review": {
@@ -3268,6 +3644,8 @@
           },
           "api_cost_usd": 0.007201,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 196207,
           "output": 5211,
           "review": {
@@ -3294,6 +3672,8 @@
           },
           "api_cost_usd": 0.007265,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 268948,
           "output": 4120,
           "review": {
@@ -3320,6 +3700,8 @@
           },
           "api_cost_usd": 0.005495,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 158005,
           "output": 3842,
           "review": {
@@ -3346,6 +3728,8 @@
           },
           "api_cost_usd": 0.005465,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 181928,
           "output": 4382,
           "review": {
@@ -3372,6 +3756,8 @@
           },
           "api_cost_usd": 0.007952,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 291965,
           "output": 5986
         },
@@ -3393,6 +3779,8 @@
           },
           "api_cost_usd": 0.007964,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 252306,
           "output": 6399,
           "review": {
@@ -3420,6 +3808,8 @@
           },
           "api_cost_usd": 0.007521,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 291040,
           "output": 4882,
           "review": {
@@ -3447,6 +3837,8 @@
           },
           "api_cost_usd": 0.009424,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 362195,
           "output": 6307,
           "review": {
@@ -3460,6 +3852,15 @@
     },
     "luna-high": {
       "model": "gpt-6-luna",
+      "label": "Luna 6",
+      "vendor": "OpenAI",
+      "family": "luna",
+      "base": "luna",
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-11-15",
+      "last": "2026-11-17",
       "plan": "ChatGPT",
       "effort": "high",
       "runs": 3,
@@ -3513,6 +3914,8 @@
           },
           "api_cost_usd": 0.012911,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 351963,
           "output": 10325
         },
@@ -3534,6 +3937,8 @@
           },
           "api_cost_usd": 0.011608,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 367513,
           "output": 11734
         },
@@ -3555,6 +3960,8 @@
           },
           "api_cost_usd": 0.011577,
           "turns": null,
+          "harness_version": "codex-cli 0.167.0",
+          "plan": "ChatGPT",
           "tokens": 407443,
           "output": 8212,
           "review": {
@@ -3568,6 +3975,15 @@
     },
     "deepseek": {
       "model": "opencode-go/deepseek-v4.1-flash",
+      "label": "DeepSeek V4.1 Flash",
+      "vendor": "DeepSeek",
+      "family": "deepseek",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-10-21",
+      "last": "2026-11-17",
       "plan": "OpenCode Go",
       "effort": "default",
       "runs": 21,
@@ -3625,6 +4041,8 @@
           },
           "api_cost_usd": 0.050297,
           "turns": 28,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1130077,
           "output": 13504
         },
@@ -3648,6 +4066,8 @@
           },
           "api_cost_usd": 0.066153,
           "turns": 30,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1574378,
           "output": 20295
         },
@@ -3671,6 +4091,8 @@
           },
           "api_cost_usd": 0.048737,
           "turns": 33,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1597585,
           "output": 21666
         },
@@ -3694,6 +4116,8 @@
           },
           "api_cost_usd": 0.066644,
           "turns": 37,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2342064,
           "output": 13785
         },
@@ -3717,6 +4141,8 @@
           },
           "api_cost_usd": 0.075718,
           "turns": 31,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2027508,
           "output": 15039
         },
@@ -3740,6 +4166,8 @@
           },
           "api_cost_usd": 0.07699,
           "turns": 32,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2236775,
           "output": 19571
         },
@@ -3763,6 +4191,8 @@
           },
           "api_cost_usd": 0.06266,
           "turns": 24,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1434673,
           "output": 14698
         },
@@ -3786,6 +4216,8 @@
           },
           "api_cost_usd": 0.08232,
           "turns": 42,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2807785,
           "output": 24288
         },
@@ -3809,6 +4241,8 @@
           },
           "api_cost_usd": 0.074109,
           "turns": 46,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 3059275,
           "output": 21672
         },
@@ -3832,6 +4266,8 @@
           },
           "api_cost_usd": 0.058175,
           "turns": 33,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1692433,
           "output": 11481
         },
@@ -3855,6 +4291,8 @@
           },
           "api_cost_usd": 0.046537,
           "turns": 22,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 972602,
           "output": 10995
         },
@@ -3878,6 +4316,8 @@
           },
           "api_cost_usd": 0.064119,
           "turns": 35,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1820612,
           "output": 13422
         },
@@ -3901,6 +4341,8 @@
           },
           "api_cost_usd": 0.064531,
           "turns": 38,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2348898,
           "output": 23924
         },
@@ -3924,6 +4366,8 @@
           },
           "api_cost_usd": 0.072375,
           "turns": 35,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2114697,
           "output": 16657
         },
@@ -3947,6 +4391,8 @@
           },
           "api_cost_usd": 0.064703,
           "turns": 40,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2280677,
           "output": 14276
         },
@@ -3970,6 +4416,8 @@
           },
           "api_cost_usd": 0.043252,
           "turns": 20,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 910122,
           "output": 11337
         },
@@ -3993,6 +4441,8 @@
           },
           "api_cost_usd": 0.06076,
           "turns": 29,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1605525,
           "output": 21551
         },
@@ -4016,6 +4466,8 @@
           },
           "api_cost_usd": 0.042062,
           "turns": 34,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1638217,
           "output": 13130
         },
@@ -4039,6 +4491,8 @@
           },
           "api_cost_usd": 0.048933,
           "turns": 33,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 1491524,
           "output": 14239
         },
@@ -4062,6 +4516,8 @@
           },
           "api_cost_usd": 0.051137,
           "turns": 20,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 856595,
           "output": 10548
         },
@@ -4085,6 +4541,8 @@
           },
           "api_cost_usd": 0.065315,
           "turns": 39,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
           "tokens": 2203959,
           "output": 17116
         }

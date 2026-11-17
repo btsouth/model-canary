@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import traceback
 from pathlib import Path
 
 import gen
@@ -30,26 +31,60 @@ def effort_of(spec):
     runs at the model's own default: DeepSeek has low, high and max, but no medium."""
     return "default" if spec["harness"] == "opencode" else spec.get("effort", EFFORT)
 
+# Each entry is one line on the site. `label`, `vendor` and `family` name and group it there;
+# `base` marks a second effort level of another entry. When a new version replaces a model, the
+# new one is added next to it and the old one gets `until` (its last day) and `successor`: they
+# run side by side for two weeks, then the old one stops. Entries are never deleted, so a
+# retired model keeps its name and its record on the site.
 MODELS = {
-    "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Ultra"},
-    "fable52": {"harness": "claude", "model": "claude-fable-5-2", "plan": "Claude Ultra"},
-    "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Ultra"},
-    "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Ultra"},
-    "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra"},
-    "haiku-high": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra", "effort": "high"},
-    "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT"},
-    "terra": {"harness": "codex", "model": "gpt-6.1-terra", "plan": "ChatGPT"},
-    "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT"},
-    "luna": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT"},
-    "luna-high": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT", "effort": "high"},
-    "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go"},
+    "opus": {"harness": "claude", "model": "claude-opus-5-5", "plan": "Claude Ultra",
+             "label": "Opus 5.5", "vendor": "Anthropic", "family": "opus"},
+    "fable52": {"harness": "claude", "model": "claude-fable-5-2", "plan": "Claude Ultra",
+                "label": "Fable 5.2", "vendor": "Anthropic", "family": "fable"},
+    "fable": {"harness": "claude", "model": "claude-fable-5-1", "plan": "Claude Ultra",
+              "label": "Fable 5.1", "vendor": "Anthropic", "family": "fable",
+              "until": "2026-11-26", "successor": "fable52"},
+    "sonnet": {"harness": "claude", "model": "claude-sonnet-5-5", "plan": "Claude Ultra",
+               "label": "Sonnet 5.5", "vendor": "Anthropic", "family": "sonnet"},
+    "haiku": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra",
+              "label": "Haiku 5.5", "vendor": "Anthropic", "family": "haiku"},
+    "haiku-high": {"harness": "claude", "model": "claude-haiku-5-5", "plan": "Claude Ultra", "effort": "high",
+                   "label": "Haiku 5.5", "vendor": "Anthropic", "family": "haiku", "base": "haiku"},
+    "sol62": {"harness": "codex", "model": "gpt-6.2-sol", "plan": "ChatGPT",
+              "label": "Sol 6.2", "vendor": "OpenAI", "family": "sol"},
+    "sol": {"harness": "codex", "model": "gpt-6.1-sol", "plan": "ChatGPT",
+            "label": "Sol 6.1", "vendor": "OpenAI", "family": "sol",
+            "until": "2026-11-30", "successor": "sol62"},
+    "terra": {"harness": "codex", "model": "gpt-6.1-terra", "plan": "ChatGPT",
+              "label": "Terra 6.1", "vendor": "OpenAI", "family": "terra"},
+    "astra62": {"harness": "codex", "model": "gpt-6.2-astra", "plan": "ChatGPT",
+                "label": "Astra 6.2", "vendor": "OpenAI", "family": "astra"},
+    "astra": {"harness": "codex", "model": "gpt-6-astra", "plan": "ChatGPT",
+              "label": "Astra 6", "vendor": "OpenAI", "family": "astra",
+              "until": "2026-11-30", "successor": "astra62"},
+    "luna": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT",
+             "label": "Luna 6", "vendor": "OpenAI", "family": "luna"},
+    "luna-high": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT", "effort": "high",
+                  "label": "Luna 6", "vendor": "OpenAI", "family": "luna", "base": "luna"},
+    "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go",
+                 "label": "DeepSeek V4.1 Flash", "vendor": "DeepSeek", "family": "deepseek"},
 }
+
+
+def active(key, date):
+    """Whether a model still runs on this date (an ISO day)."""
+    until = MODELS[key].get("until")
+    return until is None or date <= until
+
 
 # Codex reports tokens but no price, so its runs are priced here: OpenAI's standard API list
 # price per 1M tokens (input, cached input, output) for prompts up to 272K tokens, from
-# https://developers.openai.com/api/docs/pricing on 2026-10-31. Codex's output count already
-# includes reasoning tokens.
+# https://developers.openai.com/api/docs/pricing on 2026-10-31 (the 6.2 models on 2026-11-17).
+# A run keeps the price it was recorded with. Codex's output count already includes reasoning
+# tokens.
 OPENAI_PRICES = {
+    "gpt-6.2-astra": (8.00, 0.40, 40.00),
+    "gpt-6.2-sol": (2.00, 0.10, 10.00),
     "gpt-6-astra": (10.00, 1.00, 50.00),
     "gpt-6.1-sol": (2.00, 0.10, 10.00),
     "gpt-6.1-terra": (1.00, 0.05, 5.00),
@@ -331,37 +366,58 @@ def grade(workdir, hidden):
     }
 
 
+def day_of(seed):
+    return seed if re.fullmatch(r"\d{4}-\d\d-\d\d", seed) else dt.date.today().isoformat()
+
+
 def run(key, seed):
     spec = MODELS[key]
     stamp = dt.datetime.now(dt.timezone.utc)
+    # Only what describes the run itself goes into the record; the site's names and grouping
+    # come from MODELS when summarize.py runs.
+    record = {"date": day_of(seed), "started_at": stamp.isoformat(timespec="seconds"), "model_key": key,
+              **{k: spec[k] for k in ("harness", "model", "plan")}, "effort": effort_of(spec),
+              "task_version": gen.VERSION, "seed": seed}
     # /tmp keeps the task away from this repo, and the hidden tests stay in memory until the
     # model is done, so there is nothing to find.
     scratch = Path(tempfile.mkdtemp(prefix=f"canary-{key}-", dir="/tmp"))
-    variant = gen.generate(seed, scratch)
-    workdir, hidden = scratch / "task", scratch / "hidden.py"
-    hidden_text = hidden.read_text()
-    hidden.unlink()
-    for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
-                ["git", "-c", "user.name=canary", "-c", "user.email=canary@localhost", "commit", "-qm", "task"]):
-        sh(*cmd, cwd=workdir)
-    runner = {"claude": run_claude, "codex": run_codex, "opencode": run_opencode}[spec["harness"]]
-    transcript, outcome = runner(spec, workdir)
-    hidden.write_text(hidden_text)
-    diff, grades = grade(workdir, hidden)
-    # Any sign the model looked at the harness, the reference code or the hidden tests.
-    leaks = sorted({m for m in (str(ROOT), "model-canary", "schedule_task", "gen.py", "hidden.py", "test_hidden")
-                    if m in transcript})
-    limits = outcome["limits"]
-    # Past 100% the run is paid from credits, so its limit readings say nothing about the plan.
-    over = any((reading or {}).get(w) is not None and reading[w] >= 1
-               for reading in limits.values() for w in ("five_hour", "seven_day"))
-    record = {"date": seed if re.fullmatch(r"\d{4}-\d\d-\d\d", seed) else dt.date.today().isoformat(),
-              "started_at": stamp.isoformat(timespec="seconds"),
-              "model_key": key, **spec, "effort": effort_of(spec), "task_version": gen.VERSION, "seed": seed,
-              "variant": variant, **outcome, "over_limit": over, **grades}
-    # The CLI itself failed (a limit, an outage, a login problem): not the model's score.
-    record["infra_error"] = outcome["exit_code"] not in (0, None) and not grades["diff_lines"]
-    record["harness_seen"] = leaks
+    try:
+        variant = gen.generate(seed, scratch)
+        workdir, hidden = scratch / "task", scratch / "hidden.py"
+        hidden_text = hidden.read_text()
+        hidden.unlink()
+        for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
+                    ["git", "-c", "user.name=canary", "-c", "user.email=canary@localhost", "commit", "-qm", "task"]):
+            sh(*cmd, cwd=workdir)
+        runner = {"claude": run_claude, "codex": run_codex, "opencode": run_opencode}[spec["harness"]]
+        transcript, outcome = runner(spec, workdir)
+        hidden.write_text(hidden_text)
+        diff, grades = grade(workdir, hidden)
+        # Any sign the model looked at the harness, the reference code or the hidden tests.
+        leaks = sorted({m for m in (str(ROOT), "model-canary", "schedule_task", "gen.py", "hidden.py", "test_hidden")
+                        if m in transcript})
+        limits = outcome["limits"]
+        # Past 100% the run is paid from credits, so its limit readings say nothing about the plan.
+        over = any((reading or {}).get(w) is not None and reading[w] >= 1
+                   for reading in limits.values() for w in ("five_hour", "seven_day"))
+        record.update({"variant": variant, **outcome, "over_limit": over, **grades})
+        # The CLI itself failed (a limit, an outage, a login problem): not the model's score.
+        record["infra_error"] = outcome["exit_code"] not in (0, None) and not grades["diff_lines"]
+        record["harness_seen"] = leaks
+    except Exception as err:
+        # The harness broke before the model could finish (a missing CLI, say). Record it like
+        # any other infra error, in the same shape, so the other models still run and the
+        # day's freshness check sees the gap.
+        transcript, diff = traceback.format_exc(), ""
+        record.update({"variant": None, "exit_code": None, "timed_out": False, "wall_seconds": 0,
+                       "tokens": {}, "api_cost_usd": None, "turns": None,
+                       "limits": {"before": None, "after": None}, "harness_version": None,
+                       "over_limit": False, "visible_tests_pass": False, "hidden_passed": 0,
+                       "hidden_total": 0, "hidden_failed": [], "score": 0, "passed": False,
+                       "tests_tampered": False, "diff_lines": 0, "infra_error": True,
+                       "harness_seen": [], "error": f"{type(err).__name__}: {err}"})
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
     values = secrets()
     out_dir = RESULTS / "runs" / record["date"] / key
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -370,9 +426,9 @@ def run(key, seed):
     (out_dir / "result.json").write_text(redact(json.dumps(record, indent=2), values) + "\n")
     with open(RESULTS / "runs.jsonl", "a") as f:
         f.write(redact(json.dumps(record), values) + "\n")
-    shutil.rmtree(scratch, ignore_errors=True)
     print(f"{key}: passed={record['passed']} hidden={record['hidden_passed']}/{record['hidden_total']} "
-          f"time={record['wall_seconds']}s limits={record['limits']}")
+          f"time={record['wall_seconds']}s limits={record['limits']}"
+          + (f" infra_error={record.get('error') or True}" if record["infra_error"] else ""))
     return record
 
 
@@ -385,6 +441,8 @@ if __name__ == "__main__":
         del args[i:i + 2]
     keys = args or ["all"]
     if keys == ["all"]:
-        keys = list(MODELS)
-    for k in keys:
-        run(k, seed)
+        keys = [k for k in MODELS if active(k, day_of(seed))]
+    failed = [k for k in keys if run(k, seed)["infra_error"]]
+    if failed:
+        print(f"No result for: {', '.join(failed)}", file=sys.stderr)
+        sys.exit(1)

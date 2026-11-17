@@ -76,14 +76,38 @@ result, the note says so, the entry is marked `"cause": "unclear"` and the miss 
 Only an entry I mark `"cause": "harness"` myself, after fixing the task, is left out of the
 summary. `python3 regrade.py DATE MODEL` checks a single run by hand.
 
+## New versions and retired models
+
+Each entry in `MODELS` in `run.py` is one line on the site, with its name, vendor and family.
+When a vendor ships a new version, it gets its own entry next to the old one instead of taking
+over the old one's history, so each line on the chart stays one model. The old entry gets
+`until` (its last day) and `successor`: the two run side by side for two weeks, which gives the
+site enough same-day pairs to say how the new version compares, and then the old one stops.
+Entries are never deleted, so a retired model keeps its name and its full record on the site.
+
+## When a day goes missing
+
+A model whose CLI can't start (missing, logged out) is recorded as an infra error and the others
+still run; the service then exits non-zero. Since the run happens on a home server, a check from
+outside covers the rest: `.github/workflows/freshness.yml` reads `results/summary.json` every
+morning after the run and opens an issue labelled `canary-down` when no run landed that day or an
+active model has no result. It comments on the open issue while the problem lasts and closes it
+once a full day lands.
+
+## Results
+
 Each run writes `results/runs/<date>/<model>/` (result, redacted transcript and diff) and
-appends a line to `results/runs.jsonl`. `summarize.py` builds `results/summary.json`.
+appends a line to `results/runs.jsonl`. `summarize.py` builds `results/summary.json` for the
+site: per model its name, vendor, family, first and last day, retirement and every counted run,
+plus the days a CLI version or plan changed, so the site can mark them instead of letting the
+jump look like the model. Only the current task version counts, so if the task itself ever
+changes, every model's history starts over.
 
 ## Running it
 
 ```bash
 python3 run.py opus                      # one model, today's variant
-python3 run.py all                       # every model in run.py
+python3 run.py all                       # every active model in run.py
 python3 run.py --seed 2026-10-21 sol     # a specific day's variant
 python3 summarize.py
 ```

@@ -124,5 +124,19 @@
       "by": "claude-opus-5-5",
       "note": "Built the day name table from `calendar.day_abbr`, so `SUN` was 6 and `MON` was 0, which put every name one day early. The spec numbers Sunday as 0. It also treated `L` as matching every day of the month, rejected `L` inside a list like `17,23,L`, and rejected `?` in the day-of-week field, all of which the spec allows."
     }
+  },
+  "2026-11-17": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-17",
+      "by": "claude-opus-5-5",
+      "note": "`_field` looked up a single name with `base in names` without upper-casing it, so `thu`, `oct` and `Fri` were rejected even though the spec allows names in any case. It also rejected a whole day field of `?`, which the spec says means `*`. Its `\"L\" in item` check also rejected the month name `JUL` as a bad special day item."
+    },
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-17",
+      "by": "claude-opus-5-5",
+      "note": "Built the day-name table from `calendar.day_abbr`, which counts from Monday as 0, so `MON` meant Sunday, `THU` meant Wednesday and `SUN` meant Saturday. The spec numbers day of week 0 to 7 with 0 and 7 as Sunday and names `SUN`-`SAT`, so `MON` is 1 and `THU` is 4."
+    }
   }
 }

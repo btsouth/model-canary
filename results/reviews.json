@@ -138,5 +138,19 @@
       "by": "claude-opus-5-5",
       "note": "Built the day-name table from `calendar.day_abbr`, which counts from Monday as 0, so `MON` meant Sunday, `THU` meant Wednesday and `SUN` meant Saturday. The spec numbers day of week 0 to 7 with 0 and 7 as Sunday and names `SUN`-`SAT`, so `MON` is 1 and `THU` is 4."
     }
+  },
+  "2026-11-18": {
+    "fable": {
+      "cause": "model",
+      "checked": "2026-11-18",
+      "by": "claude-opus-5-5",
+      "note": "The check for misplaced specials rejects any item containing `L`, `#` or `?` before names are looked up. So the uppercase month name `JUL` raised `ValueError` while `jul` worked. The spec says month and day names are allowed in any case, so `JUL` is a valid month item."
+    },
+    "sonnet": {
+      "cause": "model",
+      "checked": "2026-11-18",
+      "by": "claude-opus-5-5",
+      "note": "The parser accepted a step on the special day items and silently dropped it, so `L/2` behaved like `L` and `5L/2` like `5L`. The spec allows `/S` only after `*`, `N` or `A-B`, which are listed before `L`, `NL` and `N#K`, and every other form must raise `ValueError`."
+    }
   }
 }

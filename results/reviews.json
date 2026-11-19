@@ -151,6 +151,26 @@
       "checked": "2026-11-18",
       "by": "claude-opus-5-5",
       "note": "The parser accepted a step on the special day items and silently dropped it, so `L/2` behaved like `L` and `5L/2` like `5L`. The spec allows `/S` only after `*`, `N` or `A-B`, which are listed before `L`, `NL` and `N#K`, and every other form must raise `ValueError`."
+    },
+    "astra": {
+      "cause": "model",
+      "checked": "2026-11-19",
+      "by": "claude-opus-5-5",
+      "note": "Capped the day-of-week field at 6 for every item, so `1/3` became only Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also includes 7, which is Sunday. The 0 to 6 rule in the spec applies only to wrapping ranges."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-19",
+      "by": "claude-opus-5-5",
+      "note": "Day names were built from `calendar.day_abbr`, which starts on Monday, so `MON` meant Sunday, `SAT` meant Friday and `FRI-MON` started on Thursday. The spec numbers the day-of-week field with 0 and 7 as Sunday, so Monday is 1 and Saturday is 6."
+    }
+  },
+  "2026-11-19": {
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-19",
+      "by": "claude-opus-5-5",
+      "note": "Built the day name table from `calendar.day_abbr`, which counts from Monday, so `MON` became 0 and every day name meant the day before it. The spec numbers the day-of-week field with 0 and 7 as Sunday, so `MON` must be 1 and `SUN` must be 0."
     }
   }
 }

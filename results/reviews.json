@@ -172,5 +172,19 @@
       "by": "claude-opus-5-5",
       "note": "Built the day name table from `calendar.day_abbr`, which counts from Monday, so `MON` became 0 and every day name meant the day before it. The spec numbers the day-of-week field with 0 and 7 as Sunday, so `MON` must be 1 and `SUN` must be 0."
     }
+  },
+  "2026-11-20": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-20",
+      "by": "claude-opus-5-5",
+      "note": "In `_parse`, the day-of-month and day-of-week branch stored the whole dict returned by the recursive `values(...)` call as the field's `vals`, not its `[\"vals\"]` set. So `day.day in dom[\"vals\"]` checked dict keys, and no explicit day list ever matched. The spec says a day runs when it is listed in both day fields, so these schedules should match and `next_run` should find their runs, but the code returned `False`, `None` or a later date."
+    },
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-20",
+      "by": "claude-opus-5-5",
+      "note": "The parser rejects any item containing the letter `L` before it looks up names, so the month name `JUL` raises `ValueError` as an invalid special item. The spec allows `JAN` to `DEC` in the month field, so `JUL` should mean July and the expression should match."
+    }
   }
 }

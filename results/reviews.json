@@ -186,5 +186,37 @@
       "by": "claude-opus-5-5",
       "note": "The parser rejects any item containing the letter `L` before it looks up names, so the month name `JUL` raises `ValueError` as an invalid special item. The spec allows `JAN` to `DEC` in the month field, so `JUL` should mean July and the expression should match."
     }
+  },
+  "2026-11-21": {
+    "fable": {
+      "cause": "model",
+      "checked": "2026-11-21",
+      "by": "claude-opus-5-5",
+      "note": "In the day-of-week field the code applied `% 7` to both ends of a range before checking for wraparound, so `0-7` became `0-0` and matched only Sunday. The spec says a range wraps only when A is greater than B, so `0-7` lists every value from 0 to 7, which is every day of the week."
+    },
+    "haiku": {
+      "cause": "model",
+      "checked": "2026-11-21",
+      "by": "claude-opus-5-5",
+      "note": "Accepted a step after `L` in the day-of-month field, so `L/2` was read as plain `L` and gave the last day of the month. The spec allows `/S` only after `*`, `N` or `A-B`, and `L` is a separate item that takes no step, so `L/2` should raise `ValueError`."
+    },
+    "terra": {
+      "cause": "model",
+      "checked": "2026-11-21",
+      "by": "claude-opus-5-5",
+      "note": "The day-of-week parser reduced both range ends mod 7 before building the range, so `0-7` became `0-0` and matched only Sunday. The spec says `A-B` is every value from A to B, and 7 is only treated as 0 when the range wraps. So `0-7` covers every day of the week, and the next run after Friday 02:58 is 03:15 the same day."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-21",
+      "by": "claude-opus-5-5",
+      "note": "Built day names from `calendar.day_abbr`, which starts on Monday, so `SUN` meant Saturday and `FRI-MON` started on Thursday. The spec numbers day of week from 0 for Sunday. It also took each end of a day range mod 7 first, so `0-7` became Sunday only, but the spec treats `0-7` as a plain range that covers the whole week."
+    },
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-21",
+      "by": "claude-opus-5-5",
+      "note": "When `after` fell exactly on a minute, `next_run` tried that same minute first, rejected it as not strictly later, and then skipped to the next day instead of trying the next minute. SCHEDULE.md says the result is the first run strictly after `after`, and gives the example that a schedule running every minute goes from 10:00:00 to 10:01, but the code returns the next midnight."
+    }
   }
 }

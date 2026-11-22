@@ -218,5 +218,13 @@
       "by": "claude-opus-5-5",
       "note": "When `after` fell exactly on a minute, `next_run` tried that same minute first, rejected it as not strictly later, and then skipped to the next day instead of trying the next minute. SCHEDULE.md says the result is the first run strictly after `after`, and gives the example that a schedule running every minute goes from 10:00:00 to 10:01, but the code returns the next midnight."
     }
+  },
+  "2026-11-22": {
+    "sol": {
+      "cause": "model",
+      "checked": "2026-11-22",
+      "by": "claude-opus-5-5",
+      "note": "Capped the day-of-week field at 6 when expanding `N/S`, so `1/3` became Monday and Thursday only. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also includes 7, which is Sunday."
+    }
   }
 }

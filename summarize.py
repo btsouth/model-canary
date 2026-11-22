@@ -13,8 +13,8 @@ from run import MODELS
 
 RESULTS = Path(__file__).resolve().parent / "results"
 TASK_VERSION = 3
-HARNESS_NAMES = {"claude": "Claude Code", "codex": "Codex", "opencode": "OpenCode"}
-VENDOR_OF_HARNESS = {"claude": "Anthropic", "codex": "OpenAI", "opencode": "DeepSeek"}
+HARNESS_NAMES = {"claude": "Claude Code", "codex": "Codex", "opencode": "OpenCode", "antigravity": "Antigravity"}
+VENDOR_OF_HARNESS = {"claude": "Anthropic", "codex": "OpenAI", "opencode": "DeepSeek", "antigravity": "Google"}
 
 
 def events(runs):

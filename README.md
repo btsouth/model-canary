@@ -41,16 +41,17 @@ tokens and cost on an identical piece of work are the trends to watch.
 ## How a run works
 
 `run.py` generates the day's variant into a temporary git repo and runs the model through its
-own CLI (Claude Code, Codex or OpenCode) with fixed settings: medium effort, no web access,
-and none of my personal instructions, plugins or MCP servers. Three entries differ on effort:
+own CLI (Claude Code, Codex, Antigravity or OpenCode) with fixed settings: medium effort, no web
+access, and none of my personal instructions, plugins or MCP servers. Three entries differ on effort:
 Haiku 5.5 and Luna 6 also run a second time at high, as their own entries, and DeepSeek runs
 at its default because OpenCode offers it low, high and max but no medium. It records:
 
 - score, pass or fail, which hidden tests failed, and the diff
 - wall-clock time
 - tokens, and what they would cost at API list prices. Claude Code and OpenCode report that
-  cost themselves. Codex reports only tokens, so `run.py` prices them at OpenAI's standard rates.
-- the plan's 5-hour and weekly usage before and after the run
+  cost themselves. Codex and Antigravity report only tokens, so `run.py` prices them at standard
+  API rates.
+- the plan's 5-hour and weekly usage before and after the run (for subscription plans that report it)
 
 Both providers report usage in whole percents, and other work on the same account moves the
 same numbers, so a single run's limit cost is rough. The trend over many runs is the useful

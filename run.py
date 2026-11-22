@@ -11,6 +11,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -66,6 +67,8 @@ MODELS = {
              "label": "Luna 6", "vendor": "OpenAI", "family": "luna"},
     "luna-high": {"harness": "codex", "model": "gpt-6-luna", "plan": "ChatGPT", "effort": "high",
                   "label": "Luna 6", "vendor": "OpenAI", "family": "luna", "base": "luna"},
+    "neon": {"harness": "antigravity", "model": "gemini-4-neon", "plan": "Gemini API",
+             "label": "Gemini 4 Neon", "vendor": "Google", "family": "neon"},
     "deepseek": {"harness": "opencode", "model": "opencode-go/deepseek-v4.1-flash", "plan": "OpenCode Go",
                  "label": "DeepSeek V4.1 Flash", "vendor": "DeepSeek", "family": "deepseek"},
 }
@@ -77,11 +80,12 @@ def active(key, date):
     return until is None or date <= until
 
 
-# Codex reports tokens but no price, so its runs are priced here: OpenAI's standard API list
-# price per 1M tokens (input, cached input, output) for prompts up to 272K tokens, from
-# https://developers.openai.com/api/docs/pricing on 2026-10-31 (the 6.2 models on 2026-11-17).
-# A run keeps the price it was recorded with. Codex's output count already includes reasoning
-# tokens.
+# Codex and Antigravity report tokens but no price, so their runs are priced here: standard API
+# list prices per 1M tokens (input, cached input, output). OpenAI rates are for prompts up to
+# 272K tokens from https://developers.openai.com/api/docs/pricing on 2026-10-31 (the 6.2 models
+# on 2026-11-17). Google rates are from https://aistudio.google.com/docs/pricing on 2026-11-22.
+# A run keeps the price it was recorded with. Both CLIs' output counts already include
+# reasoning/thinking tokens.
 OPENAI_PRICES = {
     "gpt-6.2-astra": (8.00, 0.40, 40.00),
     "gpt-6.2-sol": (2.00, 0.10, 10.00),
@@ -91,13 +95,25 @@ OPENAI_PRICES = {
     "gpt-6-luna": (0.10, 0.01, 0.50),
 }
 
+GEMINI_PRICES = {
+    "gemini-4-neon": (3.00, 0.15, 15.00),
+}
 
-def openai_cost(model, tokens):
-    if model not in OPENAI_PRICES:
+
+def list_cost(prices, model, tokens):
+    if model not in prices:
         return None
-    price_in, price_cached, price_out = OPENAI_PRICES[model]
+    price_in, price_cached, price_out = prices[model]
     return round((tokens["input"] * price_in + tokens["cache_read"] * price_cached
                   + tokens["output"] * price_out) / 1e6, 6)
+
+
+def openai_cost(model, tokens):
+    return list_cost(OPENAI_PRICES, model, tokens)
+
+
+def gemini_cost(model, tokens):
+    return list_cost(GEMINI_PRICES, model, tokens)
 
 
 PROMPT = (
@@ -120,6 +136,12 @@ OPENCODE = Path.home() / ".local" / "opt" / "opencode2" / "bin" / "opencode"
 OPENCODE_HOME = Path.home() / ".opencode-canary"
 GO_KEY = Path.home() / ".config" / "model-canary" / "opencode-go.key"
 
+# Antigravity CLI runs from a throwaway home inside each run's scratch dir with Gemini API key
+# auth (never personal OAuth), so it sees none of my rules, skills, plugins, MCP servers or
+# earlier runs.
+AGY = Path.home() / ".local" / "bin" / "agy"
+GEMINI_KEY = Path.home() / ".config" / "model-canary" / "gemini-api.key"
+
 CLAUDE_FLAGS = [
     "--setting-sources", "project", "--strict-mcp-config", "--disable-slash-commands",
     "--no-session-persistence", "--permission-mode", "bypassPermissions",
@@ -134,12 +156,16 @@ def sh(*cmd, cwd=None, env=None, timeout=None):
 def secrets():
     """Token values that must never reach a committed file."""
     found = set()
-    try:
-        found.add(GO_KEY.read_text().strip())
-    except OSError:
-        pass
-    if os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
-        found.add(os.environ["CLAUDE_CODE_OAUTH_TOKEN"])
+    for key_file in (GO_KEY, GEMINI_KEY):
+        try:
+            value = key_file.read_text().strip()
+            if value:
+                found.add(value)
+        except OSError:
+            pass
+    for var in ("CLAUDE_CODE_OAUTH_TOKEN", "GEMINI_API_KEY"):
+        if os.environ.get(var):
+            found.add(os.environ[var])
     for path in (Path.home() / ".claude" / ".credentials.json", CODEX_AUTH):
         try:
             data = json.loads(path.read_text())
@@ -160,6 +186,8 @@ def secrets():
 TOKEN_PATTERNS = [
     re.compile(r"sk-ant-[A-Za-z0-9_\-]{10,}"),
     re.compile(r"sk-[A-Za-z0-9_\-]{20,}"),
+    re.compile(r"AIza[A-Za-z0-9_\-]{20,}"),
+    re.compile(r"AQ\.[A-Za-z0-9_\-]{20,}"),
     re.compile(r"eyJ[A-Za-z0-9_\-]{10,}\.[A-Za-z0-9_\-]{10,}\.[A-Za-z0-9_\-]{10,}"),
 ]
 
@@ -348,6 +376,100 @@ def run_opencode(spec, workdir):
                     "limits": {"before": before, "after": after}, "harness_version": version}
 
 
+def run_antigravity(spec, workdir):
+    # Fresh home per run (cleaned up with workdir's scratch dir) so conversations/*.db never
+    # carries over to a later day. Scoped permissions allow workspace files and shell commands
+    # while blocking web fetches, browser actions and MCP servers.
+    home = workdir.parent / "agy-home"
+    settings_dir = home / ".gemini" / "antigravity-cli"
+    settings_dir.mkdir(parents=True, exist_ok=True)
+    (settings_dir / "settings.json").write_text(json.dumps({
+        "modelProvider": "gemini",
+        "browserEnabled": False,
+        "permissions": {
+            "allow": [
+                f"read_file({workdir})",
+                f"write_file({workdir})",
+                "command(*)",
+                "command(regex:.*)",
+            ],
+            "deny": [
+                "read_url(*)",
+                "execute_url(*)",
+                "download_url(*)",
+                "mcp(*)",
+            ],
+        },
+    }, indent=2) + "\n")
+    agy_bin = str(AGY if AGY.exists() else (shutil.which("agy") or AGY))
+    env = {
+        **os.environ,
+        "HOME": str(home),
+        "GEMINI_API_KEY": GEMINI_KEY.read_text().strip(),
+        "AGY_CLI_DISABLE_AUTO_UPDATE": "1",
+        "PWD": str(workdir),
+    }
+    cmd = [
+        agy_bin, "-p", PROMPT, "--model", spec["model"], "--effort", effort_of(spec),
+        "--output-format", "stream-json", "--disable-slash-commands",
+    ]
+    started = time.monotonic()
+    proc = subprocess.Popen(cmd, cwd=workdir, env=env, stdin=subprocess.DEVNULL,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            text=True, start_new_session=True)
+    try:
+        stdout, stderr = proc.communicate(timeout=TIMEOUT)
+        code, timed_out = proc.returncode, False
+    except subprocess.TimeoutExpired:
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        stdout, stderr = proc.communicate()
+        code, timed_out = None, True
+    wall = time.monotonic() - started
+    # Stream events report per-step usage as they finish, and the final result event carries
+    # the run's totals. In agy's stream-json, input_tokens is already non-cached input
+    # (separate from cache_read_tokens), while output_tokens includes thinking_tokens.
+    step_usage = {"input": 0, "cache_read": 0, "cache_write": 0, "output": 0, "reasoning": 0}
+    usage, turns = None, None
+    for line in stdout.splitlines():
+        try:
+            event = json.loads(line)
+        except ValueError:
+            continue
+        kind = event.get("event")
+        if kind == "step_update":
+            st = event.get("step_update") or {}
+            u = st.get("usage") if st.get("state") == "DONE" else None
+            if isinstance(u, dict):
+                step_usage["input"] += u.get("input_tokens", 0)
+                step_usage["cache_read"] += u.get("cache_read_tokens", 0)
+                step_usage["output"] += u.get("output_tokens", 0)
+                step_usage["reasoning"] += u.get("thinking_tokens", 0)
+        elif kind == "result":
+            res = event.get("result") or {}
+            u = res.get("usage") or {}
+            if u:
+                usage = {
+                    "input": u.get("input_tokens", 0),
+                    "cache_read": u.get("cache_read_tokens", 0),
+                    "cache_write": 0,
+                    "output": u.get("output_tokens", 0),
+                    "reasoning": u.get("thinking_tokens", 0),
+                }
+            turns = res.get("num_turns")
+            if code == 0 and res.get("status") not in (None, "SUCCESS"):
+                code = 1
+    if usage is None:
+        usage = step_usage
+    transcript = stdout if stdout.strip() else stderr
+    version = sh(agy_bin, "--version").stdout.strip()
+    return transcript, {"exit_code": code, "timed_out": timed_out, "wall_seconds": round(wall, 1),
+                        "tokens": usage, "api_cost_usd": gemini_cost(spec["model"], usage), "turns": turns,
+                        "limits": {"before": None, "after": None}, "harness_version": version}
+
+
 def grade(workdir, hidden):
     tampered = bool(sh("git", "status", "--porcelain", "--", "tests", cwd=workdir).stdout.strip())
     sh("git", "checkout", "--", "tests", cwd=workdir)
@@ -389,7 +511,8 @@ def run(key, seed):
         for cmd in (["git", "init", "-q"], ["git", "add", "-A"],
                     ["git", "-c", "user.name=canary", "-c", "user.email=canary@localhost", "commit", "-qm", "task"]):
             sh(*cmd, cwd=workdir)
-        runner = {"claude": run_claude, "codex": run_codex, "opencode": run_opencode}[spec["harness"]]
+        runner = {"claude": run_claude, "codex": run_codex, "opencode": run_opencode,
+                  "antigravity": run_antigravity}[spec["harness"]]
         transcript, outcome = runner(spec, workdir)
         hidden.write_text(hidden_text)
         diff, grades = grade(workdir, hidden)

@@ -1,7 +1,7 @@
 {
   "schema": 2,
   "task_version": 3,
-  "updated": "2026-11-22T11:33:39+00:00",
+  "updated": "2026-11-22T22:59:18+00:00",
   "date": "2026-11-22",
   "variant": {
     "split": "allocate_units",
@@ -5645,6 +5645,71 @@
           "plan": "ChatGPT",
           "tokens": 591085,
           "output": 12329
+        }
+      ]
+    },
+    "neon": {
+      "model": "gemini-4-neon",
+      "label": "Gemini 4 Neon",
+      "vendor": "Google",
+      "family": "neon",
+      "base": null,
+      "successor": null,
+      "retired": null,
+      "until": null,
+      "first": "2026-11-22",
+      "last": "2026-11-22",
+      "plan": "Gemini API",
+      "effort": "medium",
+      "runs": 1,
+      "pass_rate_30": 0.0,
+      "mean_score_30": 0.994,
+      "median_seconds_30": 285.1,
+      "latest": {
+        "date": "2026-11-22",
+        "seed": "2026-11-22",
+        "passed": false,
+        "score": 0.994,
+        "hidden_passed": 156,
+        "hidden_total": 157,
+        "wall_seconds": 285.1,
+        "tokens": {
+          "input": 71506,
+          "cache_read": 160275,
+          "cache_write": 0,
+          "output": 34914,
+          "reasoning": 20644
+        },
+        "api_cost_usd": 0.762269,
+        "limits": {
+          "before": null,
+          "after": null
+        },
+        "harness_version": "1.5.14"
+      },
+      "history": [
+        {
+          "date": "2026-11-22",
+          "passed": false,
+          "score": 0.994,
+          "wall_seconds": 285.1,
+          "over_limit": false,
+          "limits": {
+            "before": null,
+            "after": null
+          },
+          "api_cost_usd": 0.762269,
+          "turns": 1,
+          "harness_version": "1.5.14",
+          "plan": "Gemini API",
+          "tokens": 266695,
+          "output": 34914,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-22",
+            "by": "claude-opus-5-5",
+            "note": "Read `1/3` in the day-of-week field as Monday and Thursday only, because `N/S` was built with `range(N % 7, 7)` and stopped at 6. The spec says `N/S` lists N up to the field's maximum, and day of week goes up to 7, which is Sunday, so Sunday counts too."
+          }
         }
       ]
     },

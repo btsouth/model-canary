@@ -232,5 +232,31 @@
       "by": "claude-opus-5-5",
       "note": "Read `1/3` in the day-of-week field as Monday and Thursday only, because `N/S` was built with `range(N % 7, 7)` and stopped at 6. The spec says `N/S` lists N up to the field's maximum, and day of week goes up to 7, which is Sunday, so Sunday counts too."
     }
+  },
+  "2026-11-23": {
+    "terra": {
+      "cause": "model",
+      "checked": "2026-11-23",
+      "by": "claude-opus-5-5",
+      "note": "The code reduced both ends of a day-of-week range with `% 7` before checking for wraparound, so `0-7` became `0-0` and matched only Sunday. The spec says a range wraps only when A is greater than B, so `0-7` lists every value from 0 to 7, which is every day of the week."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-23",
+      "by": "claude-opus-5-5",
+      "note": "The day-of-week field counted as matching every day when it held only `NL` or `N#K` items, so `1#3` and `5L` matched any day. The spec says only `*` or `?` matches every day. The code also rejected `L` inside a list, turned `0-7` into Sunday only, and stripped whitespace inside quoted values in `parse_fields`, which its docstring says to keep."
+    },
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-23",
+      "by": "claude-opus-5-5",
+      "note": "The parser rejects any item containing the letter `L` as a misplaced last day marker before it looks up names, so the month name `JUL` raises `ValueError`. The spec allows month names `JAN` to `DEC` in any case, so `JUL` is a valid month and both expressions are valid."
+    },
+    "neon": {
+      "cause": "model",
+      "checked": "2026-11-23",
+      "by": "claude-opus-5-5",
+      "note": "The code read `N/S` in the day-of-week field as running only up to 6, so `1/3` gave Monday and Thursday only. The spec says `N/S` runs up to the field's maximum, which is 7 for day of week, so `1/3` also includes 7, which is Sunday."
+    }
   }
 }

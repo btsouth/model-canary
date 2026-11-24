@@ -258,5 +258,13 @@
       "by": "claude-opus-5-5",
       "note": "The code read `N/S` in the day-of-week field as running only up to 6, so `1/3` gave Monday and Thursday only. The spec says `N/S` runs up to the field's maximum, which is 7 for day of week, so `1/3` also includes 7, which is Sunday."
     }
+  },
+  "2026-11-24": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-24",
+      "by": "claude-opus-5-5",
+      "note": "Built the day name table from `calendar.day_abbr`, so `MON` was 0 and `SUN` was 6, which shifted every day name one day early. The spec numbers the day-of-week field with 0 and 7 as Sunday and names running `SUN` to `SAT`, so `MON` must be 1 and `SUN` must be 0."
+    }
   }
 }

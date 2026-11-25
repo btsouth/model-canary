@@ -266,5 +266,13 @@
       "by": "claude-opus-5-5",
       "note": "Built the day name table from `calendar.day_abbr`, so `MON` was 0 and `SUN` was 6, which shifted every day name one day early. The spec numbers the day-of-week field with 0 and 7 as Sunday and names running `SUN` to `SAT`, so `MON` must be 1 and `SUN` must be 0."
     }
+  },
+  "2026-11-25": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-25",
+      "by": "claude-opus-5-5",
+      "note": "`_parse_field` reads `base` before assigning it, so any stepped item like `*/7` raises `UnboundLocalError`, and it never passes `names=True` to `_number`, so names like `JAN` or `sun` raise `ValueError` although the spec allows them in any case. `NL` was also checked as just a weekday, so `5L` matched every Friday rather than the last Friday of the month as the spec says."
+    }
   }
 }

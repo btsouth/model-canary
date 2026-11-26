@@ -274,5 +274,31 @@
       "by": "claude-opus-5-5",
       "note": "`_parse_field` reads `base` before assigning it, so any stepped item like `*/7` raises `UnboundLocalError`, and it never passes `names=True` to `_number`, so names like `JAN` or `sun` raise `ValueError` although the spec allows them in any case. `NL` was also checked as just a weekday, so `5L` matched every Friday rather than the last Friday of the month as the spec says."
     }
+  },
+  "2026-11-26": {
+    "fable": {
+      "cause": "model",
+      "checked": "2026-11-26",
+      "by": "claude-opus-5-5",
+      "note": "For `N/S` in the day-of-week field the code stopped at 6, so `1/3` gave only Monday and Thursday. The spec says `N/S` runs up to the field's maximum, which is 7 for day of week, so `1/3` also includes 7, which is Sunday."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-26",
+      "by": "claude-opus-5-5",
+      "note": "Built the day-name table from `calendar.day_abbr`, which counts from Monday, so `SUN` became 6 and every name meant the day before, making `FRI-MON` start on Thursday. It also rejected any item containing `L` before checking names, so the month name `JUL` raised `bad special`. The spec numbers days from `SUN` as 0 and allows all of `JAN` to `DEC` in the month field."
+    },
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-26",
+      "by": "claude-opus-5-5",
+      "note": "The `_DAYS` table numbered day names from `MON` as 0, so every name meant the day before it, with `MON` read as Sunday and `FRI-MON` starting on Thursday. The spec says day of week 0 is Sunday and names run from `SUN` to `SAT`, so `SUN` is 0 and `MON` is 1."
+    },
+    "neon": {
+      "cause": "model",
+      "checked": "2026-11-26",
+      "by": "claude-opus-5-5",
+      "note": "Read `1/3` in the day-of-week field as Monday and Thursday because the code stops the stepped list at 6. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also includes 7, which is Sunday."
+    }
   }
 }

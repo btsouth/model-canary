@@ -300,5 +300,31 @@
       "by": "claude-opus-5-5",
       "note": "Read `1/3` in the day-of-week field as Monday and Thursday because the code stops the stepped list at 6. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also includes 7, which is Sunday."
     }
+  },
+  "2026-11-27": {
+    "sonnet": {
+      "cause": "model",
+      "checked": "2026-11-27",
+      "by": "claude-opus-5-5",
+      "note": "Accepted `L/2` in the day-of-month field by parsing the step and then ignoring it, so it ran like plain `L`. The spec allows `/S` only after `*`, `N` or `A-B`, and lists `L` as a separate item, so `L/2` should raise `ValueError`."
+    },
+    "astra": {
+      "cause": "model",
+      "checked": "2026-11-27",
+      "by": "claude-opus-5-5",
+      "note": "Capped the day-of-week field at 6 for `N/S` items too, so `1/3` meant only Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also includes Sunday. Only wrapping ranges are told to count through 0 to 6."
+    },
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-27",
+      "by": "claude-opus-5-5",
+      "note": "The parser rejects any item ending in `L` as a misplaced `L` or `NL` before it looks up names, so the uppercase month name `JUL` raises `ValueError`. The spec says `JAN` to `DEC` are valid month names in any case, so `JUL` must parse as July."
+    },
+    "neon": {
+      "cause": "model",
+      "checked": "2026-11-27",
+      "by": "claude-opus-5-5",
+      "note": "For `N/S` in the day-of-week field the code listed values only up to 6, so `1/3` meant just Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also keeps 7, which is Sunday."
+    }
   }
 }

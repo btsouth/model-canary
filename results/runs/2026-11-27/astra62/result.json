@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-27",
+  "started_at": "2026-11-27T11:24:09+00:00",
+  "model_key": "astra62",
+  "harness": "codex",
+  "model": "gpt-6.2-astra",
+  "plan": "ChatGPT",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-27",
+  "variant": {
+    "split": "apportion",
+    "tie": "later",
+    "sep": "|",
+    "quote": "'",
+    "rounding": "half_up",
+    "who": "person",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "and",
+      "wrap": true,
+      "years": 50
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 105.7,
+  "tokens": {
+    "input": 12283,
+    "cache_read": 153728,
+    "cache_write": 0,
+    "output": 4220,
+    "reasoning": 303
+  },
+  "api_cost_usd": 0.328555,
+  "turns": null,
+  "limits": {
+    "before": {
+      "five_hour": 0.04,
+      "seven_day": 0.16
+    },
+    "after": {
+      "five_hour": 0.1,
+      "seven_day": 0.16
+    }
+  },
+  "harness_version": "codex-cli 0.170.0",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 157,
+  "hidden_total": 157,
+  "hidden_failed": [],
+  "score": 1.0,
+  "passed": true,
+  "tests_tampered": false,
+  "diff_lines": 242,
+  "infra_error": false,
+  "harness_seen": []
+}

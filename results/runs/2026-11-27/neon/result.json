@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-27",
+  "started_at": "2026-11-27T11:32:45+00:00",
+  "model_key": "neon",
+  "harness": "antigravity",
+  "model": "gemini-4-neon",
+  "plan": "Gemini API",
+  "effort": "medium",
+  "task_version": 3,
+  "seed": "2026-11-27",
+  "variant": {
+    "split": "apportion",
+    "tie": "later",
+    "sep": "|",
+    "quote": "'",
+    "rounding": "half_up",
+    "who": "person",
+    "symbol": "\u00a3",
+    "schedule": {
+      "rule": "and",
+      "wrap": true,
+      "years": 50
+    },
+    "units": "dhms"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_seconds": 292.6,
+  "tokens": {
+    "input": 75346,
+    "cache_read": 160149,
+    "cache_write": 0,
+    "output": 35117,
+    "reasoning": 22095
+  },
+  "api_cost_usd": 0.776815,
+  "turns": 1,
+  "limits": {
+    "before": null,
+    "after": null
+  },
+  "harness_version": "1.5.18",
+  "over_limit": false,
+  "visible_tests_pass": true,
+  "hidden_passed": 156,
+  "hidden_total": 157,
+  "hidden_failed": [
+    "next_dow_step_wraps_seven"
+  ],
+  "score": 0.994,
+  "passed": false,
+  "tests_tampered": false,
+  "diff_lines": 504,
+  "infra_error": false,
+  "harness_seen": []
+}

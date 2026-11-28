@@ -1,0 +1,567 @@
+diff --git a/tally/allocate.py b/tally/allocate.py
+index c9fa9aa..8e9aa2c 100644
+--- a/tally/allocate.py
++++ b/tally/allocate.py
+@@ -14,10 +14,25 @@ def split(total, weights):
+     >>> split(100, [1, 1, 1])
+     [34, 33, 33]
+     """
+-    if not weights or any(w < 0 for w in weights) or sum(weights) == 0:
++    weights = list(weights)
++    if not weights:
+         raise ValueError("weights must be non-negative and not all zero")
+-    whole = sum(weights)
+-    return [round(total * w / whole) for w in weights]
++    frac_weights = [Fraction(w) for w in weights]
++    if any(w < 0 for w in frac_weights):
++        raise ValueError("weights must be non-negative and not all zero")
++    whole = sum(frac_weights)
++    if whole == 0:
++        raise ValueError("weights must be non-negative and not all zero")
++    sign = -1 if total < 0 else 1
++    abs_total = abs(total)
++    exact = [abs_total * w / whole for w in frac_weights]
++    shares = [e.numerator // e.denominator for e in exact]
++    remainders = [e - s for e, s in zip(exact, shares)]
++    leftover = abs_total - sum(shares)
++    order = sorted(range(len(shares)), key=lambda i: (-remainders[i], i))
++    for i in order[:leftover]:
++        shares[i] += 1
++    return [sign * s for s in shares]
+ 
+ 
+ def format_amount(cents):
+diff --git a/tally/duration.py b/tally/duration.py
+index a128806..2af689c 100644
+--- a/tally/duration.py
++++ b/tally/duration.py
+@@ -1,7 +1,9 @@
+ import re
+ 
+ _UNITS = {"h": 3600, "m": 60, "s": 1}
+-_PART = re.compile(r"(\d+)([hms])")
++_DURATION = re.compile(
++    r"\s*(?:([0-9]+)[hH])?\s*(?:([0-9]+)[mM])?\s*(?:([0-9]+)[sS])?\s*"
++)
+ 
+ 
+ def parse(text):
+@@ -12,10 +14,18 @@ def parse(text):
+     and between the parts are allowed. Anything else, including an empty string,
+     raises ValueError.
+     """
+-    parts = _PART.findall(text.strip())
+-    if not parts:
++    match = _DURATION.fullmatch(text)
++    if not match or not any(match.groups()):
+         raise ValueError(f"bad duration: {text!r}")
+-    return sum(int(n) * _UNITS[u] for n, u in parts)
++    h, m, s = match.groups()
++    total = 0
++    if h is not None:
++        total += int(h) * 3600
++    if m is not None:
++        total += int(m) * 60
++    if s is not None:
++        total += int(s)
++    return total
+ 
+ 
+ def format_duration(seconds):
+diff --git a/tally/fields.py b/tally/fields.py
+index 098e78d..86fe82f 100644
+--- a/tally/fields.py
++++ b/tally/fields.py
+@@ -12,27 +12,77 @@ def parse_fields(text):
+     are skipped, so a blank line gives {}. A field without '=', an empty key, a
+     quote that is never closed, or a key that appears twice raises ValueError.
+     """
+-    fields, field, quoted = [], "", False
+-    for ch in text:
+-        if ch == QUOTE:
+-            quoted = not quoted
+-            field += ch
+-        elif ch == SEP and not quoted:
+-            fields.append(field)
+-            field = ""
+-        else:
+-            field += ch
+-    fields.append(field)
+     result = {}
+-    for field in fields:
+-        if not field.strip():
++    i = 0
++    n = len(text)
++    while i < n:
++        while i < n and text[i].isspace():
++            i += 1
++        if i >= n:
++            break
++        if text[i] == SEP:
++            i += 1
+             continue
+-        if "=" not in field:
+-            raise ValueError(f"field without '=': {field!r}")
+-        key, value = (part.strip() for part in field.split("=", 1))
++
++        # Parse key up to '=' or SEP
++        key_start = i
++        while i < n and text[i] != "=" and text[i] != SEP:
++            i += 1
++        if i >= n or text[i] != "=":
++            raise ValueError(f"field without '=': {text[key_start:i]!r}")
++        key = text[key_start:i].strip()
+         if not key:
+-            raise ValueError(f"empty key in {field!r}")
+-        if len(value) >= 2 and value[0] == QUOTE and value[-1] == QUOTE:
+-            value = value[1:-1]
+-        result[key] = value
++            raise ValueError(f"empty key in {text[key_start:i+1]!r}")
++        if key in result:
++            raise ValueError(f"duplicate key: {key!r}")
++        i += 1  # skip '='
++
++        # Skip whitespace before value
++        while i < n and text[i].isspace():
++            i += 1
++
++        if i >= n:
++            result[key] = ""
++            break
++        if text[i] == SEP:
++            result[key] = ""
++            i += 1
++            continue
++
++        if text[i] == QUOTE:
++            i += 1  # skip opening quote
++            chars = []
++            closed = False
++            while i < n:
++                if text[i] == QUOTE:
++                    if i + 1 < n and text[i + 1] == QUOTE:
++                        chars.append(QUOTE)
++                        i += 2
++                    else:
++                        i += 1
++                        closed = True
++                        break
++                else:
++                    chars.append(text[i])
++                    i += 1
++            if not closed:
++                raise ValueError("unclosed quote")
++            while i < n and text[i].isspace():
++                i += 1
++            if i < n:
++                if text[i] == SEP:
++                    i += 1
++                else:
++                    raise ValueError(f"unexpected character after closing quote: {text[i]!r}")
++            result[key] = "".join(chars)
++        else:
++            val_start = i
++            while i < n and text[i] != SEP:
++                if text[i] == QUOTE:
++                    raise ValueError("unexpected quote in unquoted value")
++                i += 1
++            result[key] = text[val_start:i].strip()
++            if i < n and text[i] == SEP:
++                i += 1
++
+     return result
+diff --git a/tally/intervals.py b/tally/intervals.py
+index 247fcc1..e02a0dc 100644
+--- a/tally/intervals.py
++++ b/tally/intervals.py
+@@ -6,11 +6,17 @@ def merge(intervals):
+     an interval with start > end raises ValueError. Returns a sorted list of
+     (start, end) tuples.
+     """
+-    result = []
++    valid = []
+     for start, end in intervals:
++        if start > end:
++            raise ValueError(f"invalid interval: ({start}, {end})")
+         if start == end:
+             continue
+-        if result and start < result[-1][1]:
++        valid.append((start, end))
++    valid.sort()
++    result = []
++    for start, end in valid:
++        if result and start <= result[-1][1]:
+             result[-1] = (result[-1][0], max(result[-1][1], end))
+         else:
+             result.append((start, end))
+@@ -29,7 +35,7 @@ def free_slots(busy, day_start, day_end, min_length=1):
+     for start, end in merge(busy):
+         if end <= day_start or start >= day_end:
+             continue
+-        if start - cursor > min_length:
++        if start - cursor >= min_length:
+             slots.append((cursor, start))
+         cursor = max(cursor, end)
+     if day_end - cursor >= min_length:
+diff --git a/tally/ledger.py b/tally/ledger.py
+index 20048cb..a5bd34a 100644
+--- a/tally/ledger.py
++++ b/tally/ledger.py
+@@ -21,14 +21,20 @@ def bill(entries, rate_per_hour):
+     Returns a list of (name, cents) pairs; no entries gives [].
+     """
+     totals = {}
+-    charge = 0
++    display = {}
+     for name, text in entries:
+         seconds = parse(text)
+-        name = name.strip()
+-        totals[name] = totals.get(name, 0) + seconds
+-        charge += round(seconds * rate_per_hour / 3600)
++        trimmed = name.strip()
++        key = trimmed.casefold()
++        if key not in display:
++            display[key] = trimmed
++        totals[key] = totals.get(key, 0) + seconds
+     if not totals:
+         return []
+-    names = list(totals)
+-    shares = split(charge, [totals[n] for n in names])
+-    return list(zip(names, shares))
++    keys = list(totals)
++    total_seconds = sum(totals.values())
++    if total_seconds == 0:
++        return [(display[k], 0) for k in keys]
++    charge = round(Fraction(total_seconds * rate_per_hour, 3600))
++    shares = split(charge, [totals[k] for k in keys])
++    return [(display[k], share) for k, share in zip(keys, shares)]
+diff --git a/tally/schedule.py b/tally/schedule.py
+index 8965296..e1a09f1 100644
+--- a/tally/schedule.py
++++ b/tally/schedule.py
+@@ -1,11 +1,323 @@
+ """Cron-style schedules. SCHEDULE.md has the full rules."""
+ 
++import calendar
++import datetime
++import re
++
++_SHORTCUTS = {
++    "@yearly": "0 0 1 1 *",
++    "@annually": "0 0 1 1 *",
++    "@monthly": "0 0 1 * *",
++    "@weekly": "0 0 * * 0",
++    "@daily": "0 0 * * *",
++    "@midnight": "0 0 * * *",
++    "@hourly": "0 * * * *",
++}
++
++_MONTH_NAMES = {
++    "jan": 1,
++    "feb": 2,
++    "mar": 3,
++    "apr": 4,
++    "may": 5,
++    "jun": 6,
++    "jul": 7,
++    "aug": 8,
++    "sep": 9,
++    "oct": 10,
++    "nov": 11,
++    "dec": 12,
++}
++
++_DOW_NAMES = {
++    "sun": 0,
++    "mon": 1,
++    "tue": 2,
++    "wed": 3,
++    "thu": 4,
++    "fri": 5,
++    "sat": 6,
++}
++
++_DIGITS = re.compile(r"[0-9]+")
++_FIELD_SEP = re.compile(r"[ \t]+")
++
++
++def _parse_int(token):
++    if not _DIGITS.fullmatch(token):
++        raise ValueError(f"invalid number: {token!r}")
++    return int(token)
++
++
++def _parse_value(token, min_val, max_val, names):
++    if _DIGITS.fullmatch(token):
++        val = int(token)
++    elif names is not None and token.lower() in names:
++        val = names[token.lower()]
++    else:
++        raise ValueError(f"invalid field value: {token!r}")
++    if not (min_val <= val <= max_val):
++        raise ValueError(f"value {val} out of range {min_val}-{max_val}")
++    return val
++
++
++def _parse_standard_item(item, min_val, max_val, names):
++    if "/" in item:
++        parts = item.split("/")
++        if len(parts) != 2 or not parts[0] or not parts[1]:
++            raise ValueError(f"invalid step item: {item!r}")
++        base, step_str = parts
++        step = _parse_int(step_str)
++        if step < 1:
++            raise ValueError(f"step must be >= 1: {item!r}")
++    else:
++        base = item
++        step = 1
++
++    if base == "*":
++        start, end = min_val, max_val
++    elif "-" in base:
++        bounds = base.split("-")
++        if len(bounds) != 2 or not bounds[0] or not bounds[1]:
++            raise ValueError(f"invalid range: {item!r}")
++        start = _parse_value(bounds[0], min_val, max_val, names)
++        end = _parse_value(bounds[1], min_val, max_val, names)
++        if start > end:
++            raise ValueError(f"range start > end: {item!r}")
++    else:
++        start = _parse_value(base, min_val, max_val, names)
++        end = max_val if "/" in item else start
++
++    return range(start, end + 1, step)
++
++
++def _parse_simple_field(field, min_val, max_val, names=None):
++    items = field.split(",")
++    values = set()
++    for item in items:
++        if not item:
++            raise ValueError(f"empty item in field: {field!r}")
++        values.update(_parse_standard_item(item, min_val, max_val, names))
++    return sorted(values)
++
++
++def _parse_dom_field(field):
++    if field in ("*", "?"):
++        return False, set(range(1, 32)), False
++    items = field.split(",")
++    values = set()
++    last_day = False
++    for item in items:
++        if not item:
++            raise ValueError(f"empty item in day-of-month field: {field!r}")
++        if item == "L":
++            last_day = True
++        else:
++            values.update(_parse_standard_item(item, 1, 31, None))
++    return True, values, last_day
++
++
++def _parse_dow_field(field):
++    if field in ("*", "?"):
++        return False, set(range(7)), set(), set()
++    items = field.split(",")
++    values = set()
++    last_dows = set()
++    nth_dows = set()
++    for item in items:
++        if not item:
++            raise ValueError(f"empty item in day-of-week field: {field!r}")
++        if item.endswith("L"):
++            num_str = item[:-1]
++            if not num_str:
++                raise ValueError(f"invalid NL item: {item!r}")
++            n = _parse_int(num_str)
++            if not (0 <= n <= 7):
++                raise ValueError(f"day of week out of range: {item!r}")
++            last_dows.add(n % 7)
++        elif "#" in item:
++            parts = item.split("#")
++            if len(parts) != 2 or not parts[0] or not parts[1]:
++                raise ValueError(f"invalid N#K item: {item!r}")
++            n = _parse_int(parts[0])
++            k = _parse_int(parts[1])
++            if not (0 <= n <= 7):
++                raise ValueError(f"day of week out of range: {item!r}")
++            if not (1 <= k <= 5):
++                raise ValueError(f"nth occurrence out of range: {item!r}")
++            nth_dows.add((n % 7, k))
++        else:
++            for v in _parse_standard_item(item, 0, 7, _DOW_NAMES):
++                values.add(v % 7)
++    return True, values, last_dows, nth_dows
++
++
++class _Schedule:
++    def __init__(self, expr):
++        if not isinstance(expr, str):
++            raise ValueError("schedule expression must be a string")
++        text = expr.strip()
++        if not text:
++            raise ValueError("empty schedule expression")
++        if text.startswith("@"):
++            key = text.lower()
++            if key not in _SHORTCUTS:
++                raise ValueError(f"unknown shortcut: {text!r}")
++            text = _SHORTCUTS[key]
++
++        parts = _FIELD_SEP.split(text)
++        if len(parts) != 5:
++            raise ValueError(f"expected 5 fields, got {len(parts)}: {expr!r}")
++
++        min_f, hour_f, dom_f, month_f, dow_f = parts
++        self.minutes = _parse_simple_field(min_f, 0, 59)
++        self.minutes_set = set(self.minutes)
++        self.hours = _parse_simple_field(hour_f, 0, 23)
++        self.hours_set = set(self.hours)
++        self.dom_restricted, self.dom_values, self.dom_last = _parse_dom_field(dom_f)
++        self.months = _parse_simple_field(month_f, 1, 12, _MONTH_NAMES)
++        self.months_set = set(self.months)
++        (
++            self.dow_restricted,
++            self.dow_values,
++            self.dow_last,
++            self.dow_nth,
++        ) = _parse_dow_field(dow_f)
++
++    def _dom_matches(self, day, days_in_month):
++        return (day in self.dom_values) or (self.dom_last and day == days_in_month)
++
++    def _dow_matches(self, year, month, day, days_in_month):
++        dow = (datetime.date(year, month, day).weekday() + 1) % 7
++        if dow in self.dow_values:
++            return True
++        if dow in self.dow_last and day + 7 > days_in_month:
++            return True
++        if self.dow_nth and (dow, (day - 1) // 7 + 1) in self.dow_nth:
++            return True
++        return False
++
++    def _day_matches(self, year, month, day, days_in_month):
++        if self.dom_restricted and self.dow_restricted:
++            return self._dom_matches(day, days_in_month) or self._dow_matches(
++                year, month, day, days_in_month
++            )
++        if self.dom_restricted:
++            return self._dom_matches(day, days_in_month)
++        if self.dow_restricted:
++            return self._dow_matches(year, month, day, days_in_month)
++        return True
++
++    def matches(self, when):
++        if when.month not in self.months_set:
++            return False
++        if when.hour not in self.hours_set:
++            return False
++        if when.minute not in self.minutes_set:
++            return False
++        days_in_month = calendar.monthrange(when.year, when.month)[1]
++        return self._day_matches(when.year, when.month, when.day, days_in_month)
++
++    def _next_month_start(self, year, month):
++        for m in self.months:
++            if m > month:
++                return datetime.datetime(year, m, 1, self.hours[0], self.minutes[0])
++        if year >= datetime.MAXYEAR:
++            return None
++        return datetime.datetime(year + 1, self.months[0], 1, self.hours[0], self.minutes[0])
++
++    def next_run(self, after):
++        try:
++            cur = after.replace(second=0, microsecond=0) + datetime.timedelta(minutes=1)
++        except OverflowError:
++            return None
++        try:
++            limit = after + datetime.timedelta(days=50 * 365)
++        except OverflowError:
++            limit = datetime.datetime.max
++
++        while cur <= limit:
++            if cur.month not in self.months_set:
++                cur = self._next_month_start(cur.year, cur.month)
++                if cur is None:
++                    return None
++                continue
++
++            days_in_month = calendar.monthrange(cur.year, cur.month)[1]
++            matched_day = None
++            for d in range(cur.day, days_in_month + 1):
++                if self._day_matches(cur.year, cur.month, d, days_in_month):
++                    matched_day = d
++                    break
++
++            if matched_day is None:
++                cur = self._next_month_start(cur.year, cur.month)
++                if cur is None:
++                    return None
++                continue
++
++            if matched_day > cur.day:
++                cur = datetime.datetime(
++                    cur.year, cur.month, matched_day, self.hours[0], self.minutes[0]
++                )
++                return cur if cur <= limit else None
++
++            if cur.hour not in self.hours_set:
++                next_hour = None
++                for h in self.hours:
++                    if h > cur.hour:
++                        next_hour = h
++                        break
++                if next_hour is not None:
++                    cur = datetime.datetime(
++                        cur.year, cur.month, cur.day, next_hour, self.minutes[0]
++                    )
++                    return cur if cur <= limit else None
++                try:
++                    cur = datetime.datetime(
++                        cur.year, cur.month, cur.day, self.hours[0], self.minutes[0]
++                    ) + datetime.timedelta(days=1)
++                except OverflowError:
++                    return None
++                continue
++
++            next_min = None
++            for mi in self.minutes:
++                if mi >= cur.minute:
++                    next_min = mi
++                    break
++            if next_min is not None:
++                cur = datetime.datetime(
++                    cur.year, cur.month, cur.day, cur.hour, next_min
++                )
++                return cur if cur <= limit else None
++
++            next_hour = None
++            for h in self.hours:
++                if h > cur.hour:
++                    next_hour = h
++                    break
++            if next_hour is not None:
++                cur = datetime.datetime(
++                    cur.year, cur.month, cur.day, next_hour, self.minutes[0]
++                )
++                return cur if cur <= limit else None
++
++            try:
++                cur = datetime.datetime(
++                    cur.year, cur.month, cur.day, self.hours[0], self.minutes[0]
++                ) + datetime.timedelta(days=1)
++            except OverflowError:
++                return None
++
++        return None
++
+ 
+ def matches(expr, when):
+     """True if the schedule expr runs at the minute of the datetime when."""
+-    raise NotImplementedError
++    return _Schedule(expr).matches(when)
+ 
+ 
+ def next_run(expr, after):
+     """The first run of expr strictly after the datetime after, or None."""
+-    raise NotImplementedError
++    return _Schedule(expr).next_run(after)

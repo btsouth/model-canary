@@ -326,5 +326,19 @@
       "by": "claude-opus-5-5",
       "note": "For `N/S` in the day-of-week field the code listed values only up to 6, so `1/3` meant just Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also keeps 7, which is Sunday."
     }
+  },
+  "2026-11-28": {
+    "luna": {
+      "cause": "model",
+      "checked": "2026-11-28",
+      "by": "claude-opus-5-5",
+      "note": "The parser kept day-of-week value `7` as 7, but the matcher compares against `(weekday()+1)%7`, which is never 7, so `7`, `6-7` and the Sunday at the end of `1/3` never match. The spec says 0 and 7 are both Sunday in the day-of-week field, so `7` should have been mapped to 0 for plain values, ranges and steps, as the code already did for `NL` and `N#K`."
+    },
+    "luna-high": {
+      "cause": "model",
+      "checked": "2026-11-28",
+      "by": "claude-opus-5-5",
+      "note": "The `L` and `#` modifier check in `_parse_field` runs on every field and is case sensitive, so the month name `JUL` is rejected with `invalid day modifier` while lowercase `jul` is accepted. The spec lists `JAN` to `DEC` as valid month names in any case, so `JUL` must parse as July."
+    }
   }
 }

@@ -1,22 +1,22 @@
 {
   "schema": 2,
   "task_version": 3,
-  "updated": "2026-11-27T11:37:38+00:00",
-  "date": "2026-11-27",
+  "updated": "2026-11-28T11:31:56+00:00",
+  "date": "2026-11-28",
   "variant": {
-    "split": "apportion",
-    "tie": "later",
-    "sep": "|",
-    "quote": "'",
-    "rounding": "half_up",
-    "who": "person",
-    "symbol": "\u00a3",
+    "split": "split",
+    "tie": "earlier",
+    "sep": ",",
+    "quote": "\"",
+    "rounding": "half_even",
+    "who": "account",
+    "symbol": "$",
     "schedule": {
-      "rule": "and",
-      "wrap": true,
+      "rule": "or",
+      "wrap": false,
       "years": 50
     },
-    "units": "dhms"
+    "units": "hms"
   },
   "hidden_total": 157,
   "events": [
@@ -67,6 +67,12 @@
       "vendor": "Google",
       "kind": "harness",
       "text": "Antigravity 1.5.18"
+    },
+    {
+      "date": "2026-11-28",
+      "vendor": "Google",
+      "kind": "harness",
+      "text": "Antigravity 1.5.19"
     }
   ],
   "models": {
@@ -80,37 +86,37 @@
       "retired": null,
       "until": null,
       "first": "2026-10-21",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 31,
+      "runs": 32,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
       "median_seconds_30": 123.9,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 143.8,
+        "wall_seconds": 108.5,
         "tokens": {
           "input": 16,
-          "cache_read": 157750,
-          "cache_write": 23398,
-          "output": 14779,
-          "reasoning": 5380
+          "cache_read": 138457,
+          "cache_write": 19078,
+          "output": 11088,
+          "reasoning": 4252
         },
-        "api_cost_usd": 0.514378,
+        "api_cost_usd": 0.4021394,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -828,6 +834,29 @@
           "plan": "Claude Ultra",
           "tokens": 195943,
           "output": 14779
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 108.5,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.09
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.09
+            }
+          },
+          "api_cost_usd": 0.4021394,
+          "turns": 8,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
+          "tokens": 168639,
+          "output": 11088
         }
       ]
     },
@@ -841,37 +870,37 @@
       "retired": null,
       "until": null,
       "first": "2026-11-13",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 15,
+      "runs": 16,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 101.5,
+      "median_seconds_30": 102.5,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 106.2,
+        "wall_seconds": 103.6,
         "tokens": {
-          "input": 8,
-          "cache_read": 40572,
-          "cache_write": 26535,
-          "output": 11416,
-          "reasoning": 4425
+          "input": 6,
+          "cache_read": 24636,
+          "cache_write": 25174,
+          "output": 11141,
+          "reasoning": 4694
         },
-        "api_cost_usd": 0.44874640000000005,
+        "api_cost_usd": 0.42916319999999997,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -1221,6 +1250,29 @@
           "plan": "Claude Ultra",
           "tokens": 78531,
           "output": 11416
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 103.6,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.09
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.09
+            }
+          },
+          "api_cost_usd": 0.42916319999999997,
+          "turns": 3,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
+          "tokens": 60957,
+          "output": 11141
         }
       ]
     },
@@ -2000,37 +2052,37 @@
       "retired": null,
       "until": null,
       "first": "2026-10-30",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 22,
-      "pass_rate_30": 0.727,
+      "runs": 23,
+      "pass_rate_30": 0.739,
       "mean_score_30": 0.998,
-      "median_seconds_30": 72.7,
+      "median_seconds_30": 72.3,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
-        "passed": false,
-        "score": 0.994,
-        "hidden_passed": 156,
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 73.3,
+        "wall_seconds": 64.0,
         "tokens": {
           "input": 10,
-          "cache_read": 68281,
-          "cache_write": 17974,
-          "output": 10377,
-          "reasoning": 4573
+          "cache_read": 69300,
+          "cache_write": 17719,
+          "output": 9444,
+          "reasoning": 3540
         },
-        "api_cost_usd": 0.18251409999999998,
+        "api_cost_usd": 0.172266,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -2574,6 +2626,29 @@
             "by": "claude-opus-5-5",
             "note": "Accepted `L/2` in the day-of-month field by parsing the step and then ignoring it, so it ran like plain `L`. The spec allows `/S` only after `*`, `N` or `A-B`, and lists `L` as a separate item, so `L/2` should raise `ValueError`."
           }
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 64.0,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.09
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.09
+            }
+          },
+          "api_cost_usd": 0.172266,
+          "turns": 5,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
+          "tokens": 96473,
+          "output": 9444
         }
       ]
     },
@@ -2587,37 +2662,37 @@
       "retired": null,
       "until": null,
       "first": "2026-10-30",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "Claude Ultra",
       "effort": "medium",
-      "runs": 22,
-      "pass_rate_30": 0.909,
+      "runs": 23,
+      "pass_rate_30": 0.913,
       "mean_score_30": 0.999,
-      "median_seconds_30": 158.3,
+      "median_seconds_30": 156.5,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 169.7,
+        "wall_seconds": 129.3,
         "tokens": {
           "input": 14,
-          "cache_read": 220583,
-          "cache_write": 49785,
-          "output": 39670,
-          "reasoning": 29783
+          "cache_read": 185048,
+          "cache_write": 37572,
+          "output": 29313,
+          "reasoning": 20798
         },
-        "api_cost_usd": 0.03199923,
+        "api_cost_usd": 0.024022779999999997,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -3139,6 +3214,29 @@
           "plan": "Claude Ultra",
           "tokens": 310052,
           "output": 39670
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 129.3,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.09
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.09
+            }
+          },
+          "api_cost_usd": 0.024022779999999997,
+          "turns": 7,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
+          "tokens": 251947,
+          "output": 29313
         }
       ]
     },
@@ -3152,37 +3250,37 @@
       "retired": null,
       "until": null,
       "first": "2026-11-15",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "Claude Ultra",
       "effort": "high",
-      "runs": 13,
+      "runs": 14,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 306.9,
+      "median_seconds_30": 306.7,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 368.1,
+        "wall_seconds": 212.6,
         "tokens": {
-          "input": 52,
-          "cache_read": 1737487,
-          "cache_write": 87760,
-          "output": 77238,
-          "reasoning": 55696
+          "input": 20,
+          "cache_read": 402078,
+          "cache_write": 58416,
+          "output": 49903,
+          "reasoning": 37172
         },
-        "api_cost_usd": 0.07355107,
+        "api_cost_usd": 0.040657479999999996,
         "limits": {
           "before": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           },
           "after": {
             "five_hour": null,
-            "seven_day": 0.07
+            "seven_day": 0.09
           }
         },
         "harness_version": "2.1.319 (Claude Code)"
@@ -3486,6 +3584,29 @@
           "plan": "Claude Ultra",
           "tokens": 1902537,
           "output": 77238
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 212.6,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": null,
+              "seven_day": 0.09
+            },
+            "after": {
+              "five_hour": null,
+              "seven_day": 0.09
+            }
+          },
+          "api_cost_usd": 0.040657479999999996,
+          "turns": 14,
+          "harness_version": "2.1.319 (Claude Code)",
+          "plan": "Claude Ultra",
+          "tokens": 510417,
+          "output": 49903
         }
       ]
     },
@@ -3499,37 +3620,37 @@
       "retired": null,
       "until": null,
       "first": "2026-11-18",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 10,
+      "runs": 11,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 225.4,
+      "median_seconds_30": 231.1,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 277.2,
+        "wall_seconds": 249.5,
         "tokens": {
-          "input": 54341,
-          "cache_read": 242560,
+          "input": 52304,
+          "cache_read": 340736,
           "cache_write": 0,
-          "output": 12432,
-          "reasoning": 3893
+          "output": 11584,
+          "reasoning": 2311
         },
-        "api_cost_usd": 0.257258,
+        "api_cost_usd": 0.254522,
         "limits": {
           "before": {
             "five_hour": 0.0,
-            "seven_day": 0.15
+            "seven_day": 0.17
           },
           "after": {
-            "five_hour": 0.02,
-            "seven_day": 0.15
+            "five_hour": 0.03,
+            "seven_day": 0.18
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -3764,6 +3885,29 @@
           "plan": "ChatGPT",
           "tokens": 309333,
           "output": 12432
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 249.5,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.0,
+              "seven_day": 0.17
+            },
+            "after": {
+              "five_hour": 0.03,
+              "seven_day": 0.18
+            }
+          },
+          "api_cost_usd": 0.254522,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 404624,
+          "output": 11584
         }
       ]
     },
@@ -3777,37 +3921,37 @@
       "retired": null,
       "until": "2026-11-30",
       "first": "2026-10-21",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 31,
+      "runs": 32,
       "pass_rate_30": 0.9,
       "mean_score_30": 0.999,
-      "median_seconds_30": 142.6,
+      "median_seconds_30": 143.8,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 158.3,
+        "wall_seconds": 162.9,
         "tokens": {
-          "input": 19042,
-          "cache_read": 178304,
+          "input": 21389,
+          "cache_read": 204288,
           "cache_write": 0,
-          "output": 7052,
-          "reasoning": 1099
+          "output": 7466,
+          "reasoning": 827
         },
-        "api_cost_usd": 0.126434,
+        "api_cost_usd": 0.137867,
         "limits": {
           "before": {
-            "five_hour": 0.02,
-            "seven_day": 0.15
+            "five_hour": 0.03,
+            "seven_day": 0.18
           },
           "after": {
             "five_hour": 0.04,
-            "seven_day": 0.15
+            "seven_day": 0.18
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -4542,6 +4686,29 @@
           "plan": "ChatGPT",
           "tokens": 204398,
           "output": 7052
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 162.9,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.03,
+              "seven_day": 0.18
+            },
+            "after": {
+              "five_hour": 0.04,
+              "seven_day": 0.18
+            }
+          },
+          "api_cost_usd": 0.137867,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 233143,
+          "output": 7466
         }
       ]
     },
@@ -4555,37 +4722,37 @@
       "retired": null,
       "until": null,
       "first": "2026-10-30",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 22,
-      "pass_rate_30": 0.909,
+      "runs": 23,
+      "pass_rate_30": 0.913,
       "mean_score_30": 0.999,
-      "median_seconds_30": 77.2,
+      "median_seconds_30": 77.3,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 82.4,
+        "wall_seconds": 91.1,
         "tokens": {
-          "input": 8700,
-          "cache_read": 113664,
+          "input": 13158,
+          "cache_read": 161664,
           "cache_write": 0,
-          "output": 4026,
-          "reasoning": 175
+          "output": 4396,
+          "reasoning": 224
         },
-        "api_cost_usd": 0.034513,
+        "api_cost_usd": 0.043221,
         "limits": {
           "before": {
             "five_hour": 0.04,
-            "seven_day": 0.15
+            "seven_day": 0.18
           },
           "after": {
-            "five_hour": 0.04,
-            "seven_day": 0.16
+            "five_hour": 0.05,
+            "seven_day": 0.18
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -5108,6 +5275,29 @@
           "plan": "ChatGPT",
           "tokens": 126390,
           "output": 4026
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 91.1,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.04,
+              "seven_day": 0.18
+            },
+            "after": {
+              "five_hour": 0.05,
+              "seven_day": 0.18
+            }
+          },
+          "api_cost_usd": 0.043221,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 179218,
+          "output": 4396
         }
       ]
     },
@@ -5121,37 +5311,37 @@
       "retired": null,
       "until": null,
       "first": "2026-11-18",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 10,
+      "runs": 11,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 105.6,
+      "median_seconds_30": 105.5,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 105.7,
+        "wall_seconds": 103.2,
         "tokens": {
-          "input": 12283,
-          "cache_read": 153728,
+          "input": 12526,
+          "cache_read": 183552,
           "cache_write": 0,
-          "output": 4220,
-          "reasoning": 303
+          "output": 4135,
+          "reasoning": 172
         },
-        "api_cost_usd": 0.328555,
+        "api_cost_usd": 0.339029,
         "limits": {
           "before": {
-            "five_hour": 0.04,
-            "seven_day": 0.16
+            "five_hour": 0.05,
+            "seven_day": 0.18
           },
           "after": {
-            "five_hour": 0.1,
-            "seven_day": 0.16
+            "five_hour": 0.11,
+            "seven_day": 0.19
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -5386,6 +5576,29 @@
           "plan": "ChatGPT",
           "tokens": 170231,
           "output": 4220
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 103.2,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.05,
+              "seven_day": 0.18
+            },
+            "after": {
+              "five_hour": 0.11,
+              "seven_day": 0.19
+            }
+          },
+          "api_cost_usd": 0.339029,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 200213,
+          "output": 4135
         }
       ]
     },
@@ -5399,37 +5612,37 @@
       "retired": null,
       "until": "2026-11-30",
       "first": "2026-10-21",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 31,
+      "runs": 32,
       "pass_rate_30": 0.867,
       "mean_score_30": 0.999,
-      "median_seconds_30": 124.7,
+      "median_seconds_30": 122.2,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
-        "passed": false,
-        "score": 0.994,
-        "hidden_passed": 156,
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 126.3,
+        "wall_seconds": 114.7,
         "tokens": {
-          "input": 13617,
-          "cache_read": 134016,
+          "input": 23363,
+          "cache_read": 109312,
           "cache_write": 0,
-          "output": 4940,
-          "reasoning": 419
+          "output": 4786,
+          "reasoning": 226
         },
-        "api_cost_usd": 0.517186,
+        "api_cost_usd": 0.582242,
         "limits": {
           "before": {
-            "five_hour": 0.1,
-            "seven_day": 0.16
+            "five_hour": 0.11,
+            "seven_day": 0.19
           },
           "after": {
-            "five_hour": 0.15,
-            "seven_day": 0.17
+            "five_hour": 0.16,
+            "seven_day": 0.2
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -6169,6 +6382,29 @@
             "by": "claude-opus-5-5",
             "note": "Capped the day-of-week field at 6 for `N/S` items too, so `1/3` meant only Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also includes Sunday. Only wrapping ranges are told to count through 0 to 6."
           }
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 114.7,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.11,
+              "seven_day": 0.19
+            },
+            "after": {
+              "five_hour": 0.16,
+              "seven_day": 0.2
+            }
+          },
+          "api_cost_usd": 0.582242,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 137461,
+          "output": 4786
         }
       ]
     },
@@ -6182,37 +6418,37 @@
       "retired": null,
       "until": null,
       "first": "2026-10-30",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "medium",
-      "runs": 22,
-      "pass_rate_30": 0.182,
-      "mean_score_30": 0.95,
-      "median_seconds_30": 101.8,
+      "runs": 23,
+      "pass_rate_30": 0.174,
+      "mean_score_30": 0.952,
+      "median_seconds_30": 99.7,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": false,
-        "score": 0.981,
-        "hidden_passed": 154,
+        "score": 0.987,
+        "hidden_passed": 155,
         "hidden_total": 157,
-        "wall_seconds": 99.7,
+        "wall_seconds": 89.7,
         "tokens": {
-          "input": 25366,
-          "cache_read": 194304,
+          "input": 13281,
+          "cache_read": 121088,
           "cache_write": 0,
-          "output": 4610,
-          "reasoning": 847
+          "output": 4582,
+          "reasoning": 598
         },
-        "api_cost_usd": 0.006785,
+        "api_cost_usd": 0.00483,
         "limits": {
           "before": {
-            "five_hour": 0.15,
-            "seven_day": 0.17
+            "five_hour": 0.16,
+            "seven_day": 0.2
           },
           "after": {
-            "five_hour": 0.15,
-            "seven_day": 0.17
+            "five_hour": 0.16,
+            "seven_day": 0.2
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -6824,6 +7060,35 @@
             "by": "claude-opus-5-5",
             "note": "The parser rejects any item ending in `L` as a misplaced `L` or `NL` before it looks up names, so the uppercase month name `JUL` raises `ValueError`. The spec says `JAN` to `DEC` are valid month names in any case, so `JUL` must parse as July."
           }
+        },
+        {
+          "date": "2026-11-28",
+          "passed": false,
+          "score": 0.987,
+          "wall_seconds": 89.7,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.16,
+              "seven_day": 0.2
+            },
+            "after": {
+              "five_hour": 0.16,
+              "seven_day": 0.2
+            }
+          },
+          "api_cost_usd": 0.00483,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 138951,
+          "output": 4582,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-28",
+            "by": "claude-opus-5-5",
+            "note": "The parser kept day-of-week value `7` as 7, but the matcher compares against `(weekday()+1)%7`, which is never 7, so `7`, `6-7` and the Sunday at the end of `1/3` never match. The spec says 0 and 7 are both Sunday in the day-of-week field, so `7` should have been mapped to 0 for plain values, ranges and steps, as the code already did for `NL` and `N#K`."
+          }
         }
       ]
     },
@@ -6837,37 +7102,37 @@
       "retired": null,
       "until": null,
       "first": "2026-11-15",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "ChatGPT",
       "effort": "high",
-      "runs": 13,
-      "pass_rate_30": 0.538,
+      "runs": 14,
+      "pass_rate_30": 0.5,
       "mean_score_30": 0.989,
-      "median_seconds_30": 191.7,
+      "median_seconds_30": 189.6,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
-        "passed": true,
-        "score": 1.0,
-        "hidden_passed": 157,
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
+        "passed": false,
+        "score": 0.994,
+        "hidden_passed": 156,
         "hidden_total": 157,
-        "wall_seconds": 183.6,
+        "wall_seconds": 155.9,
         "tokens": {
-          "input": 25390,
-          "cache_read": 339584,
+          "input": 25933,
+          "cache_read": 295424,
           "cache_write": 0,
-          "output": 9138,
-          "reasoning": 4125
+          "output": 7871,
+          "reasoning": 2939
         },
-        "api_cost_usd": 0.010504,
+        "api_cost_usd": 0.009483,
         "limits": {
           "before": {
-            "five_hour": 0.15,
-            "seven_day": 0.17
+            "five_hour": 0.16,
+            "seven_day": 0.2
           },
           "after": {
-            "five_hour": 0.15,
-            "seven_day": 0.17
+            "five_hour": 0.16,
+            "seven_day": 0.2
           }
         },
         "harness_version": "codex-cli 0.170.0"
@@ -7207,6 +7472,35 @@
           "plan": "ChatGPT",
           "tokens": 374112,
           "output": 9138
+        },
+        {
+          "date": "2026-11-28",
+          "passed": false,
+          "score": 0.994,
+          "wall_seconds": 155.9,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.16,
+              "seven_day": 0.2
+            },
+            "after": {
+              "five_hour": 0.16,
+              "seven_day": 0.2
+            }
+          },
+          "api_cost_usd": 0.009483,
+          "turns": null,
+          "harness_version": "codex-cli 0.170.0",
+          "plan": "ChatGPT",
+          "tokens": 329228,
+          "output": 7871,
+          "review": {
+            "cause": "model",
+            "checked": "2026-11-28",
+            "by": "claude-opus-5-5",
+            "note": "The `L` and `#` modifier check in `_parse_field` runs on every field and is case sensitive, so the month name `JUL` is rejected with `invalid day modifier` while lowercase `jul` is accepted. The spec lists `JAN` to `DEC` as valid month names in any case, so `JUL` must parse as July."
+          }
         }
       ]
     },
@@ -7220,34 +7514,34 @@
       "retired": null,
       "until": null,
       "first": "2026-11-22",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "Gemini API",
       "effort": "medium",
-      "runs": 6,
-      "pass_rate_30": 0.333,
-      "mean_score_30": 0.996,
-      "median_seconds_30": 288.9,
+      "runs": 7,
+      "pass_rate_30": 0.429,
+      "mean_score_30": 0.997,
+      "median_seconds_30": 285.1,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
-        "passed": false,
-        "score": 0.994,
-        "hidden_passed": 156,
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
+        "passed": true,
+        "score": 1.0,
+        "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 292.6,
+        "wall_seconds": 260.3,
         "tokens": {
-          "input": 75346,
-          "cache_read": 160149,
+          "input": 72395,
+          "cache_read": 192085,
           "cache_write": 0,
-          "output": 35117,
-          "reasoning": 22095
+          "output": 29878,
+          "reasoning": 19092
         },
-        "api_cost_usd": 0.776815,
+        "api_cost_usd": 0.694168,
         "limits": {
           "before": null,
           "after": null
         },
-        "harness_version": "1.5.18"
+        "harness_version": "1.5.19"
       },
       "history": [
         {
@@ -7375,6 +7669,23 @@
             "by": "claude-opus-5-5",
             "note": "For `N/S` in the day-of-week field the code listed values only up to 6, so `1/3` meant just Monday and Thursday. The spec says `N/S` runs up to the field's maximum, and day of week goes up to 7, so `1/3` also keeps 7, which is Sunday."
           }
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 260.3,
+          "over_limit": false,
+          "limits": {
+            "before": null,
+            "after": null
+          },
+          "api_cost_usd": 0.694168,
+          "turns": 1,
+          "harness_version": "1.5.19",
+          "plan": "Gemini API",
+          "tokens": 294358,
+          "output": 29878
         }
       ]
     },
@@ -7388,29 +7699,29 @@
       "retired": null,
       "until": null,
       "first": "2026-10-21",
-      "last": "2026-11-27",
+      "last": "2026-11-28",
       "plan": "OpenCode Go",
       "effort": "default",
-      "runs": 31,
+      "runs": 32,
       "pass_rate_30": 1.0,
       "mean_score_30": 1.0,
-      "median_seconds_30": 714.8,
+      "median_seconds_30": 741.3,
       "latest": {
-        "date": "2026-11-27",
-        "seed": "2026-11-27",
+        "date": "2026-11-28",
+        "seed": "2026-11-28",
         "passed": true,
         "score": 1.0,
         "hidden_passed": 157,
         "hidden_total": 157,
-        "wall_seconds": 551.2,
+        "wall_seconds": 797.7,
         "tokens": {
-          "input": 82963,
-          "cache_read": 1676288,
+          "input": 118331,
+          "cache_read": 3352960,
           "cache_write": 0,
-          "output": 15816,
-          "reasoning": 48601
+          "output": 16141,
+          "reasoning": 77956
         },
-        "api_cost_usd": 0.056124,
+        "api_cost_usd": 0.084267,
         "limits": {
           "before": {
             "five_hour": 0.0,
@@ -8200,6 +8511,31 @@
           "plan": "OpenCode Go",
           "tokens": 1775067,
           "output": 15816
+        },
+        {
+          "date": "2026-11-28",
+          "passed": true,
+          "score": 1.0,
+          "wall_seconds": 797.7,
+          "over_limit": false,
+          "limits": {
+            "before": {
+              "five_hour": 0.0,
+              "seven_day": 0.0,
+              "monthly": 0.01
+            },
+            "after": {
+              "five_hour": 0.0,
+              "seven_day": 0.0,
+              "monthly": 0.01
+            }
+          },
+          "api_cost_usd": 0.084267,
+          "turns": 46,
+          "harness_version": "opencode v2.1.1",
+          "plan": "OpenCode Go",
+          "tokens": 3487432,
+          "output": 16141
         }
       ]
     }
